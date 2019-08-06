@@ -1,0 +1,267 @@
+{
+    "node_types": [
+        {
+            "name": "Paper",
+	    "raw_file": "Papers.txt",
+	    "id": "PaperId",
+            "cols": [
+		"PaperId",
+		"Rank",
+		"Doi",
+		"DocType",
+		"PaperTitle",
+		"OriginalTitle",
+		"BookTitle",
+		"Year",
+		"Date",
+		"Publisher",
+		"JournalId",
+		"ConferenceSeriesId",
+		"ConferenceInstanceId",
+		"Volume",
+		"Issue",
+		"FirstPage",
+		"LastPage",
+		"ReferenceCount",
+		"CitationCount",
+		"EstimatedCitation",
+		"OriginalVenue",
+		"CreatedDate"
+	    ],
+            "data_types": {
+		"PaperId": "long",
+		"Rank": "long",
+		"Year": "int",
+		"Date": "date",
+		"JournalId": "long",
+		"ConferenceSeriesId": "long",
+		"ConferenceInstanceId": "long",
+		"ReferenceCount": "long",
+		"CitationCount": "long",
+		"EstimatedCitation": "long",
+		"CreatedDate": "date"
+	    },
+	    "foreign_keys": ["JournalId", "ConferenceSeriesId", "ConferenceInstanceId"]
+        },
+        {
+            "name": "Author",
+	    "raw_file": "Authors.txt",
+	    "id": "AuthorId",
+            "cols": [
+		"AuthorId",
+		"Rank",
+		"NormalizedName",
+		"DisplayName",
+		"LastKnownAffiliationId",
+		"PaperCount",
+		"CitationCount",
+		"CreatedDate"
+	    ],
+            "data_types": {
+		"AuthorId": "long",
+		"Rank": "long",
+		"LastKnownAffiliationId": "long",
+		"PaperCount": "long",
+		"CitationCount": "long",
+		"CreatedDate": "date"
+	    }
+        },
+        {
+            "name": "Affiliation",
+	    "raw_file": "Affiliations.txt",
+	    "id": "AffiliationId",
+            "cols": [
+		"AffiliationId",
+		"Rank",
+		"NormalizedName",
+		"DisplayName",
+		"GridId",
+		"OfficialPage",
+		"WikiPage",
+		"PaperCount",
+		"CitationCount",
+		"CreatedDate"
+	    ],
+            "data_types": {
+		"AffiliationId": "long",
+		"Rank": "long",
+		"PaperCount": "long",
+		"CitationCount": "long",
+		"CreatedDate": "date"
+	    }
+        },
+        {
+            "name": "ConferenceInstance",
+	    "raw_file": "ConferenceInstances.txt",
+	    "id": "ConferenceInstanceId",
+            "cols": [
+		"ConferenceInstanceId",
+		"NormalizedName",
+		"DisplayName",
+		"ConferenceSeriesId",
+		"Location",
+		"OfficialUrl",
+		"StartDate",
+		"EndDate",
+		"AbstractRegistrationDate",
+		"SubmissionDeadlineDate",
+		"NotificationDueDate",
+		"FinalVersionDueDate",
+		"PaperCount",
+		"CitationCount",
+		"CreatedDate"
+	    ],
+            "data_types": {
+		"ConferenceInstanceId": "long",
+		"ConferenceSeriesId": "long",
+		"StartDate": "date",
+		"EndDate": "date",
+		"AbstractRegistrationDate": "date",
+		"SubmissionDeadlineDate": "date",
+		"NotificationDueDate": "date",
+		"FinalVersionDueDate": "date",
+		"PaperCount": "long",
+		"CitationCount": "long",
+		"Latitude": "float",
+		"Longitude": "float",
+		"CreatedDate": "date"
+	    },
+	    "foreign_keys": ["ConferenceSeriesId"]
+        },
+        {
+            "name": "ConferenceSeries",
+	    "raw_file": "ConferenceSeries.txt",
+	    "id": "ConferenceSeriesId",
+            "cols": [
+		"ConferenceSeriesId",
+		"Rank",
+		"NormalizedName",
+		"DisplayName",
+		"PaperCount",
+		"CitationCount",
+		"CreatedDate"
+	    ],
+            "data_types": {
+		"ConferenceSeriesId": "long",
+		"Rank": "long",
+		"PaperCount": "long",
+		"CitationCount": "long",
+		"CreatedDate": "date"
+	    }
+        },
+        {
+            "name": "Journal",
+	    "raw_file": "Journals.txt",
+	    "id": "JournalId",
+            "cols": [
+		"JournalId",
+		"Rank",
+		"NormalizedName",
+		"DisplayName",
+		"Issn",
+		"Publisher",
+		"Webpage",
+		"PaperCount",
+		"CitationCount",
+		"CreatedDate"
+	    ],
+            "data_types": {
+		"JournalId": "long",
+		"Rank": "long",
+		"PaperCount": "long",
+		"CitationCount": "long",
+		"CreatedDate": "date"
+	    }
+        },
+        {
+            "name": "FieldOfStudy",
+	    "raw_file": "FieldsOfStudy.txt",
+	    "id": "FieldOfStudyId",
+            "cols": [
+		"FieldOfStudyId",
+		"Rank",
+		"NormalizedName",
+		"DisplayName",
+		"MainType",
+		"Level",
+		"PaperCount",
+		"CitationCount",
+		"CreatedDate"
+	    ],
+            "data_types": {
+		"FieldOfStudyId": "long",
+		"Rank": "long",
+		"Level": "int",
+		"PaperCount": "long",
+		"CitationCount": "long",
+		"CreatedDate": "date"
+	    }
+        }
+    ],
+    "relationships": [
+	{
+	    "start_node": "Author",
+	    "end_node": "Paper",
+	    "type": "IS_AUTHOR_OF",
+	    "src_file": "PaperAuthorAffiliations.txt",
+	    "start_col": 1,
+	    "end_col": 0
+	},
+	{
+	    "start_node": "Author",
+	    "end_node": "Affiliation",
+	    "type": "IS_AFFILIATED_WITH",
+	    "src_file": "PaperAuthorAffiliations.txt",
+	    "start_col": 1,
+	    "end_col": 2
+	},
+	{
+	    "start_node": "Paper",
+	    "end_node": "Journal",
+	    "type": "IS_PUBLISHED_IN",
+	    "src_file": "Papers.txt",
+	    "start_col": 0,
+	    "end_col": 10
+	},
+	{
+	    "start_node": "Paper",
+	    "end_node": "ConferenceInstance",
+	    "type": "IS_PRESENTED_AT",
+	    "src_file": "Papers.txt",
+	    "start_col": 0,
+	    "end_col": 12
+	},
+	{
+	    "start_node": "Paper",
+	    "end_node": "FieldOfStudy",
+	    "type": "BELONGS_TO",
+	    "src_file": "PaperFieldsOfStudy.txt",
+	    "start_col": 0,
+	    "end_col": 1
+	},
+	{
+	    "start_node": "Paper",
+	    "end_node": "Paper",
+	    "type": "CAUSES_TO_RECOMMEND",
+	    "src_file": "PaperRecommendations.txt",
+	    "start_col": 0,
+	    "end_col": 1
+	},
+	{
+	    "start_node": "Paper",
+	    "end_node": "Paper",
+	    "type": "REFERENCES",
+	    "src_file": "PaperReferences.txt",
+	    "start_col": 0,
+	    "end_col": 1
+	},
+	{
+	    "start_node": "ConferenceInstance",
+	    "end_node": "ConferenceSeries",
+	    "type": "IS_INSTANCE_OF",
+	    "src_file": "ConferenceInstances.txt",
+	    "start_col": 0,
+	    "end_col": 3
+	}
+    ]
+}

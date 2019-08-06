@@ -1,0 +1,2 @@
+MAG_DELIMITER = b'\t'
+NEO4J_DELIMITER = b','
