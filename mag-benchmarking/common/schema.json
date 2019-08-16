@@ -122,8 +122,6 @@
 		"FinalVersionDueDate": "date",
 		"PaperCount": "long",
 		"CitationCount": "long",
-		"Latitude": "float",
-		"Longitude": "float",
 		"CreatedDate": "date"
 	    },
 	    "foreign_keys": ["ConferenceSeriesId"]
