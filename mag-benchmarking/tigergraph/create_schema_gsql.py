@@ -24,15 +24,17 @@ if __name__ == '__main__':
     vertices = []
     edges = []
     for node in schema['node_types']:
+        excluded_fields = set(node['foreign_keys']) if 'foreign_keys' in node else set()
         data_defs = 'PRIMARY_ID {} {}'.format(
             node['id'],
             convert_dtype(node['data_types'][node['id']]) if node['id'] in node['data_types'] else 'STRING'
         )
         for field in node['cols']:
-            data_defs += ', {} {}'.format(
-                field,
-                convert_dtype(node['data_types'][field]) if field in node['data_types'] else 'STRING'
-            )
+            if field not in excluded_fields:
+                data_defs += ', {} {}'.format(
+                    field,
+                    convert_dtype(node['data_types'][field]) if field in node['data_types'] else 'STRING'
+                )
         gsql = 'CREATE VERTEX {} ({}) WITH primary_id_as_attribute="true"'.format(
             node['name'].lower(),
             data_defs
