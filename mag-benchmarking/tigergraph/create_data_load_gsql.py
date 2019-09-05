@@ -11,7 +11,7 @@ if __name__ == '__main__':
     with open(schema_file, 'r') as f:
         schema = json.loads(f.read())
 
-    mag_dir = os.path.join('/', 'home', 'tigergraph', 'data', 'reduced-mags', 'mag-fos-data-processing')
+    mag_dir = os.path.join('/', 'tigergraph', 'data', 'mag')
 
     for node in schema['node_types']:
         filepath = os.path.join(mag_dir, node['raw_file'])
