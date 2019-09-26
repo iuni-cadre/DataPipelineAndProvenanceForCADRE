@@ -1,0 +1,11 @@
+USE GRAPH mag
+
+BEGIN
+CREATE QUERY count_all_edges() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {paper.*, author.*, affiliation.*, journal.*, fieldofstudy.*, conferenceinstance.*, conferenceseries.*};
+  tmp = SELECT v FROM vertices:v -(ANY)-> ANY POST_ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_all_edges

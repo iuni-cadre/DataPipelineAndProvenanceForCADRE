@@ -1,0 +1,10 @@
+USE GRAPH mag
+
+BEGIN
+CREATE QUERY get_paper(STRING t) FOR GRAPH mag {
+  papers = {paper.*};
+  q = SELECT p FROM papers:p WHERE p.PaperTitle == t;
+  PRINT q;
+}
+END
+INSTALL QUERY get_paper

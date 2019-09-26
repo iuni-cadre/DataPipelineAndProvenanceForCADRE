@@ -1,0 +1,12 @@
+USE GRAPH mag
+
+BEGIN
+CREATE QUERY get_paper(STRING t) FOR GRAPH mag {
+  papers = {paper.*};
+  nodes = {paper.*, author.*, journal.*};
+  nodes = paper.* UNION author.* UNION journal.*;
+  q = SELECT p FROM paper:p WHERE p.PaperTitle == t;
+  PRINT q;
+}
+END
+INSTALL QUERY get_paper
