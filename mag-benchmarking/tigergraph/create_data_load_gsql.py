@@ -11,8 +11,7 @@ if __name__ == '__main__':
     with open(schema_file, 'r') as f:
         schema = json.loads(f.read())
 
-    mag_dir = os.path.join('/', 'tigergraph', 'data', 'mag')
-
+    mag_dir = os.path.join('/', 'home', 'tigergraph', 'data', 'reduced-mags', 'mag-fos-data-processing')
     for node in schema['node_types']:
         filepath = os.path.join(mag_dir, node['raw_file'])
         assert os.path.exists(filepath) and os.path.isfile(filepath)
@@ -23,7 +22,7 @@ if __name__ == '__main__':
         print('DEFINE FILENAME {}_file="{}";'.format(node['name'].lower(), filepath))
 
         excluded_fields = set(node['foreign_keys']) if 'foreign_keys' in node else set()
-        print('LOAD {}_file TO VERTEX {} VALUES ($0, {}) USING header="false", separator="\\t";'.format(
+        print('LOAD {}_file TO VERTEX {} VALUES ({}) USING header="false", separator="\\t";'.format(
             node['name'].lower(),
             node['name'].lower(),
             ', '.join(['${}'.format(idx) for idx, name in list(enumerate(node['cols'])) if name not in excluded_fields])

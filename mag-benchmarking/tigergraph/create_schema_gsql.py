@@ -30,7 +30,7 @@ if __name__ == '__main__':
             convert_dtype(node['data_types'][node['id']]) if node['id'] in node['data_types'] else 'STRING'
         )
         for field in node['cols']:
-            if field not in excluded_fields:
+            if field not in excluded_fields and field != node['id']:
                 data_defs += ', {} {}'.format(
                     field,
                     convert_dtype(node['data_types'][field]) if field in node['data_types'] else 'STRING'
