@@ -1,15 +1,25 @@
 export HADOOP_USER_NAME=hdfs
+export PATH=$PATH:~/.local/bin
 export JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera/
 export HADOOP_HOME=/opt/cloudera/parcels/CDH/lib/hadoop
-export SPARK_HOME=/opt/cloudera/parcels/CDH/lib/spark
+export HADOOP_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hive/conf/
+export SPARK_HOME=/opt/cloudera/parcels/CDH-6.3.1-1.cdh6.3.1.p0.1470567/lib/spark
 
 module swap python/3.6.8
+source activate tf-prob
 
 pip install --user Toree
 export PATH=~/.local/bin:$PATH
-jupyter toree install --spark_home=$SPARK_HOME --user --spark_opts="--packages com.databricks:spark-xml_2.11:0.5.0 --driver-memory 8G --executor-memory 15G --executor-cores 6 --conf spark.driver.maxResultSize=8g"
+jupyter toree install --spark_home=$SPARK_HOME --user --spark_opts=" --master yarn --deploy-mode client --jars /opt/cloudera/parcels/CDH/jars/commons-dbcp-1.4.jar,/opt/cloudera/parcels/CDH/jars/datanucleus-api-jdo-4.2.5.jar,/opt/cloudera/parcels/CDH/jars/datanucleus-core-4.1.17.jar,/opt/cloudera/parcels/CDH/jars/datanucleus-rdbms-4.1.17.jar --packages com.databricks:spark-xml_2.11:0.5.0 --driver-memory 8G --executor-memory 14G --executor-cores 7 --conf spark.driver.maxResultSize=8g"
 jupyter kernelspec list
 
+hdfs dfs -mkdir /data1
+hdfs dfs -copyFromLocal /WoS/parquet/ /data1/WoS/
+
+
 jupyter serverextension enable --py jupyterlab
-cd /gpfs/projects/UITS/IUNI/IMAGENE/
+cd /N/dc2/projects/IUNI_MSAcademic/
 jupyter notebook --no-browser --port=8000 --ip=149.165.230.163
+
+spark.sparkContext.uiWebUrl
+sqlContext.sql("set spark.sql.caseSensitive=true") 
