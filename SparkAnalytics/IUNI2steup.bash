@@ -2,7 +2,7 @@ export HADOOP_USER_NAME=hdfs
 export PATH=$PATH:~/.local/bin
 export JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera/
 export HADOOP_HOME=/opt/cloudera/parcels/CDH/lib/hadoop
-export HADOOP_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hive/conf/
+export HADOOP_CONF_DIR=/opt/cloudera/parcels/CDH-6.3.1-1.cdh6.3.1.p0.1470567/lib/spark/conf/yarn-conf
 export SPARK_HOME=/opt/cloudera/parcels/CDH-6.3.1-1.cdh6.3.1.p0.1470567/lib/spark
 
 module swap python/3.6.8
@@ -15,6 +15,7 @@ jupyter kernelspec list
 
 hdfs dfs -mkdir /data1
 hdfs dfs -copyFromLocal /WoS/parquet/ /data1/WoS/
+hdfs dfs -ls /
 
 
 jupyter serverextension enable --py jupyterlab
