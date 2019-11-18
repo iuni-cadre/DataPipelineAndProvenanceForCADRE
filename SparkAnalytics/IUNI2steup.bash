@@ -15,6 +15,7 @@ jupyter kernelspec list
 
 hdfs dfs -mkdir /data1
 hdfs dfs -copyFromLocal /WoS/parquet/ /data1/WoS/
+hdfs dfs -ls /
 
 
 jupyter serverextension enable --py jupyterlab
