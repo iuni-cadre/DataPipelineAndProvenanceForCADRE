@@ -10,6 +10,7 @@ source activate tf-prob
 
 pip install --user Toree
 export PATH=~/.local/bin:$PATH
+jupyter toree install --spark_home=$SPARK_HOME --user --spark_opts=" --master yarn  --packages com.databricks:spark-xml_2.11:0.5.0,graphframes:graphframes:0.7.0-spark2.4-s_2.11 --driver-memory 8G --executor-memory 14G --executor-cores 7 --conf spark.driver.maxResultSize=8g"
 jupyter toree install --spark_home=$SPARK_HOME --user --spark_opts=" --master yarn --deploy-mode client --jars /opt/cloudera/parcels/CDH/jars/commons-dbcp-1.4.jar,/opt/cloudera/parcels/CDH/jars/datanucleus-api-jdo-4.2.5.jar,/opt/cloudera/parcels/CDH/jars/datanucleus-core-4.1.17.jar,/opt/cloudera/parcels/CDH/jars/datanucleus-rdbms-4.1.17.jar --packages com.databricks:spark-xml_2.11:0.5.0 --driver-memory 8G --executor-memory 14G --executor-cores 7 --conf spark.driver.maxResultSize=8g"
 jupyter kernelspec list
 
