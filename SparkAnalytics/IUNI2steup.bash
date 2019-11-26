@@ -17,7 +17,7 @@ jupyter kernelspec list
 hdfs dfs -mkdir /data1
 hdfs dfs -copyFromLocal /WoS/parquet/ /data1/WoS/
 hdfs dfs -ls /
-
+hdfs dfs -copyToLocal <hdfs_input_file_path> <output_path>
 
 jupyter serverextension enable --py jupyterlab
 cd /N/dc2/projects/IUNI_MSAcademic/
