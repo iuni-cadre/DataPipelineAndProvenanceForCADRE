@@ -1,0 +1,16 @@
+USE GRAPH mag
+SET syntax_version="v2"
+
+BEGIN
+CREATE QUERY hop_1_neighbors(VERTEX<paper> p) FOR GRAPH mag {
+  OrAccum  @visited = false;
+  Start = {p};
+
+  FirstNeighbors = SELECT tgt
+                     FROM Start:s -(refers_to:e)-> paper:tgt
+                    ACCUM tgt.@visited += true, s.@visited += true;
+
+  PRINT FirstNeighbors;
+}
+END
+INSTALL QUERY hop_1_neighbors

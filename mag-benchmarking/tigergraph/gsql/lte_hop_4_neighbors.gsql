@@ -1,30 +1,8 @@
 USE GRAPH mag
-
-
-BEGIN
-CREATE QUERY count_all_vertices() FOR GRAPH mag {
-  SumAccum<INT> @@vertexCount;
-  vertices = {paper.*, author.*, affiliation.*, journal.*, fieldofstudy.*, conferenceinstance.*, conferenceseries.*};
-  tmp = SELECT v FROM vertices:v POST_ACCUM @@vertexCount += 1;
-
-  PRINT @@vertexCount;
-}
-END
-INSTALL QUERY count_all_vertices
+SET syntax_version="v2"
 
 BEGIN
-CREATE QUERY count_all_edges() FOR GRAPH mag {
-  SumAccum<INT> @@edgeCount;
-  vertices = {paper.*, author.*, affiliation.*, journal.*, fieldofstudy.*, conferenceinstance.*, conferenceseries.*};
-  tmp = SELECT e FROM vertices:src -(ANY:e)->ANY:tgt POST_ACCUM @@edgeCount += 1;
-  PRINT @@edgeCount;
-}
-END
-INSTALL QUERY count_all_edges
-
-
-BEGIN
-CREATE QUERY lte_four_hop_neighbors(VERTEX<paper> p) FOR GRAPH mag {
+CREATE QUERY lte_hop_4_neighbors(VERTEX<paper> p) FOR GRAPH mag {
   OrAccum  @visited = false;
   Start = {p};
 
@@ -50,4 +28,4 @@ CREATE QUERY lte_four_hop_neighbors(VERTEX<paper> p) FOR GRAPH mag {
   PRINT All;
 }
 END
-INSTALL QUERY lte_four_hop_neighbors
+INSTALL QUERY lte_hop_4_neighbors
