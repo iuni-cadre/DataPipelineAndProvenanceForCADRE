@@ -20,7 +20,7 @@ hdfs dfs -ls /
 hdfs dfs -copyToLocal <hdfs_input_file_path> <output_path>
 
 jupyter serverextension enable --py jupyterlab
-cd /N/dc2/projects/IUNI_MSAcademic/
+cd /N/project/iuni_cadre
 jupyter notebook --no-browser --port=8000 --ip=149.165.230.163
 
 spark.sparkContext.uiWebUrl
