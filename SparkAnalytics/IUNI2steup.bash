@@ -15,12 +15,12 @@ jupyter toree install --spark_home=$SPARK_HOME --user --spark_opts=" --master ya
 jupyter kernelspec list
 
 hdfs dfs -mkdir /data1
-hdfs dfs -copyFromLocal /WoS/parquet/ /data1/WoS/
+hdfs dfs -copyFromLocal /wos_17_18/ /data1/WoSraw/
 hdfs dfs -ls /
 hdfs dfs -copyToLocal <hdfs_input_file_path> <output_path>
 
 jupyter serverextension enable --py jupyterlab
-cd /N/dc2/projects/IUNI_MSAcademic/
+cd /N/project/iuni_cadre
 jupyter notebook --no-browser --port=8000 --ip=149.165.230.163
 
 spark.sparkContext.uiWebUrl
