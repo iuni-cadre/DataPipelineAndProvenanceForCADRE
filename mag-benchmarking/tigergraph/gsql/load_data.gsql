@@ -1,119 +1,128 @@
 USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_Paper_vertex FOR GRAPH mag {
-DEFINE FILENAME paper_file="/tigergraph/data/mag-fos-computer-science/Papers.txt";
-LOAD paper_file TO VERTEX paper VALUES ($0, $1, $2, $3, $4, $5, $6, $7, $8, $9, $13, $14, $15, $16, $17, $18, $19, $20, $21) USING header="false", separator="\t";
+  DEFINE FILENAME paper_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/Papers.txt";
+  LOAD paper_file TO VERTEX paper VALUES ($0, $1, $2, $3, $4, $5, $6, $7, $8, $9, $13, $14, $15, $16, $17, $18, $19, $20, $21) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_Paper_vertex
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_Author_vertex FOR GRAPH mag {
-DEFINE FILENAME author_file="/tigergraph/data/mag-fos-computer-science/Authors.txt";
+DEFINE FILENAME author_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/Authors.txt";
 LOAD author_file TO VERTEX author VALUES ($0, $1, $2, $3, $4, $5, $6, $7) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_Author_vertex
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_Affiliation_vertex FOR GRAPH mag {
-DEFINE FILENAME affiliation_file="/tigergraph/data/mag-fos-computer-science/Affiliations.txt";
+DEFINE FILENAME affiliation_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/Affiliations.txt";
 LOAD affiliation_file TO VERTEX affiliation VALUES ($0, $1, $2, $3, $4, $5, $6, $7, $8, $9) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_Affiliation_vertex
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_ConferenceInstance_vertex FOR GRAPH mag {
-DEFINE FILENAME conferenceinstance_file="/tigergraph/data/mag-fos-computer-science/ConferenceInstances.txt";
+DEFINE FILENAME conferenceinstance_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/ConferenceInstances.txt";
 LOAD conferenceinstance_file TO VERTEX conferenceinstance VALUES ($0, $1, $2, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_ConferenceInstance_vertex
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_ConferenceSeries_vertex FOR GRAPH mag {
-DEFINE FILENAME conferenceseries_file="/tigergraph/data/mag-fos-computer-science/ConferenceSeries.txt";
+DEFINE FILENAME conferenceseries_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/ConferenceSeries.txt";
 LOAD conferenceseries_file TO VERTEX conferenceseries VALUES ($0, $1, $2, $3, $4, $5, $6) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_ConferenceSeries_vertex
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_Journal_vertex FOR GRAPH mag {
-DEFINE FILENAME journal_file="/tigergraph/data/mag-fos-computer-science/Journals.txt";
+DEFINE FILENAME journal_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/Journals.txt";
 LOAD journal_file TO VERTEX journal VALUES ($0, $1, $2, $3, $4, $5, $6, $7, $8, $9) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_Journal_vertex
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_FieldOfStudy_vertex FOR GRAPH mag {
-DEFINE FILENAME fieldofstudy_file="/tigergraph/data/mag-fos-computer-science/FieldsOfStudy.txt";
+DEFINE FILENAME fieldofstudy_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/FieldsOfStudy.txt";
 LOAD fieldofstudy_file TO VERTEX fieldofstudy VALUES ($0, $1, $2, $3, $4, $5, $6, $7, $8) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_FieldOfStudy_vertex
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_IS_AUTHOR_OF_edge FOR GRAPH mag {
-DEFINE FILENAME IsAuthorOf_file="/tigergraph/data/mag-fos-computer-science/PaperAuthorAffiliations.txt";
+DEFINE FILENAME IsAuthorOf_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/PaperAuthorAffiliations.txt";
 LOAD IsAuthorOf_file TO EDGE is_author_of VALUES ($1, $0) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_IS_AUTHOR_OF_edge
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_IS_AFFILIATED_WITH_edge FOR GRAPH mag {
-DEFINE FILENAME IsAffiliatedWith_file="/tigergraph/data/mag-fos-computer-science/PaperAuthorAffiliations.txt";
+DEFINE FILENAME IsAffiliatedWith_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/PaperAuthorAffiliations.txt";
 LOAD IsAffiliatedWith_file TO EDGE is_affiliated_with VALUES ($1, $2) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_IS_AFFILIATED_WITH_edge
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_IS_PUBLISHED_IN_edge FOR GRAPH mag {
-DEFINE FILENAME IsPublishedIn_file="/tigergraph/data/mag-fos-computer-science/Papers.txt";
+DEFINE FILENAME IsPublishedIn_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/Papers.txt";
 LOAD IsPublishedIn_file TO EDGE is_published_in VALUES ($0, $10) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_IS_PUBLISHED_IN_edge
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_IS_PRESENTED_AT_edge FOR GRAPH mag {
-DEFINE FILENAME IsPresentedAt_file="/tigergraph/data/mag-fos-computer-science/Papers.txt";
+DEFINE FILENAME IsPresentedAt_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/Papers.txt";
 LOAD IsPresentedAt_file TO EDGE is_presented_at VALUES ($0, $12) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_IS_PRESENTED_AT_edge
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_BELONGS_TO_edge FOR GRAPH mag {
-DEFINE FILENAME BelongsTo_file="/tigergraph/data/mag-fos-computer-science/PaperFieldsOfStudy.txt";
+DEFINE FILENAME BelongsTo_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/PaperFieldsOfStudy.txt";
 LOAD BelongsTo_file TO EDGE belongs_to VALUES ($0, $1) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_BELONGS_TO_edge
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_CAUSES_TO_RECOMMEND_edge FOR GRAPH mag {
-DEFINE FILENAME CausesToRecommend_file="/tigergraph/data/mag-fos-computer-science/PaperRecommendations.txt";
+DEFINE FILENAME CausesToRecommend_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/PaperRecommendations.txt";
 LOAD CausesToRecommend_file TO EDGE causes_to_recommend VALUES ($0, $1) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_CAUSES_TO_RECOMMEND_edge
-USE GRAPH mag
+
 BEGIN
 CREATE LOADING JOB load_REFERS_TO_edge FOR GRAPH mag {
-DEFINE FILENAME RefersTo_file="/tigergraph/data/mag-fos-computer-science/PaperReferences.txt";
+DEFINE FILENAME RefersTo_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/PaperReferences.txt";
 LOAD RefersTo_file TO EDGE refers_to VALUES ($0, $1) USING header="false", separator="\t";
 }
 END
 RUN LOADING JOB load_REFERS_TO_edge
-USE GRAPH mag
+
+BEGIN
+CREATE LOADING JOB load_IS_REFERRED_BY_edge FOR GRAPH mag {
+DEFINE FILENAME refs_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/PaperReferences.txt";
+LOAD refs_file TO EDGE refers_to VALUES ($1, $0) USING header="false", separator="\t";
+}
+END
+RUN LOADING JOB load_REFERS_TO_edge
+
 BEGIN
 CREATE LOADING JOB load_IS_INSTANCE_OF_edge FOR GRAPH mag {
-DEFINE FILENAME IsInstanceOf_file="/tigergraph/data/mag-fos-computer-science/ConferenceInstances.txt";
+DEFINE FILENAME IsInstanceOf_file="/home/tigergraph/data/reduced-mags/mag-fos-data-processing/ConferenceInstances.txt";
 LOAD IsInstanceOf_file TO EDGE is_instance_of VALUES ($0, $3) USING header="false", separator="\t";
 }
 END
