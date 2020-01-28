@@ -212,14 +212,28 @@ END
 INSTALL QUERY count_is_published_in_edges
 
 # ===========================================================
-# REFERENCES edge count
+# REFERS_TO edge count
 # ===========================================================
 BEGIN
 CREATE QUERY count_refers_to_edges() FOR GRAPH mag {
   SumAccum<INT> @@count;
   vertices = {paper.*};
-  tmp = SELECT v FROM vertices:v -(refers_to)- paper:p ACCUM @@count += 1;
+  tmp = SELECT v FROM vertices:v -(refers_to)-> paper:p ACCUM @@count += 1;
   PRINT @@count;
 }
 END
 INSTALL QUERY count_refers_to_edges
+
+# ===========================================================
+# IS_REFERRED_BY edge count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_is_referred_by_edges() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {paper.*};
+  tmp = SELECT v FROM vertices:v -(is_referred_by)-> paper:p ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_is_referred_by_edges
