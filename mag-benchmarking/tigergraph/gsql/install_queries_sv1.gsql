@@ -1,5 +1,5 @@
 USE GRAPH mag
-SET syntax_version="v1"
+SET syntax_version="v2"
 
 # ===========================================================
 # find specific paper
@@ -18,15 +18,16 @@ CREATE QUERY find_paper(VERTEX<paper> q) FOR GRAPH mag {
 END
 INSTALL QUERY find_paper
 
+
 # ===========================================================
 # find all authors of a specific paper
 # ===========================================================
 BEGIN
 CREATE QUERY find_authors(VERTEX<paper> q) FOR GRAPH mag {
   SumAccum<INT> @@count;
-  papers = {q}
+  papers = {q};
   r = SELECT a
-      FROM papers:p -(is_author_of)- authors:a
+      FROM papers:p -(is_author_of)- author:a
       POST_ACCUM @@count += 1;
   PRINT @@count;
 }
@@ -76,7 +77,7 @@ CREATE QUERY find_citations(VERTEX<paper> q) FOR GRAPH mag {
   SumAccum<INT> @@count;
   papers = {q};
   r = SELECT src
-      FROM papers:src -(refers_to)- paper:tgt
+      FROM papers:tgt -(is_referred_by:e)-> paper:src
       POST_ACCUM @@count += 1;
   PRINT @@count;
 }
@@ -84,7 +85,7 @@ END
 INSTALL QUERY find_citations
 
 # ===========================================================
-# find all citations that are once remove from a given paper P, i.e. the papers citing the papers citing P
+# find all citations that are 2 hops removed from a given paper P, i.e. the papers citing the papers citing P
 # ===========================================================
 
 BEGIN
@@ -95,13 +96,13 @@ CREATE QUERY find_citations2(VERTEX<paper> q) FOR GRAPH mag {
   papers = {q};
 
   FirstNeighbors = SELECT src
-                   FROM paper:src -(refers_to)-> papers:tgt
+                   FROM papers:tgt -(is_referred_by)-> paper:src
                    ACCUM tgt.@visited += true, src.@visited += true;
 
   SecondNeighbors = SELECT src
-                    FROM paper:src -(refers_to)-> FirstNeighbors:tgt
+                    FROM FirstNeighbors:tgt -(is_referred_by)-> paper:src
                     WHERE src.@visited == false
-		    POST_ACCUM @@count += 1
+		    POST_ACCUM @@count += 1;
 
   PRINT @@count;
 }
@@ -109,34 +110,68 @@ END
 INSTALL QUERY find_citations2
 
 # ===========================================================
-# find all citations that are 1-4 times removed from a given paper
+# find all citations that are 3 hops removed from a given paper
 # ===========================================================
 
 BEGIN
-CREATE QUERY find_citations1_4(VERTEX<paper> q) FOR GRAPH mag {
+CREATE QUERY find_citations3(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  OrAccum  @visited = false;
+  
+  papers = {q};
+
   FirstNeighbors = SELECT src
-                   FROM paper:src -(refers_to)-> papers:tgt
+                   FROM papers:tgt -(is_referred_by)-> paper:src
                    ACCUM tgt.@visited += true, src.@visited += true;
 
   SecondNeighbors = SELECT src
-                    FROM paper:src -(refers_to)-> FirstNeighbors:tgt
+                    FROM FirstNeighbors:tgt -(is_referred_by)-> paper:src
                     WHERE src.@visited == false
-		    ACCUM src.@visited += true
+		    ACCUM src.@visited += true;
 
   ThirdNeighbors = SELECT src
-       		   FROM paper:src -(refers_to)-> SecondNeighbors:tgt
+       		   FROM SecondNeighbors:tgt -(is_referred_by)-> paper:src
                    WHERE src.@visited == false
-		   ACCUM src.@visited += true
-
-  FourthNeighbors = SELECT src
-                    FROM paper:src -(refers_to)-> ThirdNeighbors:tgt
-                    WHERE src.@visited == false
-		    POST_ACCUM @@count += 1
+		   POST_ACCUM @@count += 1;
 		    
   PRINT @@count;
 }
 END
-INSTALL QUERY find_citations1_4
+INSTALL QUERY find_citations3
+
+# ===========================================================
+# find all citations that are 4 hops removed from a given paper
+# ===========================================================
+BEGIN
+CREATE QUERY find_citations4(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  OrAccum  @visited = false;
+  
+  papers = {q};
+
+  FirstNeighbors = SELECT src
+                   FROM papers:tgt -(is_referred_by)-> paper:src
+                   ACCUM tgt.@visited += true, src.@visited += true;
+
+  SecondNeighbors = SELECT src
+                    FROM FirstNeighbors:tgt -(is_referred_by)-> paper:src
+                    WHERE src.@visited == false
+		    ACCUM src.@visited += true;
+
+  ThirdNeighbors = SELECT src
+       		   FROM SecondNeighbors:tgt -(is_referred_by)-> paper:src
+                   WHERE src.@visited == false
+		   ACCUM src.@visited += true;
+
+  FourthNeighbors = SELECT src
+                    FROM ThirdNeighbors:tgt -(is_referred_by)-> paper:src
+                    WHERE src.@visited == false
+		    POST_ACCUM @@count += 1;
+		    
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_citations4
 
 # ===========================================================
 # find all references for a given paper
@@ -147,7 +182,7 @@ CREATE QUERY find_references(VERTEX<paper> q) FOR GRAPH mag {
   SumAccum<INT> @@count;
   papers = {q};
   r = SELECT tgt
-      FROM papers:src -(refers_to)- paper:tgt
+      FROM papers:src -(refers_to)-> paper:tgt
       POST_ACCUM @@count += 1;
   PRINT @@count;
 }
@@ -172,7 +207,7 @@ CREATE QUERY find_references2(VERTEX<paper> q) FOR GRAPH mag {
   SecondNeighbors = SELECT tgt
                     FROM FirstNeighbors:src -(refers_to)-> paper:tgt
                     WHERE tgt.@visited == false
-		    POST_ACCUM @@count += 1
+		    POST_ACCUM @@count += 1;
 
   PRINT @@count;
 }
@@ -180,11 +215,11 @@ END
 INSTALL QUERY find_references2
 
 # ===========================================================
-# find references 1-4 times removed for a given paper
+# find references 4 times removed for a given paper
 # ===========================================================
 
 BEGIN
-CREATE QUERY find_references1_4(VERTEX<paper> q) FOR GRAPH mag {
+CREATE QUERY find_references3(VERTEX<paper> q) FOR GRAPH mag {
   SumAccum<INT> @@count;
   OrAccum  @visited = false;
   
@@ -197,22 +232,57 @@ CREATE QUERY find_references1_4(VERTEX<paper> q) FOR GRAPH mag {
   SecondNeighbors = SELECT tgt
                     FROM FirstNeighbors:src -(refers_to)-> paper:tgt
                     WHERE tgt.@visited == false
-		    ACCUM tgt.@visited += true
+		    ACCUM tgt.@visited += true;
 
   ThirdNeighbors = SELECT tgt
                     FROM SecondNeighbors:src -(refers_to)-> paper:tgt
                     WHERE tgt.@visited == false
-		    ACCUM tgt.@visited += true
-
-  FourthNeighbors = SELECT tgt
-                    FROM ThirdNeighbors:src -(refers_to)-> paper:tgt
-                    WHERE tgt.@visited == false
-		    POST_ACCUM @@count += 1
+		    POST_ACCUM @@count += 1;
 
   PRINT @@count;
 }
 END
-INSTALL QUERY find_references1_4
+INSTALL QUERY find_references3
+
+# ===========================================================
+# find references 4 times removed for a given paper
+# ===========================================================
+
+BEGIN
+CREATE QUERY find_references4(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  OrAccum  @visited = false;
+  
+  papers = {q};
+
+  FirstNeighbors = SELECT tgt
+                   FROM papers:src -(refers_to)-> paper:tgt
+                   ACCUM tgt.@visited += true, src.@visited += true;
+
+  SecondNeighbors = SELECT tgt
+                    FROM FirstNeighbors:src -(refers_to)-> paper:tgt
+                    WHERE tgt.@visited == false
+		    ACCUM tgt.@visited += true;
+
+  ThirdNeighbors = SELECT tgt
+                    FROM SecondNeighbors:src -(refers_to)-> paper:tgt
+                    WHERE tgt.@visited == false
+		    ACCUM tgt.@visited += true;
+
+  FourthNeighbors = SELECT tgt
+                    FROM ThirdNeighbors:src -(refers_to)-> paper:tgt
+                    WHERE tgt.@visited == false
+		    POST_ACCUM @@count += 1;
+
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_references4
+
+# ===========================================================
+# find the citations for all papers in a given field of study
+# ===========================================================
+
 
 # ===========================================================
 # find the citations for all papers in a given field of study
@@ -224,34 +294,10 @@ CREATE QUERY find_fos_paper_count(VERTEX<fieldofstudy> g) FOR GRAPH mag {
   fos = {g};
   
   r = SELECT src
-  FROM fos:f -(belongs_to)- paper:tgt <-(refers_to)- paper:src
+  FROM fos:f -(belongs_to)- paper:tgt -(is_referred_by>)- paper:src
   POST_ACCUM @@count += 1;
   
   PRINT @@count;
 }
 END
 INSTALL QUERY find_fos_paper_count
-
-# ===========================================================
-# find all citations once removed from a given paper
-# ===========================================================
-BEGIN
-CREATE QUERY find_citations_once_removed(VERTEX<paper> q) FOR GRAPH mag {
-  SumAccum<INT> @@count;
-  OrAccum  @visited = false;
-  
-  papers = {q};
-
-  FirstNeighbors = SELECT src
-                   FROM paper:src -(refers_to)-> papers:tgt
-                   ACCUM tgt.@visited += true, src.@visited += true;
-
-  SecondNeighbors = SELECT src
-                    FROM paper:src -(refers_to)-> FirstNeighbors:tgt
-                    WHERE src.@visited == false
-		    POST_ACCUM @@count += 1
-
-  PRINT @@count;
-}
-END
-INSTALL QUERY find_citations_once_removed
