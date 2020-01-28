@@ -1,0 +1,207 @@
+USE GRAPH mag
+SET syntax_version="v2"
+
+# ===========================================================
+# find specific paper
+# ===========================================================
+
+BEGIN
+CREATE QUERY find_paper(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  papers = {paper.*};
+  r = SELECT p
+      FROM papers:p
+      WHERE p==q
+      POST-ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_paper
+
+# ===========================================================
+# find all authors of a specific paper
+# ===========================================================
+BEGIN
+CREATE QUERY find_authors(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  authors = {author.*};
+  r = SELECT a
+      FROM authors:a -(is_author_of>)- paper:p
+      WHERE p==q
+      POST-ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_authors
+
+# ===========================================================
+# find the fields of study a journal\'s publications belong to
+# ===========================================================
+BEGIN
+CREATE QUERY find_fos(VERTEX<journal> k) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  journals = {journal.*};
+  
+  r = SELECT f
+  FROM journals:j - (<is_published_in:e) - paper:p -(belongs_to>)- fieldofstudy:f
+  WHERE j==k
+  POST-ACCUM @@count += 1;
+  
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_fos
+
+# ===========================================================
+# find all authors with papers matching the title criteria
+# ===========================================================
+
+BEGIN
+CREATE QUERY find_authors_by_paper_title(STRING s) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  authors = {author.*};
+  r = SELECT a
+      FROM authors:a -(is_author_of>)- paper:p
+      WHERE p.PaperTitle LIKE s
+      POST-ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_authors_by_paper_title
+
+# ===========================================================
+# find all citations for a given paper
+# ===========================================================
+
+BEGIN
+CREATE QUERY find_citations(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  papers = {paper.*};
+  r = SELECT src
+      FROM papers:src -(refers_to>:e)- paper:tgt
+      WHERE tgt==q
+      POST-ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_citations
+
+# ===========================================================
+# find all citations that are once remove from a given paper P, i.e. the papers citing the papers citing P
+# ===========================================================
+
+BEGIN
+CREATE QUERY find_citations2(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  papers = {paper.*};
+  r = SELECT src
+      FROM papers:src -(refers_to>*2)- paper:tgt
+      WHERE tgt==q
+      POST-ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_citations2
+
+# ===========================================================
+# find all citations that are 1-4 times removed from a given paper
+# ===========================================================
+
+BEGIN
+CREATE QUERY find_citations1_4(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  papers = {paper.*};
+  r = SELECT src
+      FROM papers:src -(refers_to>*1..4)- paper:tgt
+      WHERE tgt==q
+      POST-ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_citations1_4
+
+# ===========================================================
+# find all references for a given paper
+# ===========================================================
+
+BEGIN
+CREATE QUERY find_references(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  papers = {paper.*};
+  r = SELECT tgt
+      FROM papers:src -(refers_to>)- paper:tgt
+      WHERE src==q
+      POST-ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_references
+
+# ===========================================================
+# find references twice removed for a given paper
+# ===========================================================
+
+BEGIN
+CREATE QUERY find_references2(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  papers = {paper.*};
+  r = SELECT tgt
+      FROM papers:src -(refers_to>*2)- paper:tgt
+      WHERE src==q
+      POST-ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_references2
+
+# ===========================================================
+# find references 1-4 times removed for a given paper
+# ===========================================================
+
+BEGIN
+CREATE QUERY find_references1_4(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  papers = {paper.*};
+  r = SELECT tgt
+      FROM papers:src -(refers_to>*1..4)- paper:tgt
+      WHERE src==q
+      POST-ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_references1_4
+
+# ===========================================================
+# find the citations for all papers in a given field of study
+# ===========================================================
+
+BEGIN
+CREATE QUERY find_fos_paper_count(VERTEX<fieldofstudy> g) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  fos = {fieldofstudy.*};
+  
+  r = SELECT src
+  FROM fos:f - (<belongs_to) - paper:tgt -(<refers_to)- paper:src
+  WHERE f==g
+  POST-ACCUM @@count += 1;
+  
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_fos_paper_count
+
+# ===========================================================
+# find all citations once removed from a given paper
+# ===========================================================
+BEGIN
+CREATE QUERY find_citations_once_removed(VERTEX<paper> q) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  papers = {paper.*};
+  r = SELECT src
+      FROM papers:src -(refers_to>*2)- paper:tgt
+      WHERE tgt==q
+      POST-ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_citations_once_removed

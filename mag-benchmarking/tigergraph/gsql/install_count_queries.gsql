@@ -1,0 +1,225 @@
+USE GRAPH mag
+SET syntax_version="v1"
+
+# ===========================================================
+# node count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_all_nodes() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {paper.*, author.*, affiliation.*, journal.*, fieldofstudy.*, conferenceinstance.*, conferenceseries.*};
+  tmp = SELECT v FROM vertices:v POST_ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_all_nodes
+
+# ===========================================================
+# PAPER node count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_paper_nodes() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {paper.*};
+  tmp = SELECT v FROM vertices:v POST_ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_paper_nodes
+
+# ===========================================================
+# AUTHOR node count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_author_nodes() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {author.*};
+  tmp = SELECT v FROM vertices:v POST_ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_author_nodes
+
+# ===========================================================
+# AFFILIATION node count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_affiliation_nodes() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {affiliation.*};
+  tmp = SELECT v FROM vertices:v POST_ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_affiliation_nodes
+
+# ===========================================================
+# JOURNAL node count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_journal_nodes() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {journal.*};
+  tmp = SELECT v FROM vertices:v POST_ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_journal_nodes
+
+# ===========================================================
+# FIELDOFSTUDY node count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_fos_nodes() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {fieldofstudy.*};
+  tmp = SELECT v FROM vertices:v POST_ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_fos_nodes
+
+# ===========================================================
+# CONFERENCEINSTANCE node count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_confinstance_nodes() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {conferenceinstance.*};
+  tmp = SELECT v FROM vertices:v POST_ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_confinstance_nodes
+
+# ===========================================================
+# CONFERENCESERIES node count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_confseries_nodes() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {conferenceseries.*};
+  tmp = SELECT v FROM vertices:v POST_ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_confseries_nodes
+
+# ===========================================================
+# edge count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_all_edges() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {paper.*, author.*, affiliation.*, journal.*, fieldofstudy.*, conferenceinstance.*, conferenceseries.*};
+  tmp = SELECT v FROM vertices:v -(ANY)- ANY ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_all_edges
+
+# ===========================================================
+# IS_AFFILIATED_WITH edge count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_is_affiliated_with_edges() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {author.*};
+  tmp = SELECT v FROM vertices:v -(is_affiliated_with)- affiliation:a ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_is_affiliated_with_edges
+
+# ===========================================================
+# IS_AUTHOR_OF edge count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_is_author_of_edges() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {author.*};
+  tmp = SELECT v FROM vertices:v -(is_author_of)- paper:p ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_is_author_of_edges
+
+# ===========================================================
+# IS_INSTANCE_OF edge count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_is_instance_of_edges() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {conferenceinstance.*};
+  tmp = SELECT v FROM vertices:v -(is_instance_of)- conferenceseries:cs ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_is_instance_of_edges
+
+# ===========================================================
+# BELONGS_TO edge count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_belongs_to_edges() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {paper.*};
+  tmp = SELECT v FROM vertices:v -(belongs_to)- fieldofstudy:fos ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_belongs_to_edges
+
+# ===========================================================
+# IS_PRESENTED_AT edge count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_is_presented_at_edges() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {paper.*};
+  tmp = SELECT v FROM vertices:v -(is_presented_at)- conferenceinstance:ci ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_is_presented_at_edges
+
+# ===========================================================
+# IS_PUBLISHED_IN edge count
+# ===========================================================
+
+BEGIN
+CREATE QUERY count_is_published_in_edges() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {paper.*};
+  tmp = SELECT v FROM vertices:v -(is_published_in)- journal:j ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_is_published_in_edges
+
+# ===========================================================
+# REFERENCES edge count
+# ===========================================================
+BEGIN
+CREATE QUERY count_refers_to_edges() FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  vertices = {paper.*};
+  tmp = SELECT v FROM vertices:v -(refers_to)- paper:p ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY count_refers_to_edges
