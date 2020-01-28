@@ -5,12 +5,12 @@ CREATE VERTEX conferenceinstance (PRIMARY_ID ConferenceInstanceId INT, Normalize
 CREATE VERTEX conferenceseries (PRIMARY_ID ConferenceSeriesId INT, Rank INT, NormalizedName STRING, DisplayName STRING, PaperCount INT, CitationCount INT, CreatedDate DATETIME) WITH primary_id_as_attribute="true"
 CREATE VERTEX journal (PRIMARY_ID JournalId INT, Rank INT, NormalizedName STRING, DisplayName STRING, Issn STRING, Publisher STRING, Webpage STRING, PaperCount INT, CitationCount INT, CreatedDate DATETIME) WITH primary_id_as_attribute="true"
 CREATE VERTEX fieldofstudy (PRIMARY_ID FieldOfStudyId INT, Rank INT, NormalizedName STRING, DisplayName STRING, MainType STRING, Level INT, PaperCount INT, CitationCount INT, CreatedDate DATETIME) WITH primary_id_as_attribute="true"
-CREATE DIRECTED EDGE is_author_of (FROM author, TO paper)
-CREATE DIRECTED EDGE is_affiliated_with (FROM author, TO affiliation)
-CREATE DIRECTED EDGE is_published_in (FROM paper, TO journal)
-CREATE DIRECTED EDGE is_presented_at (FROM paper, TO conferenceinstance)
-CREATE DIRECTED EDGE belongs_to (FROM paper, TO fieldofstudy)
+CREATE UNDIRECTED EDGE is_author_of (FROM author, TO paper)
+CREATE UNDIRECTED EDGE is_affiliated_with (FROM author, TO affiliation)
+CREATE UNDIRECTED EDGE is_published_in (FROM paper, TO journal)
+CREATE UNDIRECTED EDGE is_presented_at (FROM paper, TO conferenceinstance)
+CREATE UNDIRECTED EDGE belongs_to (FROM paper, TO fieldofstudy)
 CREATE DIRECTED EDGE causes_to_recommend (FROM paper, TO paper)
 CREATE DIRECTED EDGE refers_to (FROM paper, TO paper)
-CREATE DIRECTED EDGE is_instance_of (FROM conferenceinstance, TO conferenceseries)
+CREATE UNDIRECTED EDGE is_instance_of (FROM conferenceinstance, TO conferenceseries)
 CREATE GRAPH mag (paper, author, affiliation, conferenceinstance, conferenceseries, journal, fieldofstudy, is_author_of, is_affiliated_with, is_published_in, is_presented_at, belongs_to, causes_to_recommend, refers_to, is_instance_of)
