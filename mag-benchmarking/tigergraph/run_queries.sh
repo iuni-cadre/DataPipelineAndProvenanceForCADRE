@@ -2,6 +2,7 @@ S=http://localhost:9000/query/mag
 H="GSQL-TIMEOUT: 120000"
 
 echo "Running find_paper" && time curl -H "$H" $S/find_paper?q=2625392185
+echo "Running find_paper_by_name" && time curl -H "$H" $S/find_paper_by_name?name=big%20data%20technologies
 echo "Running find_authors" && time curl -H "$H" $S/find_authors?q=2625392185
 echo "Running find_fos" && time curl -H "$H" $S/find_fos?k=2764955546
 echo "Running find_citations" && time curl -H "$H" $S/find_citations?q=2625392185

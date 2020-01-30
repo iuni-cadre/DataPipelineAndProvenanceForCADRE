@@ -18,6 +18,22 @@ CREATE QUERY find_paper(VERTEX<paper> q) FOR GRAPH mag {
 END
 INSTALL QUERY find_paper
 
+# ===========================================================
+# find specific paper by name
+# ===========================================================
+DROP QUERY find_paper_by_name
+BEGIN
+CREATE QUERY find_paper_by_name(STRING name) FOR GRAPH mag {
+  SumAccum<INT> @@count;
+  papers = {paper.*};
+  r = SELECT p
+      FROM papers:p
+      WHERE p.PaperTitle==name
+      POST_ACCUM @@count += 1;
+  PRINT @@count;
+}
+END
+INSTALL QUERY find_paper_by_name
 
 # ===========================================================
 # find all authors of a specific paper
@@ -55,14 +71,20 @@ INSTALL QUERY find_fos
 # find all authors with papers matching the title criteria
 # ===========================================================
 
+DROP QUERY find_authors_by_paper_title
 BEGIN
 CREATE QUERY find_authors_by_paper_title(STRING s) FOR GRAPH mag {
   SumAccum<INT> @@count;
-  authors = {author.*};
+
+  all_papers = {paper.*};
+  papers = SELECT p
+  	   FROM all_papers:p
+	   WHERE p.PaperTitle LIKE s;
+	   
   r = SELECT a
-      FROM authors:a -(is_author_of)- paper:p
-      WHERE p.PaperTitle LIKE s
+      FROM papers:p -(is_author_of)- author:a
       POST_ACCUM @@count += 1;
+      
   PRINT @@count;
 }
 END
