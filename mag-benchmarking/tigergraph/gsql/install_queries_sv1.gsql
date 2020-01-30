@@ -283,11 +283,6 @@ INSTALL QUERY find_references4
 # find the citations for all papers in a given field of study
 # ===========================================================
 
-
-# ===========================================================
-# find the citations for all papers in a given field of study
-# ===========================================================
-
 BEGIN
 CREATE QUERY find_fos_paper_count(VERTEX<fieldofstudy> g) FOR GRAPH mag {
   SumAccum<INT> @@count;
