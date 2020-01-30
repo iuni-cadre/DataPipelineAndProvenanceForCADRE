@@ -1,7 +1,6 @@
 echo "Running find_paper" && time curl http://localhost:9000/query/mag/find_paper?q=2625392185
 echo "Running find_authors" && time curl http://localhost:9000/query/mag/find_authors?q=2625392185
 echo "Running find_fos" && time curl http://localhost:9000/query/mag/find_fos?k=2764955546
-echo "Running find_authors_by_paper_title" && time curl http://localhost:9000/query/mag/find_authors_by_paper_title?s=%25big%20data%25
 echo "Running find_citations" && time curl http://localhost:9000/query/mag/find_citations?q=2625392185
 echo "Running find_citations2" && time curl http://localhost:9000/query/mag/find_citations2?q=2625392185
 echo "Running find_citations3" && time curl http://localhost:9000/query/mag/find_citations3?q=2625392185
@@ -11,3 +10,4 @@ echo "Running find_references2" && time curl http://localhost:9000/query/mag/fin
 echo "Running find_references3" && time curl http://localhost:9000/query/mag/find_references3?q=2625392185
 echo "Running find_references4" && time curl http://localhost:9000/query/mag/find_references4?q=2625392185
 echo "Running find_fos_paper_count" && time curl http://localhost:9000/query/mag/find_fos_paper_count?g=138827492
+echo "Running find_authors_by_paper_title" && time curl http://localhost:9000/query/mag/find_authors_by_paper_title?s=%25big%20data%25
