@@ -12,4 +12,3 @@ DROP QUERY find_references2
 DROP QUERY find_references3
 DROP QUERY find_references4
 DROP QUERY find_fos_paper_count
-DROP QUERY find_citations_once_removed

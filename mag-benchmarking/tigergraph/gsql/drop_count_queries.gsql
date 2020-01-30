@@ -15,3 +15,4 @@ DROP QUERY count_belongs_to_edges
 DROP QUERY count_is_presented_at_edges
 DROP QUERY count_is_published_in_edges
 DROP QUERY count_refers_to_edges
+DROP QUERY count_is_referred_by_edges
