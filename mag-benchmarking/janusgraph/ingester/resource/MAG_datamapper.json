@@ -1,0 +1,208 @@
+{
+  "vertexMap" : {
+    "Affiliation.csv" : {
+      "[VertexLabel]" : "Affiliation",
+      "AffiliationId" : "affiliationId",
+      "Rank" : "rank",
+      "NormalizedName" : "normalizedName",
+      "DisplayName" : "displayName",
+      "GridId" : "gridId",
+      "OfficialPage" : "officialPage",
+      "WikiPage" : "wikiPage",
+      "PaperCount" : "paperCount",
+      "CitationCount" : "citationCount",
+      "CreatedDate" : "createdDate"
+    },
+    "Author.csv" : {
+      "[VertexLabel]" : "Author",
+      "AuthorId" : "authorId",
+      "Rank" : "rank",
+      "NormalizedName" : "normalizedName",
+      "DisplayName" : "displayName",
+      "LastKnownAffiliationId" : "lastKnownAffiliationId",
+      "PaperCount" : "paperCount",
+      "CitationCount" : "citationCount",
+      "CreatedDate" : "createdDate"
+    },
+    "ConferenceInstance.csv" : {
+      "[VertexLabel]" : "ConferenceInstance",
+      "ConferenceInstanceId" : "conferenceInstanceId",
+      "NormalizedName" : "normalizedName",
+      "DisplayName" : "displayName",
+      "ConferenceSeriesId" : "conferenceSeriesId",
+      "Location" : "location",
+      "OfficialUrl" : "officialUrl",
+      "StartDate" : "startDate",
+      "EndDate" : "endDate",
+      "AbstractRegistrationDate" : "abstractRegistrationDate",
+      "SubmissionDeadlineDate" : "submissionDeadlineDate",
+      "NotificationDueDate" : "notificationDueDate",
+      "FinalVersionDueDate" : "finalVersionDueDate",
+      "PaperCount" : "paperCount",
+      "CitationCount" : "citationCount",
+      "CreatedDate" : "createdDate"
+    },
+    "ConferenceSeries.csv" : {
+      "[VertexLabel]" : "ConferenceSeries",
+      "ConferenceSeriesId" : "conferenceSeriesId",
+      "Rank" : "rank",
+      "NormalizedName" : "normalizedName",
+      "DisplayName" : "displayName",
+      "PaperCount" : "paperCount",
+      "CitationCount" : "citationCount",
+      "CreatedDate" : "createdDate"
+    },
+    "FieldsOfStudy.csv" : {
+      "[VertexLabel]" : "FieldsOfStudy",
+      "FieldOfStudyId" : "fieldOfStudyId",
+      "Rank" : "rank",
+      "NormalizedName" : "normalizedName",
+      "DisplayName" : "displayName",
+      "MainType" : "mainType",
+      "Level" : "level",
+      "PaperCount" : "paperCount",
+      "CitationCount" : "citationCount",
+      "CreatedDate" : "createdDate"
+    },
+    "Journal.csv" : {
+      "[VertexLabel]" : "Journal",
+      "JournalId" : "journalId",
+      "Rank" : "rank",
+      "NormalizedName" : "normalizedName",
+      "DisplayName" : "displayName",
+      "Issn" : "issn",
+      "Publisher" : "publisher",
+      "Webpage" : "webpage",
+      "PaperCount" : "paperCount",
+      "CitationCount" : "citationCount",
+      "CreatedDate" : "createdDate"
+    },
+    "Paper.csv" : {
+      "[VertexLabel]" : "Paper",
+      "PaperId" : "paperId",
+      "Rank" : "rank",
+      "Doi" : "doi",
+      "DocType" : "docType",
+      "PaperTitle" : "paperTitle",
+      "OriginalTitle" : "originalTitle",
+      "BookTitle" : "bookTitle",
+      "Year" : "year",
+      "Date" : "date",
+      "Publisher" : "publisher",
+      "JournalId" : "journalId",
+      "ConferenceSeriesId" : "conferenceSeriesId",
+      "ConferenceInstanceId" : "conferenceInstanceId",
+      "Volume" : "volume",
+      "Issue" : "issue",
+      "FirstPage" : "firstPage",
+      "LastPage" : "lastPage",
+      "ReferenceCount" : "referenceCount",
+      "CitationCount" : "citationCount",
+      "EstimatedCitation" : "estimatedCitation",
+      "OriginalVenue" : "originalVenue",
+      "CreatedDate" : "createdDate",
+      "LanguageCodes" : "languageCodes",
+      "Urls" : "urls"
+    },
+    "PaperAbstract.csv" : {
+      "[VertexLabel]" : "PaperAbstract",
+      "PaperId" : "paperId",
+      "Abstract" : "abstract"
+    }
+  },
+  "edgeMap" : {
+    "AffiliatedWith.csv" : {
+      "[edge_left]" : {
+        "AuthorId" : "Author.authorId"
+      },
+      "[EdgeLabel]" : "AffiliatedWith",
+      "[edge_right]" : {
+        "AffiliationId" : "Affiliation.affiliationId"
+      }
+    },
+    "AuthorOf.csv" : {
+      "[edge_left]" : {
+        "AuthorId" : "Author.authorId"
+      },
+      "[EdgeLabel]" : "AuthorOf",
+      "[edge_right]" : {
+        "PaperId" : "Paper.paperId"
+      }
+    },
+    "BelongsTo.csv" : {
+      "[edge_left]" : {
+        "PaperId" : "Paper.paperId"
+      },
+      "[EdgeLabel]" : "BelongsTo",
+      "[edge_right]" : {
+        "FieldOfStudyId" : "FieldsOfStudy.fieldOfStudyId"
+      },
+      "Weight" : "score"
+    },
+    "ChildOf.csv" : {
+      "[edge_left]" : {
+        "FieldOfStudyId1" : "FieldsOfStudy.fieldOfStudyId"
+      },
+      "[EdgeLabel]" : "ChildOf",
+      "[edge_right]" : {
+        "FieldOfStudyId2" : "FieldsOfStudy.fieldOfStudyId"
+      }
+    },
+    "InstanceOf.csv" : {
+      "[edge_left]" : {
+        "ConferenceInstanceId" : "ConferenceInstance.conferenceInstanceId"
+      },
+      "[EdgeLabel]" : "InstanceOf",
+      "[edge_right]" : {
+        "ConferenceSeriesId" : "ConferenceSeries.conferenceSeriesId"
+      }
+    },
+    "PresentedAt.csv" : {
+      "[edge_left]" : {
+        "PaperId" : "Paper.paperId"
+      },
+      "[EdgeLabel]" : "PresentedAt",
+      "[edge_right]" : {
+        "ConferenceInstanceId" : "ConferenceInstance.conferenceInstanceId"
+      }
+    },
+    "PublishedIn.csv" : {
+      "[edge_left]" : {
+        "PaperId" : "Paper.paperId"
+      },
+      "[EdgeLabel]" : "PublishedIn",
+      "[edge_right]" : {
+        "JournalId" : "Journal.journalId"
+      }
+    },
+    "Recommendations.csv" : {
+      "[edge_left]" : {
+        "PaperId1" : "Paper.paperId"
+      },
+      "[EdgeLabel]" : "Recommendations",
+      "[edge_right]" : {
+	"PaperId2" : "Paper.paperId"
+      },
+      "Weight" : "score"
+    },
+    "References.csv" : {
+      "[edge_left]" : {
+        "PaperId1" : "Paper.paperId"
+      },
+      "[EdgeLabel]" : "References",
+      "[edge_right]" : {
+	"PaperId2" : "Paper.paperId"
+      }
+    },
+    "RelatedTo.csv" : {
+      "[edge_left]" : {
+	"FieldOfStudyId1" : "FieldsOfStudy.fieldOfStudyId"
+      },
+      "[EdgeLabel]" : "RelatedTo",
+      "[edge_right]" : {
+	"FieldOfStudyId2" : "FieldsOfStudy.fieldOfStudyId"
+      },
+      "Rank" : "score"
+    }
+  }
+}

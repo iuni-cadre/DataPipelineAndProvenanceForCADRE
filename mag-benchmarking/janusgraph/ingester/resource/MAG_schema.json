@@ -1,0 +1,487 @@
+{
+  "propertyKeys" : [ {
+    "name" : "affiliationId",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "rank",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "normalizedName",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "displayName",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "gridId",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "officialPage",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "wikiPage",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "paperCount",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "citationCount",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "createdDate",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "authorId",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "lastKnownAffiliationId",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "conferenceInstanceId",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "conferenceSeriesId",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "location",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "officialUrl",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "startDate",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "endDate",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "abstractRegistrationDate",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "submissionDeadlineDate",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "notificationDueDate",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "finalVersionDueDate",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "fieldOfStudyId",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "mainType",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "level",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "journalId",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "issn",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "publisher",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "webpage",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "paperId",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "doi",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "docType",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "paperTitle",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "originalTitle",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "bookTitle",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "year",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "volume",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "issue",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "firstPage",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "lastPage",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "referenceCount",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "estimatedCitation",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "originalVenue",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "languageCodes",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "urls",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "abstract",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } , {
+    "name" : "score",
+    "dataType" : "Float",
+    "cardinality" : "SINGLE"
+  } ],
+  "vertexLabels" : [ {
+    "name" : "Affiliation",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Author",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "ConferenceInstance",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "ConferenceSeries",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "FieldsOfStudy",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Journal",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Paper",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "PaperAbstract",
+    "partition" : false,
+    "useStatic" : false
+  } ],
+  "edgeLabels" : [ {
+    "name" : "AffiliatedWith",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "AuthorOf",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "BelongsTo",
+    "multiplicity" : "MULTI",
+    "signatures" : ["score"],
+    "unidirected" : false
+  }, {
+    "name" : "ChildOf",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "InstanceOf",
+    "multiplicity" : "MANY2ONE",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "PresentedAt",
+    "multiplicity" : "MANY2ONE",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "PublishedIn",
+    "multiplicity" : "MANY2ONE",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Recommendations",
+    "multiplicity" : "MULTI",
+    "signatures" : ["score"],
+    "unidirected" : false
+  }, {
+    "name" : "References",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "RelatedTo",
+    "multiplicity" : "MULTI",
+    "signatures" : ["score"],
+    "unidirected" : false
+  } ],
+  "vertexIndexes" : [ {
+    "name" : "affiliationIdComposite",
+    "propertyKeys" : [ "affiliationId" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "lastKnownAffiliationIdComposite",
+    "propertyKeys" : [ "lastKnownAffiliationId" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "authorIdComposite",
+    "propertyKeys" : [ "authorId" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "journalIdComposite",
+    "propertyKeys" : [ "journalId" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "paperIdComposite",
+    "propertyKeys" : [ "paperId" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "conferenceInstanceIdComposite",
+    "propertyKeys" : [ "conferenceInstanceId" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "conferenceSeriesIdComposite",
+    "propertyKeys" : [ "conferenceSeriesId" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "fieldOfStudyIdComposite",
+    "propertyKeys" : [ "fieldOfStudyId" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "issnComposite",
+    "propertyKeys" : [ "issn" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "doiComposite",
+    "propertyKeys" : [ "doi" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "gridIdComposite",
+    "propertyKeys" : [ "gridId" ],
+    "composite" : true,
+    "unique" : false
+  },  {
+    "name" : "rankMixed",
+    "propertyKeys" : [ "rank" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "paperCountMixed",
+    "propertyKeys" : [ "paperCount" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "citationCountMixed",
+    "propertyKeys" : [ "citationCount" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "estimatedCitationMixed",
+    "propertyKeys" : [ "estimatedCitation" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "referenceCountMixed",
+    "propertyKeys" : [ "referenceCount" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "normalizedNameMixed",
+    "propertyKeys" : [ "normalizedName" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "displayNameMixed",
+    "propertyKeys" : [ "displayName" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "paperTitleMixed",
+    "propertyKeys" : [ "paperTitle" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "originalTitleMixed",
+    "propertyKeys" : [ "originalTitle" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "bookTitleMixed",
+    "propertyKeys" : [ "bookTitle" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "createdDateMixed",
+    "propertyKeys" : [ "createdDate" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "dateMixed",
+    "propertyKeys" : [ "date" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "publisherMixed",
+    "propertyKeys" : [ "publisher" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "levelMixed",
+    "propertyKeys" : [ "level" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "mainTypeMixed",
+    "propertyKeys" : [ "mainType" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "docTypeMixed",
+    "propertyKeys" : [ "docType" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "locationMixed",
+    "propertyKeys" : [ "location" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "yearMixed",
+    "propertyKeys" : [ "year" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "languageCodeMixed",
+    "propertyKeys" : [ "languageCodes" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "firstPageMixed",
+    "propertyKeys" : [ "firstPage" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "lastPageMixed",
+    "propertyKeys" : [ "lastPage" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  },  {
+    "name" : "abstractMixed",
+    "propertyKeys" : [ "abstract" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  } ],
+  "edgeIndexes" : [],
+  "vertexCentricIndexes" : [ {
+    "name" : "belongsToByScore",
+    "propertyKeys" : ["score"],
+    "edge" : "BelongsTo",
+    "direction" : "BOTH",
+    "order" : "decr"
+  }, {
+    "name" : "relatedToByScore",
+    "propertyKeys" : ["score"],
+    "edge" : "RelatedTo", 
+    "direction" : "BOTH",
+    "order" : "decr"
+  }, {
+    "name" : "recommendationsByScore",
+    "propertyKeys" : ["score"],
+    "edge" : "Recommendations", 
+    "direction" : "BOTH",
+    "order" : "decr"
+  } ]
+}
