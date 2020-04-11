@@ -20,7 +20,7 @@ provider:
   name: aws
   runtime: python3.6
   timeout: 30
-  region: eu-central-1
+  region: eu-east-2
   # This specify environment variables common to all the lambdas
   environment:
     # This will define an environment variable BUCKET with the name of the bucket created on line 68
@@ -28,7 +28,7 @@ provider:
       Ref: S3BucketState
  # We add a new bucket to store the query results
     ATHENA_BUCKET:
-       Ref: S3AthenaResultBucket
+       Ref: wos-athena
   # This describes the permissions common to all the lambdas
   iamRoleStatements:
     - Effect: "Allow"
