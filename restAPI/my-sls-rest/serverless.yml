@@ -21,96 +21,77 @@ service: my-sls-rest
 # frameworkVersion: "=X.X.X"
 
 provider:
+  #The next 2 lines specify the python3.6 kernel lambda function in europe
   name: aws
-  runtime: python3.8
-
-# you can overwrite defaults here
-#  stage: dev
-  region: us-east-2
-
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
-
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
-
-# you can add packaging information here
-#package:
-#  include:
-#    - include-me.py
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.py
-#    - exclude-me-dir/**
-
+  runtime: python3.6
+  region: eu-central-1
+  # This specify environment variables common to all the lambdas
+  environment:
+    # This will define an environment variable BUCKET with the name of the bucket created on line 68
+    BUCKET:
+      Ref: S3BucketState
+  # This describes the permissions common to all the lambdas
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource:
+          - "*"
+# The package tells what should be included and excluded from the zip package
+package:
+  exclude:
+    - venv/**
+    - node_modules/**
+# This is the configuration of the different lambda function we want to deploy
 functions:
-  hello:
-    handler: handler.hello
-#    The following are a few example events you can configure
-#    NOTE: Please make sure to change your handler code to work with those events
-#    Check the event documentation for details
-#    events:
-#      - http:
-#          path: users/create
-#          method: get
-#      - websocket: $connect
-#      - s3: ${env:BUCKET}
-#      - schedule: rate(10 minutes)
-#      - sns: greeter-topic
-#      - stream: arn:aws:dynamodb:region:XXXXXX:table/foo/stream/1970-01-01T00:00:00.000
-#      - alexaSkill: amzn1.ask.skill.xx-xx-xx-xx
-#      - alexaSmartHome: amzn1.ask.skill.xx-xx-xx-xx
-#      - iot:
-#          sql: "SELECT * FROM 'some_topic'"
-#      - cloudwatchEvent:
-#          event:
-#            source:
-#              - "aws.ec2"
-#            detail-type:
-#              - "EC2 Instance State-change Notification"
-#            detail:
-#              state:
-#                - pending
-#      - cloudwatchLog: '/aws/lambda/hello'
-#      - cognitoUserPool:
-#          pool: MyUserPool
-#          trigger: PreSignUp
-#      - alb:
-#          listenerArn: arn:aws:elasticloadbalancing:us-east-1:XXXXXX:listener/app/my-load-balancer/50dc6c495c0c9188/
-#          priority: 1
-#          conditions:
-#            host: example.com
-#            path: /hello
+  # The user_get function will be triggered on a GET /user/{id} and will execute the user.get function
+  user_get:
+    handler: user.get
+    events:
+      - http:
+          path: user/{id}
+          method: GET
+  # The user_post function will be triggered on a POST /user and will execute the user.post function
+  user_post:
+    handler: user.post
+    events:
+      - http:
+          path: user
+          method: POST
+  # The user_delete function will be triggered on a DELETE /user/{id} and will execute the user.delete function
+  user_delete:
+    handler: user.delete
+    events:
+      - http:
+          path: user/{id}
+          method: DELETE
+  # The user_put function will be triggered on a PUT /user/{id} and will execute the user.put function
+  user_put:
+    handler: user.put
+    events:
+      - http:
+          path: user/{id}
+          method: PUT
+  # The user_list function will be triggered on a GET /user/list and will execute the user.list function
+  user_list:
+    handler: user.all
+    events:
+      - http:
+          path: user/list
+          method: GET
 
-#    Define function environment variables here
-#    environment:
-#      variable2: value2
+#This creates an s3 bucket
+resources:
+  Resources:
+    S3BucketState:
+      Type: AWS::S3::Bucket
 
-# you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+# This is th custom config ...
+custom:
+  # ... for the serverless-python-requirements plugin
+  pythonRequirements:
+    dockerizePip: True
 
+#This specify the plugins to use
 plugins:
   - serverless-python-requirements
