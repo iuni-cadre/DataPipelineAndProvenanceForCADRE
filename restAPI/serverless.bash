@@ -1,13 +1,16 @@
-ssh iuni2.carbonate.uits.iu.edu
+https://www.sicara.ai/blog/2018-05-25-build-serverless-rest-api-15-minutes-aws
+https://github.com/quentinf00/API-S3-Lambda
+https://serverless.com/framework/docs/providers/aws/guide/installation/
 
-export HADOOP_USER_NAME=hdfs
-export PATH=$PATH:~/.local/bin
+sudo aptitude install nodejs
+sudo aptitude install npm
 
-cd /N/project/iuni_cadre/WoS_18_19
-unzip 'ESCI 2005_2019/'*.zip' -d xmlRaw
-unzip 'CORE 1900-2019'/'*.zip' -d xmlRaw
+npm install -g serverless
+serverless config credentials --provider aws --key AKIAJBXFDKLW67XRX5IA --secret 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
 
-hdfs dfs -mkdir /WoSraw/
-hdfs dfs -copyFromLocal xmlRaw/ /WoSraw/WoS2019
-hdfs dfs -ls /
-hdfs dfs -copyToLocal <hdfs_input_file_path> <output_path>
+sls deploy
+sls invoke -f init_athena_schema
+
+-----------fixing nodejs module problem--------
+rm -rf node_modules
+npm install
