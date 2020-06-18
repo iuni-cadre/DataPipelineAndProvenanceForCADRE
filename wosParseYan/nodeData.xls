@@ -1,0 +1,22 @@
+Tag	Description	XML Path	searchable	fuzzy	exact	type	must have
+PT	Publication Year	REC/static_data/summary/pub_info/@pubyear	Y	N	Y	Integer	Y
+AU	WoS Standard Names	REC/static_data/summary/names/name/wos_standard	Y	Y	Y	String(with nested diliminators)	
+AF	Author Full Names	REC/static_data/summary/names/name[@role=”author”]/full_name	Y	Y	N	String(with nested diliminators)	Y
+TI	Article Title	REC/static_data/summary/titles/title[@type=”item”]	Y	Y	Y	String	Y
+SO	Source Title	REC/static_data/summary/titles/title[@type=”source”]	Y	Y	Y	String	Y
+DT	Document Type	REC/static_data/summary/doctypes/doctype	Y	N	Y	String	Y
+CT	Conference Title	REC/static_data/summary/conferences/conference/conf_titles/conf_title	Y	Y	Y	String	Y
+DE	Author Keywords	REC/static_data/fullrecord_metadata/keywords/keyword	Y	Y	N	String	
+AB	Abstract	REC/static_data/fullrecord_metadata/abstracts/abstract/abstract_text/p	Y	Y	N	String (concact the paragraphs)	Y
+	institution name				Y		
+C1	Addresses	REC/static_data/fullrecord_metadata/addresses/address_name/address_spec/full_address	Y	Y	N	String(nested 1 level)	Y
+RI	RIDs	REC/static_data/contributors/contributor/name/@orcid_id					
+FX	Funding Text	REC/static_data/fullrecord_metadata/fund_ack/fund_text/p	N	Y	N	String (concact the paragraphs)	
+NR	Cited Reference Count	REC/static_data/fullrecord_metadata/references/@count	Y	N	Y	Integer	
+PU	Publisher	REC/static_data/summary/publishers/publisher/names/display_name	Y	N	Y	String	
+SN	ISSN	REC/dynamic_data/cluster_related/identifiers/identifier[@type=”issn”]/@value	Y	N	Y	String	
+EI	eISSN	REC/dynamic_data/cluster_related/identifiers/identifier[@type=”eissn”]/@value	Y	N	Y	String	
+BN	ISBN	REC/dynamic_data/cluster_related/identifiers/identifier[@type=”isbn”]/@value	Y	N	Y	String	
+DI	DOI	REC/dynamic_data/cluster_related/identifiers/identifier[@type=”doi”]/@value && REC/dynamic_data/cluster_related/identifiers/identifier[@type=”xref_doi”]/@value	Y	N	Y	String	Y
+UT	UT (Unique WoS ID)	REC/UID					Y
+PM	Pubmed ID	REC/dynamic_data/cluster_related/identifiers/identifier[@type=”pmid”]/@value	Y	N	Y	String	
