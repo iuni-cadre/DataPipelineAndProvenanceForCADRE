@@ -1,22 +1,23 @@
 Tag	Description	XML Path	searchable	fuzzy	exact	type	must have
 PT	Publication Year	REC/static_data/summary/pub_info/@pubyear	Y	N	Y	Integer	Y
 AU	WoS Standard Names	REC/static_data/summary/names/name/wos_standard	Y	Y	Y	String(with nested diliminators)	
-AF	Author Full Names	REC/static_data/summary/names/name[@role=îauthorî]/full_name	Y	Y	N	String(with nested diliminators)	Y
-TI	Article Title	REC/static_data/summary/titles/title[@type=îitemî]	Y	Y	Y	String	Y
-SO	Source Title	REC/static_data/summary/titles/title[@type=îsourceî]	Y	Y	Y	String	Y
+AF	Author Full Names	REC/static_data/summary/names/name[@role=‚Äùauthor‚Äù]/full_name	Y	Y	N	String(with nested diliminators)	Y
+TI	Article Title	REC/static_data/summary/titles/title[@type=‚Äùitem‚Äù]	Y	Y	Y	String	Y
+SO	Source Title	REC/static_data/summary/titles/title[@type=‚Äùsource‚Äù]	Y	Y	Y	String	Y
 DT	Document Type	REC/static_data/summary/doctypes/doctype	Y	N	Y	String	Y
 CT	Conference Title	REC/static_data/summary/conferences/conference/conf_titles/conf_title	Y	Y	Y	String	Y
 DE	Author Keywords	REC/static_data/fullrecord_metadata/keywords/keyword	Y	Y	N	String	
 AB	Abstract	REC/static_data/fullrecord_metadata/abstracts/abstract/abstract_text/p	Y	Y	N	String (concact the paragraphs)	Y
-	institution name				Y		
+	institution name				N		
 C1	Addresses	REC/static_data/fullrecord_metadata/addresses/address_name/address_spec/full_address	Y	Y	N	String(nested 1 level)	Y
-RI	RIDs	REC/static_data/contributors/contributor/name/@orcid_id					
+RI	RIDs	REC/static_data/contributors/contributor/name/@r_id		N
+OI 	ORCIDs 	REC/static_data/contributors/contributor/name/@orcid_id		N
 FX	Funding Text	REC/static_data/fullrecord_metadata/fund_ack/fund_text/p	N	Y	N	String (concact the paragraphs)	
 NR	Cited Reference Count	REC/static_data/fullrecord_metadata/references/@count	Y	N	Y	Integer	
 PU	Publisher	REC/static_data/summary/publishers/publisher/names/display_name	Y	N	Y	String	
-SN	ISSN	REC/dynamic_data/cluster_related/identifiers/identifier[@type=îissnî]/@value	Y	N	Y	String	
-EI	eISSN	REC/dynamic_data/cluster_related/identifiers/identifier[@type=îeissnî]/@value	Y	N	Y	String	
-BN	ISBN	REC/dynamic_data/cluster_related/identifiers/identifier[@type=îisbnî]/@value	Y	N	Y	String	
-DI	DOI	REC/dynamic_data/cluster_related/identifiers/identifier[@type=îdoiî]/@value && REC/dynamic_data/cluster_related/identifiers/identifier[@type=îxref_doiî]/@value	Y	N	Y	String	Y
+SN	ISSN	REC/dynamic_data/cluster_related/identifiers/identifier[@type=‚Äùissn‚Äù]/@value	Y	N	Y	String	
+EI	eISSN	REC/dynamic_data/cluster_related/identifiers/identifier[@type=‚Äùeissn‚Äù]/@value	Y	N	Y	String	
+BN	ISBN	REC/dynamic_data/cluster_related/identifiers/identifier[@type=‚Äùisbn‚Äù]/@value	Y	N	Y	String	
+DI	DOI	REC/dynamic_data/cluster_related/identifiers/identifier[@type=‚Äùdoi‚Äù]/@value && REC/dynamic_data/cluster_related/identifiers/identifier[@type=‚Äùxref_doi‚Äù]/@value	Y	N	Y	String	Y
 UT	UT (Unique WoS ID)	REC/UID					Y
-PM	Pubmed ID	REC/dynamic_data/cluster_related/identifiers/identifier[@type=îpmidî]/@value	Y	N	Y	String	
+PM	Pubmed ID	REC/dynamic_data/cluster_related/identifiers/identifier[@type=‚Äùpmid‚Äù]/@value	Y	N	Y	String	
