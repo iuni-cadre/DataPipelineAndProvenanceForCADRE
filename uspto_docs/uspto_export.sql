@@ -226,6 +226,88 @@ LINES TERMINATED BY '\r\n';
 
 
 --APPLICATION -> CITES -> PATENTS
+SELECT  citing_patent_id, 
+		cited_application_id
+FROM usapplicationcitation
+INTO OUTFILE '/N/project/mag/uspto_june_2020/csv_for_janusgraph/edges/app_cites_patents.csv'
+FIELDS ENCLOSED BY '"' 
+TERMINATED BY ';' 
+ESCAPED BY '"' 
+LINES TERMINATED BY '\r\n';
+
+--APPLICATION -> BECOMES -> PATENT
+SELECT  application_id,
+		patent_id
+FROM application
+INTO OUTFILE '/N/project/mag/uspto_june_2020/csv_for_janusgraph/edges/becomes.csv'
+FIELDS ENCLOSED BY '"' 
+TERMINATED BY ';' 
+ESCAPED BY '"' 
+LINES TERMINATED BY '\r\n';
+
+
+--PATENT -> CITES -> PATENTS
+SELECT 	citing_patent_id, 
+		cited_patent_id
+FROM uspatentcitation
+INTO OUTFILE '/N/project/mag/uspto_june_2020/csv_for_janusgraph/edges/patent_cites_patent.csv'
+FIELDS ENCLOSED BY '"' 
+TERMINATED BY ';' 
+ESCAPED BY '"' 
+LINES TERMINATED BY '\r\n';
+
+
+--#####################
+--### CATEGORY DATA ###
+--#####################
+
+
+--CPC - Node
+SELECT section_id AS 'cpc_id', 'section' AS 'level', section_id AS 'label' FROM cpc_current
+UNION ALL
+SELECT subsection_id AS 'cpc_id', 'subsection' AS 'level', subsection_title AS 'label' FROM cpc_current 
+UNION ALL
+SELECT group_id AS 'cpc_id',  'group' AS 'level', group_title AS 'label' FROM cpc_current 
+UNION ALL
+SELECT subgroup_id AS 'cpc_id', 'subgroup' AS 'level', subgroup_title AS 'label' FROM cpc_current
+INTO OUTFILE '/N/project/mag/uspto_june_2020/csv_for_janusgraph/categories/cpc_node.csv'
+FIELDS ENCLOSED BY '"' 
+TERMINATED BY ';' 
+ESCAPED BY '"' 
+LINES TERMINATED BY '\r\n';
+
+--CPC - Edge
+SELECT patent_id, section_id AS 'cpc_id' FROM cpc_current
+UNION ALL
+SELECT patent_id, subsection_id AS 'cpc_id' FROM cpc_current
+UNION ALL
+SELECT patent_id, group_id AS 'cpc_id' FROM cpc_current
+UNION ALL
+SELECT patent_id, subgroup_id AS 'cpc_id' FROM cpc_current
+INTO OUTFILE '/N/project/mag/uspto_june_2020/csv_for_janusgraph/categories/cpc_to_patent.csv'
+FIELDS ENCLOSED BY '"' 
+TERMINATED BY ';' 
+ESCAPED BY '"' 
+LINES TERMINATED BY '\r\n';
+
+
+--USPC - Node
+SELECT mainclass_id AS 'uspc_id', 'mainclass' AS 'level', mainclass_title AS 'label' FROM uspc_current
+UNION ALL
+SELECT subclass_id AS 'uspc_id', 'subclass' AS 'level', subclass_id AS 'label' FROM uspc_current
+INTO OUTFILE '/N/project/mag/uspto_june_2020/csv_for_janusgraph/categories/uspc_node.csv'
+FIELDS ENCLOSED BY '"' 
+TERMINATED BY ';' 
+ESCAPED BY '"' 
+LINES TERMINATED BY '\r\n';
+
+--USPC - Edge 
+SELECT patent_id, mainclass_id AS 'uspc_id' FROM uspc_current
+
+
+		
+
+
 
 
 
