@@ -81,4 +81,10 @@ fwrite(uspc2patent,
 uspc2patent2 <- as.data.frame(fread('/tmp/csv_for_janusgraph/categories/uspc_to_patent3.tsv'))
 
 
+##################################################
 
+
+acp <- as.data.frame(fread('/tmp/csv_for_janusgraph/edges/app_cites_patents_II.tsv'))
+
+
+View(subset(acp, acp$citing_patent_id == 'RE28801'))

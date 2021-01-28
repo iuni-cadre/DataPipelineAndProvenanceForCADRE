@@ -314,10 +314,10 @@ LINES TERMINATED BY '\r\n';
 SELECT  'patent_id', 
 		'organization_id'
 UNION
-SELECT  patent_id, 
-		organization_id
+SELECT  UPPER(patent_id),
+		UPPER(organization_id)
 FROM patent_govintorg
-INTO OUTFILE '/tmp/csv_for_janusgraph/edges/interest_in.tsv'
+INTO OUTFILE '/tmp/csv_for_janusgraph/edges/interest_in_II.tsv'
 FIELDS ENCLOSED BY '' 
 TERMINATED BY '\t' 
 ESCAPED BY '' 
@@ -342,13 +342,20 @@ SELECT  'citing_patent_id',
 		'cited_application_id'
 UNION
 SELECT  citing_patent_id, 
-		cited_application_id
+		CONCAT(SUBSTRING(cited_application_id,3,2), "/", SUBSTRING(cited_application_id, 11))
 FROM usapplicationcitation
-INTO OUTFILE '/tmp/csv_for_janusgraph/edges/app_cites_patents.tsv'
+INNER JOIN
+patent
+ON patent_id = citing_patent_id
+INNER JOIN 
+application
+ON CONCAT(SUBSTRING(cited_application_id,3,2), "/", SUBSTRING(cited_application_id, 11)) = application_id
+INTO OUTFILE '/tmp/csv_for_janusgraph/edges/app_cites_patents_II.tsv'
 FIELDS ENCLOSED BY '' 
 TERMINATED BY '\t' 
 ESCAPED BY '' 
 LINES TERMINATED BY '\r\n';
+
 
 -- APPLICATION -> BECOMES -> PATENT
 SELECT  'application_id',
@@ -368,10 +375,14 @@ LINES TERMINATED BY '\r\n';
 SELECT 	'citing_patent_id', 
 		'cited_patent_id'
 UNION
-SELECT 	citing_patent_id, 
-		cited_patent_id
+SELECT 	UPPER(citing_patent_id), 
+		UPPER(cited_patent_id)
 FROM uspatentcitation
-INTO OUTFILE '/tmp/csv_for_janusgraph/edges/patent_cites_patent.tsv'
+INNER JOIN patent
+ON patent.patent_id = citing_patent_id
+INNER JOIN patent p2
+ON p2.patent_id = cited_patent_id
+INTO OUTFILE '/tmp/csv_for_janusgraph/edges/patent_cites_patent_III.tsv'
 FIELDS ENCLOSED BY '' 
 TERMINATED BY '\t' 
 ESCAPED BY '' 
