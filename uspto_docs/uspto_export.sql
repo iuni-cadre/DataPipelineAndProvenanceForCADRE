@@ -98,11 +98,21 @@ SELECT 'organization_id',
 	   'name',
 	   'level_one',
 	   'level_two',
-	   'level_three'
+	   'level_three',
+	   'gi_statement'
 UNION
-SELECT * 
+SELECT  government_organization.organization_id, 
+	   	government_organization.name, 
+		government_organization.level_one,
+		government_organization.level_two,
+		government_organization.level_three,
+		government_interest.gi_statement 
 FROM government_organization
-INTO OUTFILE '/tmp/csv_for_janusgraph/nodes/government_organization.tsv'
+LEFT JOIN patent_govintorg
+ON patent_govintorg.organization_id = government_organization.organization_id 
+LEFT JOIN government_interest
+ON government_interest.patent_id = patent_govintorg.patent_id
+INTO OUTFILE '/tmp/csv_for_janusgraph/nodes/government_organization_II.tsv'
 FIELDS ENCLOSED BY '' 
 TERMINATED BY '\t' 
 ESCAPED BY '' 
@@ -314,10 +324,14 @@ LINES TERMINATED BY '\r\n';
 SELECT  'patent_id', 
 		'organization_id'
 UNION
-SELECT  UPPER(patent_id),
-		UPPER(organization_id)
+SELECT  UPPER(patent_govintorg.patent_id),
+		UPPER(patent_govintorg.organization_id)
 FROM patent_govintorg
-INTO OUTFILE '/tmp/csv_for_janusgraph/edges/interest_in_II.tsv'
+JOIN patent
+ON patent.patent_id = patent_govintorg.patent_id
+JOIN government_organization
+ON patent_govintorg.organization_id = government_organization.organization_id
+INTO OUTFILE '/tmp/csv_for_janusgraph/edges/interest_in_III.tsv'
 FIELDS ENCLOSED BY '' 
 TERMINATED BY '\t' 
 ESCAPED BY '' 

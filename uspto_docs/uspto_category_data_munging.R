@@ -88,3 +88,19 @@ acp <- as.data.frame(fread('/tmp/csv_for_janusgraph/edges/app_cites_patents_II.t
 
 
 View(subset(acp, acp$citing_patent_id == 'RE28801'))
+
+
+###################################################################
+
+pcp <- as.data.frame(fread('/tmp/csv_for_janusgraph/edges/patent_cites_patent_II.tsv'))
+
+View(subset(pcp, pcp$cited_patent_id == 'RE28801'))
+
+
+####################################################################
+
+ii <- as.data.frame(fread('/tmp/csv_for_janusgraph/edges/interest_in_II.tsv'))
+
+View(subset(ii, ii$organization_id == '2147483647'))
+
+
