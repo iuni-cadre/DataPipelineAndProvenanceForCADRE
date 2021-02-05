@@ -1,0 +1,20 @@
+The janusgraph cluster for PTO dataset is ready, you can query it from ??ssh_to_uspto_janus_server_1?? on bastion node for virginia VPC. Below is the example.
+
+gremlin> :remote connect tinkerpop.server conf/remote.yaml session
+
+==>Configured localhost/127.0.0.1:8182-[65a8468d-328f-46cb-92b7-39177a1187cd]
+
+gremlin> :remote console
+
+==>All scripts will now be sent to Gremlin Server - [localhost/127.0.0.1:8182]-[65a8468d-328f-46cb-92b7-39177a1187cd] - type ':remote console' to return to local mode
+
+gremlin> JanusGraphFactory.getGraphNames()
+
+==>pto
+==>ConfigurationManagementGraph
+
+gremlin> g = pto.traversal()
+
+==>graphtraversalsource[standardjanusgraph[cql:[10.0.1.34]], standard]
+
+
