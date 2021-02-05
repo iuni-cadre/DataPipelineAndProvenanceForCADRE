@@ -1,0 +1,136 @@
+==>------------------------------------------------------------------------------------------------
+Vertex Label Name              | Partitioned | Static                                             |
+---------------------------------------------------------------------------------------------------
+Patent                         | false       | false                                              |
+Inventor                       | false       | false                                              |
+Assignee                       | false       | false                                              |
+Location                       | false       | false                                              |
+Lawyer                         | false       | false                                              |
+Government_Organization        | false       | false                                              |
+Examiner                       | false       | false                                              |
+Application                    | false       | false                                              |
+IPCR                           | false       | false                                              |
+WIPO                           | false       | false                                              |
+NBER                           | false       | false                                              |
+CPC                            | false       | false                                              |
+USPC                           | false       | false                                              |
+---------------------------------------------------------------------------------------------------
+Edge Label Name                | Directed    | Unidirected | Multiplicity                         |
+---------------------------------------------------------------------------------------------------
+Inventor_Located_In            | true        | false       | MULTI                                |
+Assignee_Located_In            | true        | false       | MULTI                                |
+Coinventor                     | true        | false       | MULTI                                |
+Inventor_Of                    | true        | false       | MULTI                                |
+Assigned_To                    | true        | false       | MULTI                                |
+Citation                       | true        | false       | MULTI                                |
+Lawyer_Of                      | true        | false       | MULTI                                |
+Interested_In                  | true        | false       | MULTI                                |
+Examiner_Of                    | true        | false       | MULTI                                |
+Cites                          | true        | false       | MULTI                                |
+Becomes                        | true        | false       | MULTI                                |
+CPC_Category_Of                | true        | false       | MULTI                                |
+USPC_Category_Of               | true        | false       | MULTI                                |
+IPCR_Category_Of               | true        | false       | MULTI                                |
+NBER_Category_Of               | true        | false       | MULTI                                |
+WIPO_Category_Of               | true        | false       | MULTI                                |
+---------------------------------------------------------------------------------------------------
+Property Key Name              | Cardinality | Data Type                                          |
+---------------------------------------------------------------------------------------------------
+earliest_application_date      | SINGLE      | class java.util.Date                               |
+patent_processing_days         | SINGLE      | class java.lang.Integer                            |
+uspc_current_mainclass_average_patent_processing_days | SINGLE      | class java.lang.Integer                            |
+cpc_current_group_average_patent_processing_days | SINGLE      | class java.lang.Integer                            |
+term_extension                 | SINGLE      | class java.lang.Integer                            |
+detail_desc_length             | SINGLE      | class java.lang.Integer                            |
+inventor_id                    | SINGLE      | class java.lang.Integer                            |
+name_first                     | SINGLE      | class java.lang.String                             |
+name_last                      | SINGLE      | class java.lang.String                             |
+num_patents                    | SINGLE      | class java.lang.Integer                            |
+num_assignees                  | SINGLE      | class java.lang.Integer                            |
+lastknown_location_id          | SINGLE      | class java.lang.Integer                            |
+first_seen_date                | SINGLE      | class java.util.Date                               |
+last_seen_date                 | SINGLE      | class java.util.Date                               |
+years_active                   | SINGLE      | class java.lang.Integer                            |
+assignee_id                    | SINGLE      | class java.lang.Integer                            |
+organization                   | SINGLE      | class java.lang.String                             |
+num_inventors                  | SINGLE      | class java.lang.Integer                            |
+persistent_assignee_id         | SINGLE      | class java.lang.String                             |
+location_id                    | SINGLE      | class java.lang.Integer                            |
+city                           | SINGLE      | class java.lang.String                             |
+state                          | SINGLE      | class java.lang.String                             |
+state_fips                     | SINGLE      | class java.lang.String                             |
+county_fips                    | SINGLE      | class java.lang.String                             |
+latitude                       | SINGLE      | class java.lang.Float                              |
+longitude                      | SINGLE      | class java.lang.Float                              |
+lawyer_id                      | SINGLE      | class java.lang.Integer                            |
+persistent_lawyer_id           | SINGLE      | class java.lang.String                             |
+organization_id                | SINGLE      | class java.lang.Integer                            |
+name                           | SINGLE      | class java.lang.String                             |
+level_one                      | SINGLE      | class java.lang.String                             |
+level_two                      | SINGLE      | class java.lang.String                             |
+level_three                    | SINGLE      | class java.lang.String                             |
+examiner_id                    | SINGLE      | class java.lang.Integer                            |
+role                           | SINGLE      | class java.lang.String                             |
+group                          | SINGLE      | class java.lang.String                             |
+persistent_examiner_id         | SINGLE      | class java.lang.String                             |
+application_id                 | SINGLE      | class java.lang.String                             |
+ipcr_id                        | SINGLE      | class java.lang.Integer                            |
+level                          | SINGLE      | class java.lang.String                             |
+category_label                 | SINGLE      | class java.lang.String                             |
+wipo_field_id                  | SINGLE      | class java.lang.Integer                            |
+nber_id                        | SINGLE      | class java.lang.Integer                            |
+cpc_id                         | SINGLE      | class java.lang.String                             |
+uspc_id                        | SINGLE      | class java.lang.String                             |
+patent_id                      | SINGLE      | class java.lang.String                             |
+type                           | SINGLE      | class java.lang.String                             |
+number                         | SINGLE      | class java.lang.String                             |
+country                        | SINGLE      | class java.lang.String                             |
+date                           | SINGLE      | class java.util.Date                               |
+year                           | SINGLE      | class java.lang.Integer                            |
+abstract                       | SINGLE      | class java.lang.String                             |
+title                          | SINGLE      | class java.lang.String                             |
+kind                           | SINGLE      | class java.lang.String                             |
+num_claims                     | SINGLE      | class java.lang.Integer                            |
+num_foreign_documents_cited    | SINGLE      | class java.lang.Integer                            |
+num_us_applications_cited      | SINGLE      | class java.lang.Integer                            |
+num_us_patents_cited           | SINGLE      | class java.lang.Integer                            |
+num_total_documents_cited      | SINGLE      | class java.lang.Integer                            |
+num_times_cited_by_us_patents  | SINGLE      | class java.lang.Integer                            |
+---------------------------------------------------------------------------------------------------
+Vertex Index Name              | Type        | Unique    | Backing        | Key:           Status |
+---------------------------------------------------------------------------------------------------
+ptoPatentIdComposite           | Composite   | false     | internalindex  | patent_id:    ENABLED |
+ptoInventorIdComposite         | Composite   | false     | internalindex  | inventor_id:    ENABLED |
+ptoAssigneeIdComposite         | Composite   | false     | internalindex  | assignee_id:    ENABLED |
+ptoLocationIdComposite         | Composite   | false     | internalindex  | location_id:    ENABLED |
+ptoOrganizationIdComposite     | Composite   | false     | internalindex  | organization_id:    ENABLED |
+ptoLawyerIdComposite           | Composite   | false     | internalindex  | lawyer_id:    ENABLED |
+ptoExaminerIdComposite         | Composite   | false     | internalindex  | examiner_id:    ENABLED |
+ptoApplicationIdComposite      | Composite   | false     | internalindex  | application_id:    ENABLED |
+ptoIpcrIdComposite             | Composite   | false     | internalindex  | ipcr_id:      ENABLED |
+ptoWipoFieldIdComposite        | Composite   | false     | internalindex  | wipo_field_id:    ENABLED |
+ptoNberIdComposite             | Composite   | false     | internalindex  | nber_id:      ENABLED |
+ptoCpcIdComposite              | Composite   | false     | internalindex  | cpc_id:       ENABLED |
+ptoUspcIdComposite             | Composite   | false     | internalindex  | uspc_id:      ENABLED |
+ptoPersisAssigneeIdComposite   | Composite   | false     | internalindex  | persistent_assignee_id:    ENABLED |
+ptoTypeComposite               | Composite   | false     | internalindex  | type:         ENABLED |
+ptoNumberComposite             | Composite   | false     | internalindex  | number:       ENABLED |
+ptoDateComposite               | Composite   | false     | internalindex  | date:         ENABLED |
+ptoStateFipsComposite          | Composite   | false     | internalindex  | state_fips:    ENABLED |
+ptoCountyFipsComposite         | Composite   | false     | internalindex  | county_fips:    ENABLED |
+ptoLevelComposite              | Composite   | false     | internalindex  | level:        ENABLED |
+ptoAbstractMixed               | Mixed       | false     | search         | abstract:     ENABLED |
+ptoTitleMixed                  | Mixed       | false     | search         | title:        ENABLED |
+ptoNameFirstMixed              | Mixed       | false     | search         | name_first:    ENABLED |
+ptoNameLastMixed               | Mixed       | false     | search         | name_last:    ENABLED |
+ptoCityMixed                   | Mixed       | false     | search         | city:         ENABLED |
+ptoCountryMixed                | Mixed       | false     | search         | country:      ENABLED |
+ptoOrganizationMixed           | Mixed       | false     | search         | organization:    ENABLED |
+ptoCategoryLabelMixed          | Mixed       | false     | search         | category_label:    ENABLED |
+---------------------------------------------------------------------------------------------------
+Edge Index (VCI) Name          | Type        | Unique    | Backing        | Key:           Status |
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+Relation Index                 | Type        | Direction | Sort Key       | Order    |     Status |
+---------------------------------------------------------------------------------------------------
+
