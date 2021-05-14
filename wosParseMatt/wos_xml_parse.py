@@ -9,6 +9,8 @@ spark.conf.set('spark.sql.caseSensitive', 'True')
 WoS = spark.read.format("parquet").load("/WoSraw_2020_all/parquet/part-00826-5476e87f-146e-4916-913b-522638c0d728-c000.snappy.parquet")
 
 wos4a = WoS.select(WoS.UID.alias("wosID"),
+				  WoS.dynamic_data.ic_related.oases['_is_OA'].alias('isOpenAccess'),
+                  concat_ws(", ", WoS.dynamic_data.ic_related.oases.oas['_type']).alias('openAccessType'),	
                   WoS.static_data.fullrecord_metadata.abstracts.abstract.abstract_text.p[0].alias("abstract"),
                   WoS.static_data.fullrecord_metadata.fund_ack.fund_text.p.alias("fundingText"),
                   WoS.static_data.fullrecord_metadata.references._count.alias("citedReferenceCount"),
@@ -260,13 +262,13 @@ wosOutput = wos4.join(wos_auth2,  wos4['wosID'] == wos_auth2['wosID'], how='full
                                         wosFo3.fundingOrgs
                        )
                         
-wosOutput.coalesce(16).write.option("header","True") \
+wosOutput.coalesce(64).write.option("header","True") \
                                .option("sep","\t") \
                                .option("quoteAll", False) \
                                .option("emptyValue", None) \
                                .option("nullValue", None)\
                                .mode("overwrite") \
-                               .csv('/N/project/mag/wos_jg_2021/nodes')                       
+                               .csv('/WoSraw_2020/nodes')                       
                         
 
 
