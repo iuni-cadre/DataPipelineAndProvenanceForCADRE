@@ -1,0 +1,100 @@
+==>------------------------------------------------------------------------------------------------
+Vertex Label Name              | Partitioned | Static                                             |
+---------------------------------------------------------------------------------------------------
+Affiliation                    | false       | false                                              |
+Author                         | false       | false                                              |
+ConferenceInstance             | false       | false                                              |
+ConferenceSeries               | false       | false                                              |
+FieldOfStudy                   | false       | false                                              |
+Journal                        | false       | false                                              |
+Paper                          | false       | false                                              |
+---------------------------------------------------------------------------------------------------
+Edge Label Name                | Directed    | Unidirected | Multiplicity                         |
+---------------------------------------------------------------------------------------------------
+AffiliatedWith                 | true        | false       | MULTI                                |
+AuthorOf                       | true        | false       | MULTI                                |
+BelongsTo                      | true        | false       | MULTI                                |
+ChildOf                        | true        | false       | MULTI                                |
+InstanceOf                     | true        | false       | MANY2ONE                             |
+PresentedAt                    | true        | false       | MANY2ONE                             |
+PublishedIn                    | true        | false       | MANY2ONE                             |
+References                     | true        | false       | MULTI                                |
+---------------------------------------------------------------------------------------------------
+Property Key Name              | Cardinality | Data Type                                          |
+---------------------------------------------------------------------------------------------------
+lastKnownAffiliationId         | SINGLE      | class java.lang.Long                               |
+conferenceInstanceId           | SINGLE      | class java.lang.Long                               |
+conferenceSeriesId             | SINGLE      | class java.lang.Long                               |
+location                       | SINGLE      | class java.lang.String                             |
+officialUrl                    | SINGLE      | class java.lang.String                             |
+startDate                      | SINGLE      | class java.util.Date                               |
+endDate                        | SINGLE      | class java.util.Date                               |
+abstractRegistrationDate       | SINGLE      | class java.util.Date                               |
+submissionDeadlineDate         | SINGLE      | class java.util.Date                               |
+notificationDueDate            | SINGLE      | class java.util.Date                               |
+finalVersionDueDate            | SINGLE      | class java.util.Date                               |
+pageCount                      | SINGLE      | class java.lang.Long                               |
+fieldOfStudyId                 | SINGLE      | class java.lang.Long                               |
+mainType                       | SINGLE      | class java.lang.String                             |
+level                          | SINGLE      | class java.lang.Integer                            |
+journalId                      | SINGLE      | class java.lang.Long                               |
+issn                           | SINGLE      | class java.lang.String                             |
+publisher                      | SINGLE      | class java.lang.String                             |
+webpage                        | SINGLE      | class java.lang.String                             |
+paperId                        | SINGLE      | class java.lang.Long                               |
+doi                            | SINGLE      | class java.lang.String                             |
+docType                        | SINGLE      | class java.lang.String                             |
+paperTitle                     | SINGLE      | class java.lang.String                             |
+originalTitle                  | SINGLE      | class java.lang.String                             |
+bookTitle                      | SINGLE      | class java.lang.String                             |
+year                           | SINGLE      | class java.lang.Integer                            |
+date                           | SINGLE      | class java.util.Date                               |
+onlineDate                     | SINGLE      | class java.util.Date                               |
+volume                         | SINGLE      | class java.lang.String                             |
+issue                          | SINGLE      | class java.lang.String                             |
+firstPage                      | SINGLE      | class java.lang.String                             |
+lastPage                       | SINGLE      | class java.lang.String                             |
+referenceCount                 | SINGLE      | class java.lang.Long                               |
+estimatedCitation              | SINGLE      | class java.lang.Long                               |
+originalVenue                  | SINGLE      | class java.lang.String                             |
+familyId                       | SINGLE      | class java.lang.Long                               |
+familyRank                     | SINGLE      | class java.lang.Integer                            |
+affiliationId                  | SINGLE      | class java.lang.Long                               |
+rank                           | SINGLE      | class java.lang.Integer                            |
+normalizedName                 | SINGLE      | class java.lang.String                             |
+displayName                    | SINGLE      | class java.lang.String                             |
+gridId                         | SINGLE      | class java.lang.String                             |
+officialPage                   | SINGLE      | class java.lang.String                             |
+wikiPage                       | SINGLE      | class java.lang.String                             |
+paperCount                     | SINGLE      | class java.lang.Long                               |
+paperFamilyCount               | SINGLE      | class java.lang.Long                               |
+citationCount                  | SINGLE      | class java.lang.Long                               |
+iso3166Code                    | SINGLE      | class java.lang.String                             |
+latitude                       | SINGLE      | class java.lang.Float                              |
+longitude                      | SINGLE      | class java.lang.Float                              |
+createdDate                    | SINGLE      | class java.util.Date                               |
+authorId                       | SINGLE      | class java.lang.Long                               |
+---------------------------------------------------------------------------------------------------
+Vertex Index Name              | Type        | Unique    | Backing        | Key:           Status |
+---------------------------------------------------------------------------------------------------
+affiliationIdComposite         | Composite   | false     | internalindex  | affiliationId:    ENABLED |
+authorIdComposite              | Composite   | false     | internalindex  | authorId:     ENABLED |
+journalIdComposite             | Composite   | false     | internalindex  | journalId:    ENABLED |
+paperIdComposite               | Composite   | false     | internalindex  | paperId:      ENABLED |
+conferenceInstanceIdComposite  | Composite   | false     | internalindex  | conferenceInstanceId:    ENABLED |
+conferenceSeriesIdComposite    | Composite   | false     | internalindex  | conferenceSeriesId:    ENABLED |
+fieldOfStudyIdComposite        | Composite   | false     | internalindex  | fieldOfStudyId:    ENABLED |
+doiComposite                   | Composite   | false     | internalindex  | doi:          ENABLED |
+issnComposite                  | Composite   | false     | internalindex  | issn:         ENABLED |
+yearComposite                  | Composite   | false     | internalindex  | year:         ENABLED |
+dateMixed                      | Mixed       | false     | search         | date:         ENABLED |
+normalizedNameMixed            | Mixed       | false     | search         | normalizedName:    ENABLED |
+paperTitleMixed                | Mixed       | false     | search         | paperTitle:    ENABLED |
+---------------------------------------------------------------------------------------------------
+Edge Index (VCI) Name          | Type        | Unique    | Backing        | Key:           Status |
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+Relation Index                 | Type        | Direction | Sort Key       | Order    |     Status |
+---------------------------------------------------------------------------------------------------
+
+
