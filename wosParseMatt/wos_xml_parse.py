@@ -1,12 +1,12 @@
 from pyspark.sql import SparkSession, SQLContext
 from pyspark import SparkConf, SparkContext
 from pyspark.sql.types import *
-from pyspark.sql.functions import col, explode, concat_ws, collect_list, sort_array, count, size, coalesce, expr
+from pyspark.sql.functions import col, explode, concat_ws, collect_list, sort_array, count, size, coalesce, expr, regexp_replace
 spark= SparkSession.builder.config('spark.ui.port','4040').getOrCreate()
 
 spark.conf.set('spark.sql.caseSensitive', 'True') 
 
-WoS = spark.read.format("parquet").load("/WoSraw_2020_all/parquet/part-00826-5476e87f-146e-4916-913b-522638c0d728-c000.snappy.parquet")
+WoS = spark.read.format("parquet").load("/WoSraw_2020_all/parquet/part*.snappy.parquet")
 
 wos4a = WoS.select(WoS.UID.alias("wosID"),
 				  WoS.dynamic_data.ic_related.oases['_is_OA'].alias('isOpenAccess'),
@@ -152,29 +152,45 @@ wosIdPlus = WoS.select(WoS.UID.alias("wosID"),
 
 wosIdPlus2 = wosIdPlus.withColumn("ids", explode("ids")).select("*", col("ids")["_type"].alias("altID"))
 
+wosIdDf = wosIdPlus.select(wosIdPlus.wosID.alias("wosID"))
+
 wosIdPlus3 = wosIdPlus2.select('wosID', 'ids.*')
 
+
 issn   = wosIdPlus3.filter(wosIdPlus3._type == "issn")
-issn   = issn.select('wosID', col('_value').alias('issn'))
+issn2  = issn.groupBy("wosID").agg(sort_array(collect_list("_value")).alias("_value"))
+issn3  = issn2.withColumn("_value", concat_ws("| ", issn2._value))
+issn4  = issn3.select(col('wosID').alias("wosID"), col('_value').alias('issn'))
 
 doi   = wosIdPlus3.filter(wosIdPlus3._type == "doi")
-doi   = doi.select(col('wosID').alias('id2'), col('_value').alias('doi'))
+doi2  = doi.groupBy("wosID").agg(sort_array(collect_list("_value")).alias("_value"))
+doi3  = doi2.withColumn("_value", concat_ws("| ", doi2._value))
+doi4   = doi3.select(col('wosID').alias('wosID'), col('_value').alias('doi'))
 
 eissn   = wosIdPlus3.filter(wosIdPlus3._type == "eissn")
-eissn   = eissn.select(col('wosID').alias('id3'), col('_value').alias('eissn'))
+eissn2  = eissn.groupBy("wosID").agg(sort_array(collect_list("_value")).alias("_value"))
+eissn3  = eissn2.withColumn("_value", concat_ws("| ", eissn2._value))
+eissn4  = eissn3.select(col('wosID').alias('wosID'), col('_value').alias('eissn'))
 
 isbn   = wosIdPlus3.filter(wosIdPlus3._type == "isbn")
-isbn   = isbn.select(col('wosID').alias('id4'), col('_value').alias('isbn'))
+isbn2  = isbn.groupBy("wosID").agg(sort_array(collect_list("_value")).alias("_value"))
+isbn3  = isbn2.withColumn("_value", concat_ws("| ", isbn2._value))
+isbn4  = isbn3.select(col('wosID').alias('wosID'), col('_value').alias('isbn'))    
 
 pmid   = wosIdPlus3.filter(wosIdPlus3._type == "pmid")
-pmid   = pmid.select(col('wosID').alias('id5'), col('_value').alias('pmid'))
+pmid2  = pmid.groupBy("wosID").agg(sort_array(collect_list("_value")).alias("_value"))
+pmid3  = pmid2.withColumn("_value", concat_ws("| ", pmid2._value))
+pmid4  = pmid3.select(col('wosID').alias('wosID'), col('_value').alias('pmid'))
 
-wosIdPlus4 = issn.join(doi,   issn['wosID'] == doi['id2'],  how='full') \
-                 .join(eissn, issn['wosID'] == eissn['id3'],how='full') \
-                 .join(isbn,  issn['wosID'] == isbn['id4'], how='full') \
-                 .join(pmid,  issn['wosID'] == pmid['id5'], how='full') \
-                 .select(coalesce(issn.wosID, doi.id2, eissn.id3, isbn.id4, pmid.id5).alias('wosID'), 
-                         issn.issn, doi.doi, eissn.eissn, isbn.isbn, pmid.pmid)
+
+wosIdPlus4 = wosIdDf.join(doi4,   wosIdDf['wosID'] == doi4['wosID'],   how='left') \
+                    .join(eissn4, wosIdDf['wosID'] == eissn4['wosID'], how='left') \
+                    .join(isbn4,  wosIdDf['wosID'] == isbn4['wosID'],  how='left') \
+                    .join(pmid4,  wosIdDf['wosID'] == pmid4['wosID'],  how='left') \
+                    .join(issn4,  wosIdDf['wosID'] == issn4['wosID'],  how='left') \
+                 .select(coalesce(wosIdDf.wosID, issn4.wosID, doi4.wosID, eissn4.wosID, isbn4.wosID, pmid4.wosID).alias('wosID'), 
+                         issn4.issn, doi4.doi, eissn4.eissn, isbn4.isbn, pmid4.pmid)
+
 
 
 #BUILD CONFERENCE LOCATION
@@ -218,6 +234,8 @@ wosOutput = wos4.join(wos_auth2,  wos4['wosID'] == wos_auth2['wosID'], how='full
                                  wosIdPlus4.wosID,
                                  wosCoLo2.wosID,
                                  wosFo3.wosID).alias('wosID'),
+                  wos4.isOpenAccess,
+                  wos4.openAccessType,
                   wos4.abstract,
                   wos4.fundingText,        
                   wos4.citedReferenceCount,      
@@ -261,14 +279,68 @@ wosOutput = wos4.join(wos_auth2,  wos4['wosID'] == wos_auth2['wosID'], how='full
                                     wosCoLo2.conferenceLocation,
                                         wosFo3.fundingOrgs
                        )
+                       
+def clean_text(c):
+  c = regexp_replace(c, '"' , '')
+  c = regexp_replace(c, '\\\\' , '')
+  c = regexp_replace(c, '$s/"//g', '')
+  return c
+  
+  
+#CLEAN TEXT
+wosOutput1 = wosOutput.select(
+						clean_text(col('wosID')).alias('wosID'),
+                        clean_text(col("isOpenAccess")).alias("isOpenAccess"), 
+                        clean_text(col("openAccessType")).alias("openAccessType"),
+                        clean_text(col("abstract")).alias('abstract'),
+                        clean_text(col("fundingText")).alias('fundingText'),        
+                        clean_text(col("citedReferenceCount")).alias('citedReferenceCount'),      
+                        clean_text(col("full_address")).alias('full_address'),     
+                        clean_text(col("reprintAddress")).alias('reprintAddress'),   
+                        clean_text(col("articleNumber")).alias('articleNumber'),
+                        clean_text(col("publicationYear")).alias('publicationYear'),
+                        clean_text(col("publicationDate")).alias('publicationDate'),
+                        clean_text(col("volume")).alias('volume'),
+                        clean_text(col("issue")).alias('issue'),
+                        clean_text(col("partNumber")).alias('partNumber'),
+                        clean_text(col("supplement")).alias('supplement'),
+                        clean_text(col("specialIssue")).alias('specialIssue'),
+                        clean_text(col("earlyAccessDate")).alias('earlyAccessDate'),
+                        clean_text(col("startPage")).alias('startPage'),
+                        clean_text(col("endPage")).alias('endPage'),
+                        clean_text(col("numberOfPages")).alias('numberOfPages'),
+                        clean_text(col("publisherCity")).alias('publisherCity'),
+                        clean_text(col("publisherAddress")).alias('publisherAddress'),
+                        clean_text(col("publisher")).alias('publisher'),
+                        clean_text(col("keywordsPlus")).alias('keywordsPlus'),
+                        clean_text(col("conferenceDate")).alias('conferenceDate'),
+                        clean_text(col("conferenceSponsor")).alias('conferenceSponsor'),
+                        clean_text(col("conferenceHost")).alias('conferenceHost'),
+                        clean_text(col("conferenceTitle")).alias('conferenceTitle'),
+                        clean_text(col("documentType")).alias('documentType'),
+                        clean_text(col("RIDs")).alias('RIDs'),
+                        clean_text(col("ORCID")).alias('ORCID'),
+                        clean_text(col("standardNames")).alias('standardNames'),
+                        clean_text(col("authors")).alias('authors'),
+                        clean_text(col("emailAddress")).alias('emailAddress'),
+                        clean_text(col("paperTitle")).alias('paperTitle'), 
+                        clean_text(col("journalTitle")).alias('journalTitle'),
+                        clean_text(col("journalAbbrev")).alias('journalAbbrev'), 
+                        clean_text(col("journalISO")).alias('journalISO'),
+                        clean_text(col("issn")).alias('issn'),
+                        clean_text(col("doi")).alias('doi'),
+                        clean_text(col("eissn")).alias('eissn'), 
+                        clean_text(col("isbn")).alias('isbn'),
+                        clean_text(col("pmid")).alias('pmid'),
+                        clean_text(col("conferenceLocation")).alias('conferenceLocation'),
+                        clean_text(col("fundingOrgs")).alias('fundingOrgs')
+)  
                         
-wosOutput.coalesce(64).write.option("header","True") \
+wosOutput1.coalesce(100).write.option("header","True") \
                                .option("sep","\t") \
-                               .option("quoteAll", False) \
-                               .option("emptyValue", None) \
-                               .option("nullValue", None)\
+                               .option("quoteAll", True) \
                                .mode("overwrite") \
-                               .csv('/WoSraw_2020/nodes')                       
+                               .csv('/WoSraw_2020_all/nodes2')                       
                         
 
 
