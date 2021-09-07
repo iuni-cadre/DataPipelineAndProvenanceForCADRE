@@ -50,66 +50,43 @@ wos4 = wos4a.withColumn("fundingText",        concat_ws(", ",  col("fundingText"
             
             
 #BUILD AUTHOR ARRAY
-wos5 = WoS.select(WoS.UID.alias("wosID"), WoS.static_data.contributors.contributor.alias("author"))
 
-wos6 = wos5.withColumn("author", explode("author")).select("*", col("author")["name"]["_seq_no"].alias("seq_no"),
-                                                                col("author")["name"]["full_name"].alias("fullname"),
-                                                                col("author")["name"]["_r_id"].alias("RIDs"), 
-                                                                col("author")["name"]["_orcid_id"].alias("ORCID"),
-                                                                col("author")["name"]["display_name"].alias("standardNames")    
+wos5 = WoS.select(WoS.UID.alias("wosID"), WoS.static_data.summary.names['name'].alias("author"))
+
+wos6 = wos5.withColumn("author", explode("author")).select("*", col("author")["_seq_no"].alias("seq_no"),
+                                                                col("author")["full_name"].alias("fullname"),
+                                                                col("author")["display_name"].alias("standardNames"),
+                                                                col("author")["_orcid_id_tr"].alias("orcid_id"),
+                                                                col("author")["_r_id_tr"].alias("r_id"),
+                                                                col("author")["email_addr"].alias("email")
                                                           )
 
 wos_author = wos6.select("wosID", concat_ws(" ", wos6.fullname,      wos6.seq_no).alias("author"), 
-                                  concat_ws(" ", wos6.RIDs,          wos6.seq_no).alias("RIDs"), 
-                                  concat_ws(" ", wos6.ORCID,         wos6.seq_no).alias("ORCID"),
-                                  concat_ws(" ", wos6.standardNames, wos6.seq_no).alias("standardNames")
+                                  concat_ws(" ", wos6.standardNames, wos6.seq_no).alias("standardNames"),
+                                  concat_ws(" ", wos6.orcid_id,      wos6.seq_no).alias("orcid_id"),
+                                  concat_ws(" ", wos6.r_id,          wos6.seq_no).alias("r_id"),
+                                  concat_ws(" ", wos6.email,         wos6.seq_no).alias("email")
                         )
 
 
 wos_auth2 = wos_author.groupBy("wosID").agg(sort_array(collect_list("author")).alias("authors"),
-                                            sort_array(collect_list("RIDs")).alias("RIDs"),
-                                            sort_array(collect_list("ORCID")).alias("ORCID"),
-                                            sort_array(collect_list("standardNames")).alias("standardNames")
+                                            sort_array(collect_list("standardNames")).alias("standardNames"),
+                                            sort_array(collect_list("orcid_id")).alias("orcid_id"),
+                                            sort_array(collect_list("r_id")).alias("r_id"),
+                                            sort_array(collect_list("email")).alias("email")
                                            )  
-                                            
-
 wos_auth2 = wos_auth2.select(
    col('wosID'),
-   concat_ws("| ", col('RIDs')).alias('RIDs'),
-   concat_ws("| ", col('ORCID')).alias('ORCID'),
    concat_ws("| ", col('standardNames')).alias('standardNames'),  
-   concat_ws("| ",col('authors')).alias('authors'), 
+   concat_ws("| ", col('authors')).alias('authors'), 
+   concat_ws("| ", col("orcid_id")).alias("ORCID"),
+   concat_ws("| ", col("r_id")).alias("RID"),
+   concat_ws("| ", col("email")).alias("email"),
    size('authors').alias('count')
 )
 
-wos_auth2 = wos_auth2.drop('count')     
+wos_auth2 = wos_auth2.drop('count')
 
-
-#EMAIL ADDRESSES
-wosEmail = WoS.select(WoS.UID.alias("wosID"), WoS.static_data.fullrecord_metadata.addresses.address_name.names.alias("addr"))
-
-wosEmail2 = wosEmail.withColumn("addr", explode("addr")).select("*",
-                                                                col("addr")["name"]["_seq_no"].alias("seq_no"),
-                                                                col("addr")["name"]["email_addr"].alias("emailAddress"),
-                                                          )
-
-wosEmail3 = wosEmail2.select("wosID",
-                                  concat_ws(" ", wosEmail2.emailAddress,  wosEmail2.seq_no).alias("emailAddress")
-                        )
-
-
-wosEmail4 = wosEmail3.groupBy("wosID").agg(
-                                            sort_array(collect_list("emailAddress")).alias("emailAddress")
-                                           )  
-                                            
-
-wosEmail5 = wosEmail4.select(
-   col('wosID'),
-   concat_ws("| ", col('emailAddress')).alias('emailAddress'), 
-   size('emailAddress').alias('count')
-)
-
-wosEmail5 = wosEmail5.drop('count')
      
             
             
@@ -220,16 +197,14 @@ wosFo2 = wosFo.withColumn("fundingOrgs", col("fundingOrgs").getField("_VALUE"))
 
 wosFo3 = wosFo2.withColumn("fundingOrgs", concat_ws("| ", wosFo2.fundingOrgs))
 
-
+#MERGE
 wosOutput = wos4.join(wos_auth2,  wos4['wosID'] == wos_auth2['wosID'], how='full') \
-                .join(wosEmail5,  wos4['wosID'] == wosEmail5['wosID'], how='full') \
                 .join(wosTitle4,  wos4['wosID'] == wosTitle4['wosID'], how='full') \
                 .join(wosIdPlus4, wos4['wosID'] == wosIdPlus4['wosID'],how='full') \
                 .join(wosCoLo2,   wos4['wosID'] == wosCoLo2['wosID'],  how='full') \
                 .join(wosFo3,     wos4['wosID'] == wosFo3['wosID'],    how='full') \
                 .select(coalesce(wos4.wosID, 
                                  wos_auth2.wosID, 
-                                 wosEmail5.wosID, 
                                  wosTitle4.wosID, 
                                  wosIdPlus4.wosID,
                                  wosCoLo2.wosID,
@@ -262,11 +237,11 @@ wosOutput = wos4.join(wos_auth2,  wos4['wosID'] == wos_auth2['wosID'], how='full
                   wos4.conferenceHost,
                   wos4.conferenceTitle,
                   wos4.documentType,
-                      wos_auth2.RIDs,
+                      wos_auth2.RID,
                       wos_auth2.ORCID,
                       wos_auth2.standardNames,
                       wos_auth2.authors,
-                        wosEmail5.emailAddress,
+                      wos_auth2.email, 
                             wosTitle4.paperTitle, 
                             wosTitle4.journalTitle,
                             wosTitle4.journalAbbrev, 
@@ -318,11 +293,11 @@ wosOutput1 = wosOutput.select(
                         clean_text(col("conferenceHost")).alias('conferenceHost'),
                         clean_text(col("conferenceTitle")).alias('conferenceTitle'),
                         clean_text(col("documentType")).alias('documentType'),
-                        clean_text(col("RIDs")).alias('RIDs'),
+                        clean_text(col("RID")).alias('RID'),
                         clean_text(col("ORCID")).alias('ORCID'),
                         clean_text(col("standardNames")).alias('standardNames'),
                         clean_text(col("authors")).alias('authors'),
-                        clean_text(col("emailAddress")).alias('emailAddress'),
+                        clean_text(col("email")).alias('email'),
                         clean_text(col("paperTitle")).alias('paperTitle'), 
                         clean_text(col("journalTitle")).alias('journalTitle'),
                         clean_text(col("journalAbbrev")).alias('journalAbbrev'), 

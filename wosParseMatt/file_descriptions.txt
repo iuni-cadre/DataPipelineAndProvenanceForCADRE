@@ -1,0 +1,31 @@
+--WoS XML Parse 
+
+wos_xml_parse.py 	-- Run this file to convert all WoS XML's to csv files for ingesting into janusgraph. These CSV's were also loaded into postgres on iuni1 in 						   the core_data database in the wos_core_20 schema.
+
+wos_xml_parse.ipynb -- Used for developing/testing the xml parsing pipeline
+
+
+
+--WoS Edition and Category
+
+wos_edition_cat.py        -- A couple of users asked about adding edition and category fields to the Postgres database. This script exracts the edition and the 							 category data from the parquet files and outputs csv's. The output is loaded into the wos_core_20 schema on iuni1 as the table 							 'wos_edition'
+
+wos_extract_edition.ipynb -- Used for developing/testing the extraction of the edition and category data. 
+
+
+
+--WoS Query for Tavernier
+
+wosQueryforTavernier.py  -- Script to extract fields from Parquet for Willa Tavernier at IU Libraries. Xioaran did extraction on WoS 2019 data, I re-wrote the 								extraction for WoS 2020. I think Willa will want to re-run this next year with the 2021 data. It's subsets all records for IU for that 								year.
+
+WTarvernierQ.ipynb       -- USed for developing/testing the Query for Willa. 
+
+
+--General
+
+env_variables           -- Exports necessary environment variables to connet to hdfs
+
+run_pyspark.sh          -- Runs pyspark script at the command line. Sets memory parameters etc. 
+
+combineCSV.ipynb        -- Notebook that combines csv's created by Spark into a single csv. I used this with Willa's query so I could send her a single csv. 
+
