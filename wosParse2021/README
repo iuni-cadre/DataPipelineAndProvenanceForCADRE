@@ -1,0 +1,103 @@
+To run the spark scala scripts for converting WoS XML gz files to parquet you
+first need to set up your envirnment properly.
+
+1. The graphframes package is not part of the normal MVN repo, so you need
+to get it from the Spark MVN repo:
+
+   mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:get
+   -Dartifact=graphframes:graphframes:0.7.0-spark2.4-s_2.11
+   -DrepoUrl=https://repos.spark-packages.org
+
+
+You will also need to set the following environment variables:
+
+export HADOOP_USER_NAME=hdfs
+export PATH=~/.local/bin:$PATH
+export JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera/
+export HADOOP_HOME=/opt/cloudera/parcels/CDH/lib/hadoop
+export HADOOP_CONF_DIR=/opt/cloudera/parcels/CDH-6.3.1-1.cdh6.3.1.p0.1470567/lib/spark/conf/yarn-conf
+export SPARK_HOME=/opt/cloudera/parcels/CDH-6.3.1-1.cdh6.3.1.p0.1470567/lib/spark
+
+To execute a scala script:
+
+spark-shell \\
+  --master yarn \\
+  --packages \\
+    com.databricks:spark-xml_2.11:0.12.0,graphframes:graphframes:0.7.0-spark2.4-s_2.11 \\
+  --driver-memory 8G \\
+  --num-executors 7 \\
+  --executor-memory 14G \\
+  --executor-cores 7 \\
+  --conf spark.driver.maxResultSize=8g \\
+  -i <scala_script>
+
+To execute a python script:
+spark-submit \
+  --master yarn \
+  --driver-memory 8G \
+  --num-executors 21 \
+  --executor-cores 4 \
+  --executor-memory 28G \
+  --conf spark.yarn.executor.memoryOverheadFactor=0.2 \
+  --conf spark.driver.maxResultSize=8g \
+  WoSXMLParseFromParquet.py
+
+Adjust memory limits, number of threads, and number of executors as needed.
+
+
+The ETL pipeline for converting the source XML WoS data for ingestion by
+JanusGraph is executed in several steps.
+
+1. The source XML files containing the WoS data must first be copied to the
+   Hadoop distributed file system (HDFS).  Use the 'hdfs dfs -copyFromLocal'
+   command to copy the gzip files to HDFS.  The HDFS destination of the
+   gzip files is customarily of the form '/WoSraw_<year>'.  The parquet files
+   are customiarly stored at the HDFS location '/WoSraw_<year>/parquet'
+
+2. The compressed XML files should be converted to parquet files for more
+   efficient access during each stage of the ETL pipeline.  Alter the
+   hardcoded paths in WoScompactTable.scala to specify the HDFS locations
+   of the gzip files and the HDFS destinations of the parquet files.  The
+   conversion to parquet format is performed by executing the shell script
+   'launch_WoscompactTable.bash'.  Make sure the environment variables set
+   by the script are updated for the current Hadoop and Spark installation.
+
+3. Once the parquet format files are available the JanusGraph paper node
+   data is generated using the WoSXMLParseFromParquet.py script.  Update the
+   path the parquet files and the nodes files.  The node data will be in TSV
+   format and split across 100 TSV files.  To perform the node generation,
+   execute the shell script 'launch_WoSXMLParseFromParquet.bash'. 
+
+4. To generate the edges files, first update the hardcoded paths in the
+   'WoSCreateCitationEdges.scala' file.  To perform the edge generation,
+   execute the shell script 'launch_WoSCreateCitationEdges.scala'.
+
+5. Copy the resulting node and edges files from HDFS to either a local drive
+   or a network file system such as geode or slate.
+
+6. Once the nodes and edges files are coalesced, they must be read into
+   a Postgres database for deduplication and other processing.  These
+   scripts are located in the subdirectory 'fromPostgres'.
+
+   1. Update the schema name for the table data in each SQL script.  The
+      schema name ususally has the form: 'wos_jg_<year>'
+
+   2. Execute on the createNodeTable.sql SQL script:
+      'psql -U cadre_admin -d core_data -f createNodeTable.sql'
+
+   3. Execute on the createRefTable.sql SQL script:
+      'psql -U cadre_admin -d core_data -f createRefTable.sql'
+
+   5. Update the paths to the TSV files and the schema names in the .sh files.
+
+   6. Load the paper node data by executing the loadPapers.sh script
+
+   7. Load the edge data by executing the loadReferences.sh script
+
+   8. Perform the deduplication and other needed processing using the
+      wos_jg_prep.sql script.  Execute the processing using:
+      'psql -U cadre_admin -d core_data -f wos_jg_prep.sql'.  The final
+      paper node file for ingestion by JanusGraph will also be created by this
+      script.  Make sure the final path of the node files is set properly
+      before executing.
+      
