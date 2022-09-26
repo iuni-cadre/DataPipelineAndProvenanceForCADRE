@@ -27,5 +27,6 @@ WoSref.select("citing","cited").where($"cited".contains("WOS:") && not($"cited".
     .coalesce(100).write.mode(SaveMode.Overwrite)
     .format("com.databricks.spark.csv")
     .option("header", "true")//.option("compression", "gzip")
+    .option("sep","\t")
     .save("/WoSraw_2021/edges/refEdgesFiltered.csv")
 
