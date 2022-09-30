@@ -258,6 +258,7 @@ wosOutput = wos4.join(wos_auth2,  wos4['wosID'] == wos_auth2['wosID'], how='full
 def clean_text(c):
   c = regexp_replace(c, '"' , '')
   c = regexp_replace(c, '\\\\' , '')
+  c = regexp_replace(c, '\t', ' ')
   c = regexp_replace(c, '$s/"//g', '')
   return c
   

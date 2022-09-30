@@ -18,4 +18,14 @@ spark-submit \
   --conf spark.driver.maxResultSize=8g \
   WoSXMLParseFromParquet.py
 
+#spark-submit \
+#  --master yarn \
+#  --driver-memory 8G \
+#  --num-executors 21 \
+#  --executor-cores 4 \
+#  --executor-memory 28G \
+#  --conf spark.yarn.executor.memoryOverheadFactor=0.2 \
+#  --conf spark.driver.maxResultSize=8g \
+#  WoSXMLParseFromParquet.py
+
 echo "Return code from spark-submit is: " $?
