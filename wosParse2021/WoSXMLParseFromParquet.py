@@ -1,54 +1,53 @@
 from pyspark.sql import SparkSession, SQLContext
 from pyspark import SparkConf, SparkContext
 from pyspark.sql.types import *
-from pyspark.sql.functions import col, explode, concat_ws, collect_list, sort_array, count, size, coalesce, expr, regexp_replace
+from pyspark.sql.functions import col, explode, concat_ws, collect_list, sort_array, count, size, coalesce, expr, regexp_replace, udf
 spark= SparkSession.builder.config('spark.ui.port','4040').getOrCreate()
 
 spark.conf.set('spark.sql.caseSensitive', 'True') 
 
 WoS = spark.read.format("parquet").load("/WoSraw_2021/parquet/part*.snappy.parquet")
 
-wos4a = WoS.select(WoS.UID.alias("wosID"),
-				  WoS.dynamic_data.ic_related.oases['_is_OA'].alias('isOpenAccess'),
-                  concat_ws(", ", WoS.dynamic_data.ic_related.oases.oas['_type']).alias('openAccessType'),	
-                  WoS.static_data.fullrecord_metadata.abstracts.abstract.abstract_text.p[0].alias("abstract"),
-                  WoS.static_data.fullrecord_metadata.fund_ack.fund_text.p.alias("fundingText"),
-                  WoS.static_data.fullrecord_metadata.references._count.alias("citedReferenceCount"),
-                  WoS.static_data.fullrecord_metadata.addresses.address_name.address_spec['full_address'].alias('full_address'),
-                  WoS.static_data.fullrecord_metadata.reprint_addresses.address_name.address_spec.full_address[0].alias('reprintAddress'),
-                  WoS.static_data.fullrecord_metadata.references.reference.art_no.alias('articleNumber'),
-                  WoS.static_data.summary.pub_info._pubyear.alias("publicationYear"),
-                  WoS.static_data.summary.pub_info._coverdate.alias("publicationDate"),
-                  WoS.static_data.summary.pub_info._vol.alias("volume"),
-                  WoS.static_data.summary.pub_info._issue.alias("issue"),
-                  WoS.static_data.summary.pub_info._part_no.alias("partNumber"),
-                  WoS.static_data.summary.pub_info._supplement.alias("supplement"),
-                  WoS.static_data.summary.pub_info._special_issue.alias("specialIssue"),
-                  WoS.static_data.summary.pub_info._early_access_date.alias("earlyAccessDate"),
-                  WoS.static_data.summary.pub_info.page._begin.alias("startPage"),
-                  WoS.static_data.summary.pub_info.page._end.alias("endPage"),
-                  WoS.static_data.summary.pub_info.page._page_count.alias("numberOfPages"),
-                  WoS.static_data.summary.publishers.publisher.address_spec.city.alias("publisherCity"),
-                  WoS.static_data.summary.publishers.publisher.address_spec.full_address.alias("publisherAddress"),
-                  WoS.static_data.summary.publishers.publisher.names["name"]["full_name"].alias('publisher'),
-                  WoS.static_data.item.keywords_plus.keyword.alias('keywordsPlus'),
-                  WoS.static_data.summary.conferences.conference.conf_dates.conf_date._VALUE.alias("conferenceDate"),
-                  WoS.static_data.summary.conferences.conference.sponsors.sponsor[0].alias("conferenceSponsor"),
-                  WoS.static_data.summary.conferences.conference.conf_locations.conf_location.conf_host.alias("conferenceHost"),
-                  WoS.static_data.summary.conferences.conference.conf_titles.conf_title[0].alias("conferenceTitle"),
-                  WoS.static_data.summary.doctypes.doctype[0].alias('documentType')
-                 )
-                 
+wos4a = WoS.select(WoS.UID.alias("wosID")\
+        ,WoS.dynamic_data.ic_related.oases['_is_OA'].alias('isOpenAccess')\
+        ,concat_ws(", ", WoS.dynamic_data.ic_related.oases.oas['_type']).alias('openAccessType')\
+        ,WoS.static_data.fullrecord_metadata.abstracts.abstract.abstract_text.p[0].alias("abstract")\
+        ,WoS.static_data.fullrecord_metadata.fund_ack.fund_text.p.alias("fundingText")\
+        ,WoS.static_data.fullrecord_metadata.references._count.alias("citedReferenceCount")\
+        ,WoS.static_data.fullrecord_metadata.addresses.address_name.address_spec['full_address'].alias('full_address')\
+        ,WoS.static_data.fullrecord_metadata.reprint_addresses.address_name.address_spec.full_address[0].alias('reprintAddress')\
+        ,WoS.static_data.fullrecord_metadata.references.reference.art_no.alias('articleNumber')\
+        ,WoS.static_data.summary.pub_info._pubyear.alias("publicationYear")\
+        ,WoS.static_data.summary.pub_info._coverdate.alias("publicationDate")\
+        ,WoS.static_data.summary.pub_info._vol.alias("volume")\
+        ,WoS.static_data.summary.pub_info._issue.alias("issue")\
+        ,WoS.static_data.summary.pub_info._part_no.alias("partNumber")\
+        ,WoS.static_data.summary.pub_info._supplement.alias("supplement")\
+        ,WoS.static_data.summary.pub_info._special_issue.alias("specialIssue")\
+        ,WoS.static_data.summary.pub_info._early_access_date.alias("earlyAccessDate")\
+        ,WoS.static_data.summary.pub_info.page._begin.alias("startPage")\
+        ,WoS.static_data.summary.pub_info.page._end.alias("endPage")\
+        ,WoS.static_data.summary.pub_info.page._page_count.alias("numberOfPages")\
+        ,WoS.static_data.summary.publishers.publisher.address_spec.city.alias("publisherCity")\
+        ,WoS.static_data.summary.publishers.publisher.address_spec.full_address.alias("publisherAddress")\
+        ,WoS.static_data.summary.publishers.publisher.names["name"]["full_name"].alias('publisher')\
+        ,WoS.static_data.item.keywords_plus.keyword.alias('keywordsPlus')\
+        ,WoS.static_data.summary.conferences.conference.conf_dates.conf_date._VALUE.alias("conferenceDate")\
+        ,WoS.static_data.summary.conferences.conference.sponsors.sponsor[0].alias("conferenceSponsor")\
+        ,WoS.static_data.summary.conferences.conference.conf_locations.conf_location.conf_host.alias("conferenceHost")\
+        ,WoS.static_data.summary.conferences.conference.conf_titles.conf_title[0].alias("conferenceTitle")\
+        ,WoS.static_data.summary.doctypes.doctype[0].alias('documentType'))
+
+# added dropDuplicates where, to drop records that were duplicates from the original XML files
+# all duplicate wosID at this level are completely identical records
 wos4 = wos4a.withColumn("fundingText",        concat_ws(", ",  col("fundingText")))       \
             .withColumn("full_address",       concat_ws(", ",  col("full_address")))      \
             .withColumn("articleNumber",      concat_ws(", ",  col("articleNumber")))     \
             .withColumn("keywordsPlus",       concat_ws(", ",  col("keywordsPlus")))      \
             .withColumn("conferenceDate",     concat_ws(", ",  col("conferenceDate")))    \
             .withColumn("conferenceSponsor",  concat_ws(", ",  col("conferenceSponsor"))) \
-            .withColumn("conferenceHost",     concat_ws(", ",  col("conferenceHost"))) 
-            
-            
-            
+            .withColumn("conferenceHost",     concat_ws(", ",  col("conferenceHost"))).dropDuplicates(['wosID'])
+
 #BUILD AUTHOR ARRAY
 
 wos5 = WoS.select(WoS.UID.alias("wosID"), WoS.static_data.summary.names['name'].alias("author"))
@@ -254,17 +253,21 @@ wosOutput = wos4.join(wos_auth2,  wos4['wosID'] == wos_auth2['wosID'], how='full
                                     wosCoLo2.conferenceLocation,
                                         wosFo3.fundingOrgs
                        )
-                       
+
+# Adding dropDuplicates here to remove duplicates created by joins
+wosOutput1 = wosOutput.dropDuplicates(['wosID'])
+
+
 def clean_text(c):
   c = regexp_replace(c, '"' , '')
   c = regexp_replace(c, '\\\\' , '')
   c = regexp_replace(c, '\t', ' ')
   c = regexp_replace(c, '$s/"//g', '')
   return c
-  
-  
+
+
 #CLEAN TEXT
-wosOutput1 = wosOutput.select(
+wosOutput2 = wosOutput1.select(
 						clean_text(col('wosID')).alias('wosID'),
                         clean_text(col("isOpenAccess")).alias("isOpenAccess"), 
                         clean_text(col("openAccessType")).alias("openAccessType"),
@@ -311,11 +314,17 @@ wosOutput1 = wosOutput.select(
                         clean_text(col("conferenceLocation")).alias('conferenceLocation'),
                         clean_text(col("fundingOrgs")).alias('fundingOrgs')
 )  
-                        
-wosOutput1.coalesce(100).write.option("header","True") \
+
+
+# creates the lowercase standard names column
+# helps remove need for SQL transformation
+func1 = udf(lambda x: x.lower(), StringType())
+wosOutput3 = wosOutput2.withColumn('lc_standard_names',func1(col('standardNames')))
+
+
+wosOutput3.coalesce(100).write.option("header","True") \
                                .option("sep","\t") \
                                .option("quoteAll", True) \
                                .mode("overwrite") \
                                .csv('/WoSraw_2021/nodes')                       
                         
-
