@@ -19,6 +19,6 @@ for f in files[2:4]:
     try:
         print('starting inserts for', tab)
 #        data.to_sql(tab, conn, schema='patview_core',index=False, if_exists='append')
-	print('inserts complete for', tab)
+        print('inserts complete for', tab)
     except ValueError as e:
         print(e)
