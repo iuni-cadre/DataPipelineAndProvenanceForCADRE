@@ -5,7 +5,7 @@ import re
 
 # create a function for replacing incompatible data types with Postgres
 def dat_typ(type):
-    ints = [r'(int\(\d+\))',r'(bigint\(\d+\))',r'(binary\(\d+\))']
+    ints = [r'(int\(\d+\))',r'(bigint\(\d+\))']
 
     if type == 'bigint(1)':
         return 'BOOLEAN'
@@ -16,6 +16,8 @@ def dat_typ(type):
         return 'VARCHAR(10)'
     elif type == 'double':
         return 'DECIMAL'
+    elif type == 'binary(0)':
+        return 'VARCHAR(2)'
     else:
         return type.upper()
 
