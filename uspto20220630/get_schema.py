@@ -59,7 +59,10 @@ for soup in soups:
     for key, value in json.items():
         cols = ''
         for k,v in value.items():
-            cols = cols + f"\t{k} {dat_typ(v)},\n"
+            if v == 'BLANK':
+                continue
+            else:
+                cols = cols + f"\t{k} {dat_typ(v)},\n"
         sch = f"CREATE TABLE IF NOT EXISTS patview_core.{key} (\n{cols[:-2]}\n);\n"
         schema.append(sch)
 
