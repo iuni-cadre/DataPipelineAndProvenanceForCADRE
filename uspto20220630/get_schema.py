@@ -57,8 +57,8 @@ for soup in soups:
     for key, value in json.items():
         cols = ''
         for k,v in value.items():
-            cols = cols + f"{k} {dat_typ(v)},"
-        sch = f"CREATE TABLE IF NOT EXISTS patview_core.{key} ({cols[:-1]});"
+            cols = cols + f"\t{k} {dat_typ(v)},\n"
+        sch = f"CREATE TABLE IF NOT EXISTS patview_core.{key} (\n{cols[:-2]}\n);\n"
         schema.append(sch)
 
 # write schema to SQL file
