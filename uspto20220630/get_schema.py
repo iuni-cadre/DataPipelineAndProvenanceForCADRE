@@ -18,6 +18,8 @@ def dat_typ(type):
         return 'DECIMAL'
     elif type == 'binary(0)':
         return 'VARCHAR(2)'
+    elif 'text' in type:
+        return 'TEXT'
     else:
         return type.upper()
 
