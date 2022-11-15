@@ -3,7 +3,6 @@
 -- ############### --
 
 -- Inventor
-
 SELECT 'inventor_id',
         'name_first',
         'name_last',
@@ -26,7 +25,6 @@ SELECT inventor_id,
 FROM patview_core.g_inventor_disambiguated;
 
 -- Location
-
 SELECT 'location_id',
         'city',
         'state',
@@ -53,7 +51,6 @@ SELECT location_id,
 FROM patview_core.g_location_disambiguated;
 
 -- Assginee
-
 SELECT 'assignee_id',
         'type',
         'name_first',
@@ -82,7 +79,6 @@ LEFT JOIN patview_core.g_persistent_assignee p
 ON a.assignee_id = p.disamb_inventor_id_xxxxxxxx;
 
 -- Government Organization
-
 SELECT 'organization_id',
         'name',
         'level_one',
@@ -101,7 +97,6 @@ LEFT JOIN patview_core.g_gov_interest orgint
 ON org.patent_id = orgint.patent_id;
 
 -- Examiner
-
 SELECT 'examiner_id',
         'name_first',
         'name_last',
@@ -118,7 +113,6 @@ SELECT NULL, -- examiner id no longer supported
 FROM patview_core.g_examiner_not_disambiguated;
 
 -- Application
-
 SELECT 'application_id',
         'type',
         'number',
@@ -133,7 +127,6 @@ SELECT application_id,
 FROM patview_core.g_application;
 
 -- Lawyer 
-
 SELECT 'lawyer_id',
         'name_first',
         'name_last',
@@ -208,3 +201,103 @@ FROM patview_core.g_patent;
 -- ############### --
 --      EDGES      --
 -- ############### --
+
+-- INVENTOR LOCATED IN
+SELECT 'location_id',
+        'inventor_id'
+UNION
+SELECT location_id,
+        inventor_id
+FROM patview_core.g_inventor_disambiguated;
+
+-- ASSIGNEE LOCATED IN
+SELECT 'location_id',
+        'assignee_id'
+UNION
+SELECT location_id,
+        assignee_id
+FROM patview_core.g_assignee_disambiguated;
+
+-- COINVENTOR OF 
+SELECT 'inventor_id',
+        'coinventor_id'
+UNION
+SELECT a.inventor_id as inventor_id,
+        b.inventor_id as coinventor_id
+FROM patview_core.g_inventor_disambiguated a
+JOIN patview_core.g_inventor_disambiguated b
+ON a.patent_id = b.patent_id AND a.inventor_id <> b.inventor_id;
+
+-- INVENTOR OF
+SELECT 'patent_id',
+        'inventor_id'
+UNION
+SELECT patent_id,
+        inventor_id
+FROM patview_core.g_inventor_disambiguated;
+
+-- Assigned to
+SELECT 'patent_id',
+        'assignee_id'
+UNION
+SELECT patent_id,
+        assignee_id
+FROM patview_core.g_assignee_disambiguated;
+
+-- Lawyer of
+SELECT 'patent_id',
+        'lawyer_id'
+UNION
+SELECT patent_id,
+        attorney_id
+from patview_core.g_attorney_disambiguated;
+
+--Interested in 
+SELECT 'patent_id',
+        'gi_organization_id'
+UNION
+SELECT UPPER(org.patent_id),
+        UPPER(org.gi_organization_id)
+FROM patview_core.g_gov_interest_org org
+JOIN g_patent p
+ON p.patent_id = org.patent_id;
+
+-- Examiner of
+SELECT 'patent_id',
+        'examiner_id'
+UNION
+SELECT e.patent_id,
+        'NULL'
+FROM patview_core.g_examiner_not_disambiguated e
+JOIN patview_core.g_patent p
+ON p.patent_id = e.patent_id;
+
+-- Application -> Cites -> Patents
+SELECT 'citing_patent_id',
+        'cited_application_id'
+UNION
+SELECT cit.patent_id,
+        app.application_id
+FROM patview_core.g_us_application_citation cit
+JOIN patview_core.g_application app
+ON cit.patent_id = app.patent_id;
+
+-- Application -> Becomes -> Patent
+SELECT 'application_id',
+        'patent_id'
+UNION
+SELECT application_id,
+        patent_id
+FROM patview_core.application;
+
+-- Patent -> Cites -> Patentes
+SELECT 'citing_patent_id',
+        'cited_patent_id'
+UNION
+SELECT UPPER(c.patent_id),
+        UPPER(c.citation_patent_id)
+FROM patview_core.g_us_patent_citation c
+JOIN patent p1
+ON p1.patent = c.patent_id
+JOIN patent p2
+ON p2 = c.citation_patent_id;

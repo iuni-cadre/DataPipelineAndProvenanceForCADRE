@@ -221,10 +221,10 @@ CREATE TABLE IF NOT EXISTS patview_core.g_location_not_disambiguated (
 	raw_country VARCHAR(10)
 );
 
-CREATE TABLE IF NOT EXISTS patview_core.g_otherreference (
+CREATE TABLE IF NOT EXISTS patview_core.g_other_reference (
 	patent_id VARCHAR(20),
-	sequence TEXT,
-	text TEXT
+	other_reference_sequence TEXT,
+	other_reference_text TEXT
 );
 
 CREATE TABLE IF NOT EXISTS patview_core.g_patent (
@@ -252,11 +252,40 @@ CREATE TABLE IF NOT EXISTS patview_core.g_pct_data (
 
 CREATE TABLE IF NOT EXISTS patview_core.g_persistent_assignee (
 	rawassignee_uuid VARCHAR(64),
-	disamb_inventor_id_xxxxxxxx VARCHAR(256)
+	disamb_assignee_id_20181127  VARCHAR(256),
+	disamb_assignee_id_20190312  VARCHAR(256),
+	disamb_assignee_id_20190820  VARCHAR(256),
+	disamb_assignee_id_20191008  VARCHAR(256),
+	disamb_assignee_id_20191231  VARCHAR(256),
+	disamb_assignee_id_20200331  VARCHAR(256),
+	disamb_assignee_id_20200630  VARCHAR(256),
+	disamb_assignee_id_20200929  VARCHAR(256),
+	disamb_assignee_id_20201229  VARCHAR(256),
+	disamb_assignee_id_20210330  VARCHAR(256),
+	disamb_assignee_id_20210629  VARCHAR(256),
+	disamb_assignee_id_20210708  VARCHAR(256),
+	disamb_assignee_id_20210930  VARCHAR(256),
+	disamb_assignee_id_20211230  VARCHAR(256),
+	disamb_assignee_id_20220630  VARCHAR(256)
 );
 
 CREATE TABLE IF NOT EXISTS patview_core.g_persistent_inventor (
-	disamb_inventor_id_xxxxxxxx VARCHAR(256)
+	rawinventor_uuid VARCHAR(64),
+    disamb_inventor_id_20170808  VARCHAR(256),
+    disamb_inventor_id_20171003  VARCHAR(256),
+    disamb_inventor_id_20171226  VARCHAR(256),
+    disamb_inventor_id_20180528  VARCHAR(256),
+    disamb_inventor_id_20181127  VARCHAR(256),
+    disamb_inventor_id_20190312  VARCHAR(256),
+    disamb_inventor_id_20190820  VARCHAR(256),
+    disamb_inventor_id_20191008  VARCHAR(256),
+    disamb_inventor_id_20191231  VARCHAR(256),
+    disamb_inventor_id_20200331  VARCHAR(256),
+    disamb_inventor_id_20200630  VARCHAR(256),
+    disamb_inventor_id_20200929  VARCHAR(256),
+    disamb_inventor_id_20201229  VARCHAR(256),
+    disamb_inventor_id_20211230  VARCHAR(256),
+    disamb_inventor_id_20220630  VARCHAR(256)
 );
 
 CREATE TABLE IF NOT EXISTS patview_core.g_rel_app_text (
@@ -295,10 +324,10 @@ CREATE TABLE IF NOT EXISTS patview_core.g_us_patent_citation (
 
 CREATE TABLE IF NOT EXISTS patview_core.g_us_rel_doc (
 	patent_id VARCHAR(20),
-	related_doc_type VARCHAR(64),
-	related_doc_kind VARCHAR(64),
 	related_doc_number VARCHAR(64),
 	published_country VARCHAR(20),
+	related_doc_type VARCHAR(64),
+	related_doc_kind VARCHAR(64),
 	related_doc_published_date VARCHAR(10),
 	related_doc_status VARCHAR(20),
 	related_doc_sequence INTEGER,
