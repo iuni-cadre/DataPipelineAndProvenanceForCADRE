@@ -16,12 +16,12 @@ UNION
 SELECT inventor_id,
         disambig_inventor_name_first,
         disambig_inventor_name_last,
-        NULL, -- num_patentes no longer supported
-        NULL, -- num_assignees no longer supported
+        'NULL', -- num_patentes no longer supported
+        'NULL', -- num_assignees no longer supported
         location_id,
-        NULL, -- first_seen_date no longer supported
-        NULL, -- last_seen_date no longer supported
-        NULL -- years_active no longer supporter
+        'NULL', -- first_seen_date no longer supported
+        'NULL', -- last_seen_date no longer supported
+        'NULL' -- years_active no longer supporter
 FROM patview_core.g_inventor_disambiguated;
 
 -- Location
@@ -45,9 +45,9 @@ SELECT location_id,
         county_fips,
         latitude,
         longitude,
-        NULL, -- num_assignees no longer supported
-        NULL, -- num_invenotrs no longer supported
-        NULL -- num_patents no longer supported
+        'NULL', -- num_assignees no longer supported
+        'NULL', -- num_invenotrs no longer supported
+        'NULL' -- num_patents no longer supported
 FROM patview_core.g_location_disambiguated;
 
 -- Assginee
@@ -68,11 +68,11 @@ SELECT a.assignee_id,
         a.disambig_assignee_individual_name_first,
         a.disambig_assignee_individual_name_last,
         a.disambig_assignee_organization,
-        NULL, -- num patents no longer supported
-        NULL, -- num inventors no longer supported
-        NULL, -- first seen date no longer supported
-        NULL, -- last seen date no longer supported
-        NULL, -- years active no longer supported
+        'NULL', -- num patents no longer supported
+        'NULL', -- num inventors no longer supported
+        'NULL', -- first seen date no longer supported
+        'NULL', -- last seen date no longer supported
+        'NULL', -- years active no longer supported
         p.rawassignee_uuid, -- get from g_persistent_assignee
 FROM patview_core.g_assignee_disambiguated a
 LEFT JOIN patview_core.g_persistent_assignee p
@@ -109,7 +109,7 @@ SELECT NULL, -- examiner id no longer supported
         raw_applicant_name_last,
         examiner_role,
         art_group,
-        NULL -- persistent examiner id no longer supported
+        'NULL' -- persistent examiner id no longer supported
 FROM patview_core.g_examiner_not_disambiguated;
 
 -- Application
@@ -121,8 +121,8 @@ SELECT 'application_id',
 UNION
 SELECT application_id,
         patent_application_type,
-        NULL, -- number no longer supported
-        NULL, -- country no longer supported
+        'NULL', -- number no longer supported
+        'NULL', -- country no longer supported
         filing_date
 FROM patview_core.g_application;
 
@@ -143,13 +143,13 @@ SELECT attorney_id,
         disambig_attorney_name_first,
         disambig_attorney_name_last,
         disambig_attorney_organization,
-        NULL, -- num patents no longer supported
-        NULL, -- num assignees no longer supported
-        NULL, -- num inventors no longer supported
-        NULL, -- first seen date no longer supported
-        NULL, -- last seen date no longers supported
-        NULL, -- years active no longer supported
-        NULL -- persistent lawyer id no longer supported
+        'NULL', -- num patents no longer supported
+        'NULL', -- num assignees no longer supported
+        'NULL', -- num inventors no longer supported
+        'NULL', -- first seen date no longer supported
+        'NULL', -- last seen date no longers supported
+        'NULL', -- years active no longer supported
+        'NULL' -- persistent lawyer id no longer supported
 FROM patview_core.g_attorney_disambiguated;
 
 -- Patent

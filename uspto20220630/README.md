@@ -10,6 +10,7 @@ This folder contains scripts and documents relevant to the process for updating 
 
 - schema.sql : the schema scraped and updated, no errors should be received when loading new files as of 11/15/2022
 
+- export_nodes_edges.sql : Select statements for all nodes/edges for Cadre
 
 ### Issues Log:
 - Downloads: Following granted tables not showing on data download pages
