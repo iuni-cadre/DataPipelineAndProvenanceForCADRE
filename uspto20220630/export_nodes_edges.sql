@@ -301,3 +301,125 @@ JOIN patent p1
 ON p1.patent = c.patent_id
 JOIN patent p2
 ON p2 = c.citation_patent_id;
+
+-- ############### --
+--  CATEGORY DATA  --
+-- ############### --
+
+-- CPC Node
+SELECT 'cpc_id',
+        'level',
+        'label'
+UNION
+SELECT DISTINCT(cpc_section) AS 'cpc_id',
+        'section' AS 'level',
+        cpc_section AS 'label'
+FROM patview_core.g_cpc_current
+UNION ALL
+SELECT DISTINCT(c.cpc_class) AS 'cpc_id',
+        'subsection' AS 'level',
+        t.cpc_class_title AS 'label'
+FROM patview_core.g_cpc_current c
+JOIN patview_core.g_cpc_title t
+ON c.cpc_group = t.cpc_group
+UNION ALL
+SELECT DISTINCT(c.cpc_subclass) AS 'cpc_id',
+        'group' as 'level',
+        t.cpc_subclass_title AS 'label'
+FROM patview_core.g_cpc_current c
+JOIN patview_core.g_cpc_title t
+ON c.cpc_group = t.cpc_group
+UNION ALL
+SELECT c.cpc_group AS 'cpc_id',
+        'subgroup' AS 'level',
+        t.cpc_group_title AS 'label'
+FROM patview_core.g_cpc_current c
+JOIN patview_core.g_cpc_title;
+
+-- CPC Edge
+SELECT 'patent_id', 'cpc_id'
+UNION
+SELECT patent_id, cpc_section as 'cpc_id'
+FROM patview_core.g_cpc_current
+UNION
+SELECT patent_id, cpc_class AS 'cpc_id'
+FROM patview_core.g_cpc_current
+UNION
+SELECT patent_id, cpc_subclass AS 'cpc_id'
+FROM patview_core.g_cpc_current
+UNION
+SELECT patent_id, cpc_group AS 'cpc_id'
+FROM patview_core.g_cpc_current;
+
+-- USPC Node
+SELECT 'uspc_id','level','label'
+UNION
+SELECT DISTINCT(ifnull(uspc_mainclass_id,'')) AS 'uspc_id',
+        'mainclass' AS 'level',
+        ifnull(uspc_mainclass_title,'') AS 'label'
+FROM patview_core.g_uspc_at_issue;
+
+-- USPC Edge
+SELECT 'patent_id', 'uspc_id'
+UNION
+SELECT ifnull(patent_id,''),
+        ifnull(uspc_mainclass_id,'') AS 'uspc_id'
+FROM patview_core.g_uspc_at_issue
+UNION ALL
+SELECT ifnull(patent_id,''),
+        ifnull(uspc_subclass_id,'') AS 'uspc_id'
+FROM patview_core.g_uspc_at_issue;
+
+-- WIPO Node
+SELECT 'wipo_field_id', 'level', 'label'
+UNION
+SELECT DISTINCT(wipo_field_id), 
+        'field_title' AS 'level',
+        wipo_field_title AS 'label'
+FROM patview_core.g_wipo_technology
+UNION ALL
+SELECT DISTINCT(wipo_field_id),
+        'sector_title' AS 'level',
+        wipo_sector_title AS 'label'
+FROM patview_core.g_wipo_technology;
+
+-- WIPO Edge
+SELECT 'patent_id', 'wipo_field_id'
+UNION
+SELECT patent_id, wipo_field_id
+FROM patview_core.g_wipo_technology;
+
+-- NBER tables removed
+
+-- IPCR Node
+SELECT 'ipcr_id', 'level', 'label'
+UNION
+SELECT DISTINCT(ipc_sequence) AS 'ipcr_id', 'section' AS 'level', section AS 'label'
+FROM patview_core.g_ipc_at_issue
+UNION ALL
+SELECT DISTINCT(ipc_sequence) AS 'ipcr_id', 'ipc_class' AS 'level', ipc_class AS 'label'
+FROM patview_core.g_ipc_at_issue
+UNION ALL
+SELECT DISTINCT(ipc_sequence) AS 'ipcr_id', 'subclass' AS 'level', subclass AS 'label'
+FROM patview_core.g_ipc_at_issue
+UNION ALL
+SELECT DISTINCT(ipc_sequence) AS 'ipcr_id', 'main_group' AS 'level', main_group AS 'label'
+FROM patview_core.g_ipc_at_issue
+UNION ALL
+SELECT DISTINCT(ipc_sequence) AS 'ipcr_id', 'subgroup' AS 'level', subgroup AS 'label'
+FROM patview_core.g_ipc_at_issue
+UNION ALL
+SELECT DISTINCT(ipc_sequence) AS 'ipcr_id', 'symbol_position' AS 'level', symbol_position AS 'label'
+FROM patview_core.g_ipc_at_issue
+UNION ALL
+SELECT DISTINCT(ipc_sequence) AS 'ipcr_id', 'classification_value' AS 'level', classification_value AS 'label'
+FROM patview_core.g_ipc_at_issue
+UNION ALL
+SELECT DISTINCT(ipc_sequence) AS 'ipcr_id', 'classification_data_source' AS 'level', classification_data_source AS 'label'
+FROM patview_core.g_ipc_at_issue;
+
+-- IPCR Edge
+SELECT 'patent_id','sequence'
+UNION
+SELECT patent_id, ipc_sequence
+FROM patview_core.g_ipc_at_issue;
