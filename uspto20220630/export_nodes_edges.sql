@@ -6,6 +6,7 @@
 SELECT 'inventor_id',
         'name_first',
         'name_last',
+        'male_flag'
         -- 'num_patents',
         -- 'num_assignees',
         'lastknown_location_id'
@@ -16,6 +17,7 @@ UNION ALL
 SELECT inventor_id,
         disambig_inventor_name_first,
         disambig_inventor_name_last,
+        male_flag,
         -- num_patents no longer supported
         -- num_assignees no longer supported
         location_id
@@ -27,6 +29,7 @@ FROM patview_core.g_inventor_disambiguated;
 -- Location
 SELECT 'location_id',
         'city',
+        'county',
         'state',
         'country',
         'state_fips',
@@ -39,6 +42,7 @@ SELECT 'location_id',
 UNION ALL
 SELECT location_id,
         disambig_city,
+        county,
         disambig_state,
         disambig_country,
         state_fips,
@@ -101,14 +105,14 @@ LEFT JOIN patview_core.g_gov_interest orgint
 ON org.patent_id = orgint.patent_id;
 
 -- Examiner
-SELECT 'examiner_id',
+SELECT --'examiner_id',
         'name_first',
         'name_last',
         'role',
         'group'
         --'persistent_examiner_id'
 UNION ALL
-SELECT NULL, -- examiner id no longer supported
+SELECT  -- examiner id no longer supported
         raw_examiner_name_first,
         raw_examiner_name_last,
         examiner_role,
