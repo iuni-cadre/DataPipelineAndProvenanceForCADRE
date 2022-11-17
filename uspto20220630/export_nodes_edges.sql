@@ -46,7 +46,7 @@ SELECT a.assignee_id,
         -- first seen date no longer supported
         -- last seen date no longer supported
         -- years active no longer supported
-        p.rawassignee_uuid -- get from g_persistent_assignee
+        p.rawassignee_uuid AS g_persistent_assignee_id-- get from g_persistent_assignee
 FROM patview_core.g_assignee_disambiguated a
 LEFT JOIN patview_core.g_persistent_assignee p
 ON a.assignee_id = p.disamb_assignee_id_20220630
