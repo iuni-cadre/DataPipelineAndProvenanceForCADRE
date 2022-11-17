@@ -70,3 +70,4 @@ for soup in soups:
 with open('schema.sql','w') as f:
     for s in schema:
         f.write(s+'\n')
+
