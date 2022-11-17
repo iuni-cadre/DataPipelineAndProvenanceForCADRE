@@ -37,10 +37,10 @@ FROM patview_core.g_location_disambiguated);
 -- Assginee
 CREATE TEMP VIEW g_assignee_export AS (
 SELECT a.assignee_id,
-        a.assignee_type::VARCHAR(64),
+        a.assignee_type,
         a.disambig_assignee_individual_name_first,
         a.disambig_assignee_individual_name_last,
-        a.disambig_assignee_organization
+        a.disambig_assignee_organization,
         -- num patents no longer supported
         -- num inventors no longer supported
         -- first seen date no longer supported
@@ -49,11 +49,7 @@ SELECT a.assignee_id,
         p.rawassignee_uuid -- get from g_persistent_assignee
 FROM patview_core.g_assignee_disambiguated a
 LEFT JOIN patview_core.g_persistent_assignee p
-ON a.assignee_id in ( p.disamb_assignee_id_20181127,p.disamb_assignee_id_20190312,p.disamb_assignee_id_20190820,
-                        p.disamb_assignee_id_20191008,p.disamb_assignee_id_20191231,p.disamb_assignee_id_20200331,
-                        p.disamb_assignee_id_20200630,p.disamb_assignee_id_20200929,p.disamb_assignee_id_20201229,
-                        p.disamb_assignee_id_20210330,p.disamb_assignee_id_20210629,p.disamb_assignee_id_20210708,
-                        p.disamb_assignee_id_20210930,p.disamb_assignee_id_20211230,p.disamb_assignee_id_20220630)
+ON a.assignee_id = p.disamb_assignee_id_20220630
 );
 \copy (SELECT * FROM g_assignee_export) TO 'assignee_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
 
