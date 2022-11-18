@@ -173,8 +173,8 @@ ON p.patent_id = org.patent_id
 
 -- Examiner of
 CREATE TEMP VIEW g_examiner_of_export AS (
-SELECT e.patent_id,
-        p.patent_id
+SELECT e.patent_id AS E_patent_id,
+        p.patent_id AS P_patent_id
 FROM patview_core.g_examiner_not_disambiguated e
 JOIN patview_core.g_patent p
 ON p.patent_id = e.patent_id
@@ -196,8 +196,8 @@ ON cit.patent_id = app.patent_id
 
 -- Patent -> Cites -> Patents
 CREATE TEMP VIEW g_pat_cite_pat_export AS (
-SELECT UPPER(c.patent_id),
-        UPPER(c.citation_patent_id)
+SELECT c.patent_id,
+        c.citation_patent_id
 FROM patview_core.g_us_patent_citation c
 JOIN patview_core.g_patent p1
 ON p1.patent_id = c.patent_id
