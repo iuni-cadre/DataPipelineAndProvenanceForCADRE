@@ -36,20 +36,18 @@ FROM patview_core.g_location_disambiguated);
 
 -- Assginee
 CREATE TEMP VIEW g_assignee_export AS (
-SELECT a.assignee_id,
-        a.assignee_type,
-        a.disambig_assignee_individual_name_first,
-        a.disambig_assignee_individual_name_last,
-        a.disambig_assignee_organization,
+SELECT assignee_id,
+        assignee_type,
+        disambig_assignee_individual_name_first,
+        disambig_assignee_individual_name_last,
+        disambig_assignee_organization
         -- num patents no longer supported
         -- num inventors no longer supported
         -- first seen date no longer supported
         -- last seen date no longer supported
         -- years active no longer supported
-        p.rawassignee_uuid AS g_persistent_assignee_id-- get from g_persistent_assignee
-FROM patview_core.g_assignee_disambiguated a
-LEFT JOIN patview_core.g_persistent_assignee p
-ON a.assignee_id = p.disamb_assignee_id_20220630
+        -- persistent assignee id no longer supported
+FROM patview_core.g_assignee_disambiguated
 );
 \copy (SELECT * FROM g_assignee_export) TO 'assignee_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
 
@@ -69,7 +67,7 @@ ON org.patent_id = orgint.patent_id
 
 -- Examiner
 CREATE TEMP VIEW g_examiner_export AS (
-SELECT  -- examiner id no longer supported
+SELECT  patent_id,
         raw_examiner_name_first,
         raw_examiner_name_last,
         examiner_role,
@@ -82,7 +80,7 @@ FROM patview_core.g_examiner_not_disambiguated
 -- Application
 CREATE TEMP VIEW g_application_export AS (
 SELECT application_id,
-        patent_application_type
+        patent_application_type,
         -- number no longer supported
         -- country no longer supported
         filing_date
@@ -155,7 +153,7 @@ ON a.patent_id = b.patent_id AND a.inventor_id <> b.inventor_id
 \copy (SELECT * FROM g_coinventor_export) TO 'coinventor_of.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
 
 -- INVENTOR OF
-\copy (SELECT patent_id,inventor_id FROM patview_core.g_inventor_disambiguated) TO 'inventor_of.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+
 
 -- Assigned to
 \copy (SELECT patent_id,assignee_id FROM patview_core.g_assignee_disambiguated) TO 'assigned_to.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
@@ -165,8 +163,8 @@ ON a.patent_id = b.patent_id AND a.inventor_id <> b.inventor_id
 
 --Interested in 
 CREATE TEMP VIEW g_interested_in_export AS (
-SELECT UPPER(org.patent_id::VARCHAR(20)),
-        UPPER(org.gi_organization_id::VARCHAR(64))
+SELECT org.patent_id,
+        org.gi_organization_id
 FROM patview_core.g_gov_interest_org org
 JOIN patview_core.g_patent p
 ON p.patent_id = org.patent_id
@@ -176,7 +174,7 @@ ON p.patent_id = org.patent_id
 -- Examiner of
 CREATE TEMP VIEW g_examiner_of_export AS (
 SELECT e.patent_id,
-        'NULL'
+        p.patent_id
 FROM patview_core.g_examiner_not_disambiguated e
 JOIN patview_core.g_patent p
 ON p.patent_id = e.patent_id

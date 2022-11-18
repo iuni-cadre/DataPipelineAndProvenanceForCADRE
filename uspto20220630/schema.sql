@@ -1,3 +1,4 @@
+-- applicant not disambiguated table
 CREATE TABLE IF NOT EXISTS patview_core.g_applicant_not_disambiguated (
 	patent_id VARCHAR(36),
 	applicant_sequence INTEGER,
@@ -9,6 +10,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_applicant_not_disambiguated (
 	rawlocation_id VARCHAR(36)
 );
 
+-- application table
 CREATE TABLE IF NOT EXISTS patview_core.g_application (
 	application_id VARCHAR(36),
 	patent_id VARCHAR(20),
@@ -18,6 +20,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_application (
 	rule_47_flag BOOLEAN
 );
 
+-- assignee disambiguated table
 CREATE TABLE IF NOT EXISTS patview_core.g_assignee_disambiguated (
 	patent_id VARCHAR(20),
 	assignee_sequence INTEGER,
@@ -29,6 +32,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_assignee_disambiguated (
 	location_id VARCHAR(128)
 );
 
+-- assignee not disambiguated table
 CREATE TABLE IF NOT EXISTS patview_core.g_assignee_not_disambiguated (
 	patent_id VARCHAR(20),
 	assignee_sequence INTEGER,
@@ -40,6 +44,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_assignee_not_disambiguated (
 	rawlocation_id VARCHAR(128)
 );
 
+-- attorney disambiguated table
 CREATE TABLE IF NOT EXISTS patview_core.g_attorney_disambiguated (
 	patent_id VARCHAR(20),
 	attorney_sequence INTEGER,
@@ -50,6 +55,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_attorney_disambiguated (
 	attorney_country VARCHAR(10)
 );
 
+-- attorney not disambiguated table
 CREATE TABLE IF NOT EXISTS patview_core.g_attorney_not_disambiguated (
 	patent_id VARCHAR(20),
 	attorney_sequence INTEGER,
@@ -60,17 +66,20 @@ CREATE TABLE IF NOT EXISTS patview_core.g_attorney_not_disambiguated (
 	attorney_country VARCHAR(10)
 );
 
+-- botanic table
 CREATE TABLE IF NOT EXISTS patview_core.g_botanic (
 	patent_id VARCHAR(20),
 	latin_name VARCHAR(128),
 	plant_variety VARCHAR(128)
 );
 
+-- brf sum text table
 CREATE TABLE IF NOT EXISTS patview_core.g_brf_sum_text (
 	patent_id VARCHAR(20),
 	summary_text TEXT
 );
 
+-- claim table
 CREATE TABLE IF NOT EXISTS patview_core.g_claim (
 	patent_id VARCHAR(20),
 	claim_sequence INTEGER,
@@ -80,6 +89,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_claim (
 	exemplary INTEGER
 );
 
+-- cpc current table
 CREATE TABLE IF NOT EXISTS patview_core.g_cpc_current (
 	patent_id VARCHAR(20),
 	cpc_sequence INTEGER,
@@ -90,7 +100,9 @@ CREATE TABLE IF NOT EXISTS patview_core.g_cpc_current (
 	cpc_type VARCHAR(36),
 	cpc_symbol_position VARCHAR(2)
 );
+CREATE INDEX g_cpc_current_index ON patview_core.g_cpc_current USING HASH (cpc_group);
 
+-- cpc title table
 CREATE TABLE IF NOT EXISTS patview_core.g_cpc_title (
 	cpc_subclass VARCHAR(20),
 	cpc_subclass_title VARCHAR(512),
@@ -99,19 +111,23 @@ CREATE TABLE IF NOT EXISTS patview_core.g_cpc_title (
 	cpc_class VARCHAR(20),
 	cpc_class_title VARCHAR(512)
 );
+CREATE INDEX g_cpc_title_index ON patview_core.g_cpc_title USING HASH (cpc_group);
 
+-- detail desc text table
 CREATE TABLE IF NOT EXISTS patview_core.g_detail_desc_text (
 	patent_id VARCHAR(20),
 	description_text TEXT,
 	description_length INTEGER
 );
 
+-- draw desc text table
 CREATE TABLE IF NOT EXISTS patview_core.g_draw_desc_text (
 	patent_id VARCHAR(20),
 	draw_desc_sequence INTEGER,
 	draw_desc_text TEXT
 );
 
+-- examiner not disambiguated table
 CREATE TABLE IF NOT EXISTS patview_core.g_examiner_not_disambiguated (
 	patent_id VARCHAR(20),
 	examiner_sequence INTEGER,
@@ -121,12 +137,14 @@ CREATE TABLE IF NOT EXISTS patview_core.g_examiner_not_disambiguated (
 	art_group VARCHAR(20)
 );
 
+-- figures table
 CREATE TABLE IF NOT EXISTS patview_core.g_figures (
 	patent_id VARCHAR(20),
 	num_figures INTEGER,
 	num_sheets INTEGER
 );
 
+-- foreign citation table
 CREATE TABLE IF NOT EXISTS patview_core.g_foreign_citation (
 	patent_id VARCHAR(20),
 	citation_sequence INTEGER,
@@ -136,6 +154,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_foreign_citation (
 	citation_country VARCHAR(10)
 );
 
+-- foreign priority table
 CREATE TABLE IF NOT EXISTS patview_core.g_foreign_priority (
 	patent_id VARCHAR(20),
 	priority_claim_sequence INTEGER,
@@ -145,16 +164,19 @@ CREATE TABLE IF NOT EXISTS patview_core.g_foreign_priority (
 	foreign_country_filed VARCHAR(10)
 );
 
+-- gov interest table
 CREATE TABLE IF NOT EXISTS patview_core.g_gov_interest (
 	patent_id VARCHAR(20),
 	gi_statement TEXT
 );
 
+-- gov interest contracts table
 CREATE TABLE IF NOT EXISTS patview_core.g_gov_interest_contracts (
 	patent_id VARCHAR(20),
 	contract_award_number VARCHAR(255)
 );
 
+-- gov interest org table
 CREATE TABLE IF NOT EXISTS patview_core.g_gov_interest_org (
 	patent_id VARCHAR(255),
 	gi_organization_id INTEGER,
@@ -164,6 +186,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_gov_interest_org (
 	level_three VARCHAR(255)
 );
 
+-- inventor disambiguated table
 CREATE TABLE IF NOT EXISTS patview_core.g_inventor_disambiguated (
 	patent_id VARCHAR(36),
 	inventor_sequence INTEGER,
@@ -174,6 +197,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_inventor_disambiguated (
 	attribution_status INTEGER
 );
 
+-- inventor not disambiguated table
 CREATE TABLE IF NOT EXISTS patview_core.g_inventor_not_disambiguated (
 	patent_id VARCHAR(20),
 	inventor_sequence INTEGER,
@@ -184,6 +208,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_inventor_not_disambiguated (
 	rawlocation_id VARCHAR(128)
 );
 
+-- ipc table
 CREATE TABLE IF NOT EXISTS patview_core.g_ipc_at_issue (
 	patent_id VARCHAR(20),
 	ipc_sequence INTEGER,
@@ -201,6 +226,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_ipc_at_issue (
 	ipc_version_indicator VARCHAR(10)
 );
 
+-- location disambiguated table
 CREATE TABLE IF NOT EXISTS patview_core.g_location_disambiguated (
 	location_id VARCHAR(128),
 	disambig_city VARCHAR(128),
@@ -213,6 +239,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_location_disambiguated (
 	county_fips VARCHAR(6)
 );
 
+-- location not disambiguated table
 CREATE TABLE IF NOT EXISTS patview_core.g_location_not_disambiguated (
 	rawlocation_id VARCHAR(128),
 	location_id VARCHAR(128),
@@ -221,12 +248,14 @@ CREATE TABLE IF NOT EXISTS patview_core.g_location_not_disambiguated (
 	raw_country VARCHAR(10)
 );
 
+-- other reference table
 CREATE TABLE IF NOT EXISTS patview_core.g_other_reference (
 	patent_id VARCHAR(20),
 	other_reference_sequence TEXT,
 	other_reference_text TEXT
 );
 
+-- patent table
 CREATE TABLE IF NOT EXISTS patview_core.g_patent (
 	patent_id VARCHAR(20),
 	patent_type VARCHAR(100),
@@ -239,6 +268,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_patent (
 	filename VARCHAR(120)
 );
 
+-- pct data table
 CREATE TABLE IF NOT EXISTS patview_core.g_pct_data (
 	patent_id VARCHAR(20),
 	published_filed_date VARCHAR(10),
@@ -250,6 +280,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_pct_data (
 	pct_doc_type VARCHAR(20)
 );
 
+-- persistent assignee table
 CREATE TABLE IF NOT EXISTS patview_core.g_persistent_assignee (
 	rawassignee_uuid VARCHAR(64),
 	disamb_assignee_id_20181127  VARCHAR(256),
@@ -269,6 +300,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_persistent_assignee (
 	disamb_assignee_id_20220630  VARCHAR(256)
 );
 
+-- persistent inventor table
 CREATE TABLE IF NOT EXISTS patview_core.g_persistent_inventor (
 	rawinventor_uuid VARCHAR(64),
     disamb_inventor_id_20170808  VARCHAR(256),
@@ -288,6 +320,7 @@ CREATE TABLE IF NOT EXISTS patview_core.g_persistent_inventor (
     disamb_inventor_id_20220630  VARCHAR(256)
 );
 
+-- 
 CREATE TABLE IF NOT EXISTS patview_core.g_rel_app_text (
 	patent_id VARCHAR(20),
 	rel_app_text TEXT
