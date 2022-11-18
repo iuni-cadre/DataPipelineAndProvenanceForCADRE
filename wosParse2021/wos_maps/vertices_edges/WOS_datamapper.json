@@ -1,0 +1,64 @@
+{
+  "vertexMap" : {
+    "nodes.tsv" : {
+      "[VertexLabel]" : "Paper",
+      "wosid" : "wosid",
+      "lc_standard_names" : "lc_standard_names",
+      "full_address" : "full_address",
+      "publicationyear" : "publicationyear",
+      "standardnames" : "standardnames",
+      "authors" : "authors",
+      "papertitle" : "papertitle",
+      "journaltitle" : "journaltitle",
+      "documenttype" : "documenttype",
+      "conferencetitle" : "conferencetitle",
+      "abstract" : "abstract",
+      "fundingtext" : "fundingtext",
+      "citedreferencecount" : "citedreferencecount",
+      "publisher" : "publisher",
+      "issn" : "issn",
+      "eissn" : "eissn",
+      "isbn" : "isbn",
+      "doi" : "doi",
+      "pmid" : "pmid",
+      "isopenaccess" : "isopenaccess",
+      "openaccesstype" : "openaccesstype",
+      "conferencedate" : "conferencedate",
+      "conferencelocation" : "conferencelocation",
+      "conferencesponsor" : "conferencesponsor",
+      "conferencehost" : "conferencehost",
+      "keywordplus" : "keywordplus",
+      "reprintaddress" : "reprintaddress",
+      "emailaddress" : "emailaddress",
+      "rids" : "rids",
+      "orcid" : "orcid",
+      "fundingorgs" : "fundingorgs",
+      "publishercity" : "publishercity",
+      "publisheraddress" : "publisheraddress",
+      "journalabbrev" : "journalabbrev",
+      "journaliso" : "journaliso",
+      "publicationdate" : "publicationdate",
+      "volume" : "volume",
+      "issue" : "issue",
+      "partnumber" : "partnumber",
+      "supplement" : "supplement",
+      "specialissue" : "specialissue",
+      "startpage" : "startpage",
+      "endpage" : "endpage",
+      "articlenumber" : "articlenumber",
+      "earlyaccessdate" : "earlyaccessdate",
+      "numberofpages" : "numberofpages"
+    }
+  },
+  "edgeMap" : {
+    "refEdges.tsv" : {
+      "[edge_left]" : {
+        "citing" : "Paper.wosid"
+      },
+      "[EdgeLabel]" : "References",
+      "[edge_right]" : {
+	"cited" : "Paper.wosid"
+      }
+    }
+  }
+}

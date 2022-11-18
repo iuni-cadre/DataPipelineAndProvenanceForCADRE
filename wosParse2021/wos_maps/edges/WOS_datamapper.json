@@ -1,0 +1,15 @@
+{
+  "vertexMap" : {
+  },
+  "edgeMap" : {
+    "refEdges.tsv" : {
+      "[edge_left]" : {
+        "citing" : "Paper.wosid"
+      },
+      "[EdgeLabel]" : "References",
+      "[edge_right]" : {
+	"cited" : "Paper.wosid"
+      }
+    }
+  }
+}

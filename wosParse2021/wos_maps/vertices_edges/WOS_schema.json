@@ -1,0 +1,257 @@
+{
+  "propertyKeys" : [ {
+    "name" : "wosid",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "publicationyear",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "standardnames",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "lc_standard_names",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "authors",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "papertitle",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "journaltitle",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "documenttype",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "conferencetitle",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "abstract",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "full_address",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "reprintaddress",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "fundingtext",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "citedreferencecount",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "publisher",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "issn",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "eissn",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "isbn",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "doi",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "pmid",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "isopenaccess",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "openaccesstype",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "conferencedate",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "conferencelocation",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "conferencesponsor",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "conferencehost",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "keywordplus",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "emailaddress",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "rids",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "orcid",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "fundingorgs",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "publishercity",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "publisheraddress",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "journalabbrev",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "journaliso",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "publicationdate",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "volume",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "issue",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "partnumber",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "supplement",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "specialissue",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "startpage",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "endpage",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "articlenumber",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "earlyaccessdate",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "numberofpages",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }  ],
+  "vertexLabels" : [ {
+    "name" : "Paper",
+    "partition" : false,
+    "useStatic" : false
+  } ],
+  "edgeLabels" : [ {
+    "name" : "References",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  } ],
+  "vertexIndexes" : [ {
+    "name" : "wosKeywordPlusMixed",
+    "propertyKeys" : [ "keywordplus" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "wosLcStandardNamesMixed",
+    "propertyKeys" : [ "lc_standard_names" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "wosJournalIsoComposite",
+    "propertyKeys" : [ "journaliso" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "wosIssnComposite",
+    "propertyKeys" : [ "issn" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "wosPubYearComposite",
+    "propertyKeys" : [ "publicationyear" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "wosPubYearMixed",
+    "propertyKeys" : [ "publicationyear" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "wosJournalTitleMixed",
+    "propertyKeys" : [ "journaltitle" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "wosPaperTitleMixed",
+    "propertyKeys" : [ "papertitle" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "wosWosIdComposite",
+    "propertyKeys" : [ "wosid" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "wosAbstractMixed",
+    "propertyKeys" : [ "abstract" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  } ],
+  "edgeIndexes" : [],
+  "vertexCentricIndexes" : []
+}
