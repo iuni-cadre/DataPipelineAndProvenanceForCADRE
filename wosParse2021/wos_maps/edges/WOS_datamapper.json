@@ -8,7 +8,7 @@
       },
       "[EdgeLabel]" : "References",
       "[edge_right]" : {
-	"cited" : "Paper.wosid"
+        "cited" : "Paper.wosid"
       }
     }
   }
