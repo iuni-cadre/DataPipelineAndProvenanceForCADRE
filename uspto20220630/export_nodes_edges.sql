@@ -53,29 +53,15 @@ FROM patview_core.g_assignee_disambiguated
 
 -- Government Organization
 CREATE TEMP VIEW g_gov_org_export AS (
-SELECT org.gi_organization_id::VARCHAR(64),
-        org.fedagency_name,
-        org.level_one,
-        org.level_two,
-        org.level_three,
-        orgint.gi_statement
+SELECT gi_organization_id::VARCHAR(64) as organization_id,
+        fedagency_name,
+        level_one,
+        level_two,
+        level_three,
+        ROW_NUMBER() OVER( PARTITION BY gi_organization_id,fedagency_name, level_one, level_two, level_three) AS row_num
 FROM patview_core.g_gov_interest_org org
-LEFT JOIN patview_core.g_gov_interest orgint
-ON org.patent_id = orgint.patent_id
 );
-\copy (SELECT * FROM g_gov_org_export) TO 'gov_org_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
-
--- Examiner
-CREATE TEMP VIEW g_examiner_export AS (
-SELECT  patent_id,
-        raw_examiner_name_first,
-        raw_examiner_name_last,
-        examiner_role,
-        art_group
-        -- persistent examiner id no longer supported
-FROM patview_core.g_examiner_not_disambiguated
-);
-\copy (SELECT * FROM g_examiner_export) TO 'examiner_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_gov_org_export where row_num = 1) TO 'gov_org_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
 
 -- Application
 CREATE TEMP VIEW g_application_export AS (
@@ -164,22 +150,12 @@ ON a.patent_id = b.patent_id AND a.inventor_id <> b.inventor_id
 --Interested in 
 CREATE TEMP VIEW g_interested_in_export AS (
 SELECT org.patent_id,
-        org.gi_organization_id
+        org.gi_organization_id as organization_id
 FROM patview_core.g_gov_interest_org org
 JOIN patview_core.g_patent p
 ON p.patent_id = org.patent_id
 );
 \copy (SELECT * FROM g_interested_in_export) TO 'interested_in.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
-
--- Examiner of
-CREATE TEMP VIEW g_examiner_of_export AS (
-SELECT e.patent_id AS E_patent_id,
-        p.patent_id AS P_patent_id
-FROM patview_core.g_examiner_not_disambiguated e
-JOIN patview_core.g_patent p
-ON p.patent_id = e.patent_id
-);
-\copy (SELECT * FROM g_examiner_of_export) TO 'examiner_of.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER; 
 
 -- Application -> Cites -> Patents
 CREATE TEMP VIEW g_app_cites_pat_export AS (
