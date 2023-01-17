@@ -112,7 +112,7 @@ SELECT patent_id,
         -- number no longer supported
         -- country no longer supported
         patent_date,
-        extract(year from date(patent_date)),
+        extract(year from date(patent_date)) AS year,
         patent_abstract,
         patent_title,
         wipo_kind,
