@@ -1,0 +1,150 @@
+{
+  "vertexMap" : {
+  },
+  "edgeMap" : {
+    "inventor_located_in.tsv" : {
+      "[edge_left]" : {
+        "inventor_id" : "Inventor.inventor_id"
+      },
+      "[EdgeLabel]" : "Inventor_Located_In",
+      "[edge_right]" : {
+        "location_id" : "Location.location_id"
+      }
+    },
+    "assignee_located_in.tsv" : {
+      "[edge_left]" : {
+        "assignee_id" : "Assignee.assignee_id"
+      },
+      "[EdgeLabel]" : "Assignee_Located_In",
+      "[edge_right]" : {
+        "location_id" : "Location.location_id"
+      }
+    },
+    "coinventor_with.tsv" : {
+      "[edge_left]" : {
+        "inventor_id" : "Inventor.inventor_id"
+      },
+      "[EdgeLabel]" : "Coinventor",
+      "[edge_right]" : {
+        "coinventor_id" : "Inventor.inventor_id"
+      }
+    },
+    "inventor_of.tsv" : {
+      "[edge_left]" : {
+        "inventor_id" : "Inventor.inventor_id"
+      },
+      "[EdgeLabel]" : "Inventor_Of",
+      "[edge_right]" : {
+        "patent_id" : "Patent.patent_id"
+      }
+    },
+    "assigned_to.tsv" : {
+      "[edge_left]" : {
+        "patent_id" : "Patent.patent_id"
+      },
+      "[EdgeLabel]" : "Assigned_To",
+      "[edge_right]" : {
+	"assignee_id" : "Assignee.assignee_id"
+      }
+    },
+    "patent_cites_patent_III.tsv" : {
+      "[edge_left]" : {
+        "citing_patent_id" : "Patent.patent_id"
+      },
+      "[EdgeLabel]" : "Citation",
+      "[edge_right]" : {
+        "cited_patent_id" : "Patent.patent_id"
+      }
+    },
+    "lawyer_of.tsv" : {
+      "[edge_left]" : {
+        "lawyer_id" : "Lawyer.lawyer_id"
+      },
+      "[EdgeLabel]" : "Lawyer_Of",
+      "[edge_right]" : {
+        "patent_id" : "Patent.patent_id"
+      }
+    },
+    "interest_in_III.tsv" : {
+      "[edge_left]" : {
+        "organization_id" : "Government_Organization.organization_id"
+      },
+      "[EdgeLabel]" : "Interested_In",
+      "[edge_right]" : {
+        "patent_id" : "Patent.patent_id"
+      }
+    },
+    "examiner_of2.tsv" : {
+      "[edge_left]" : {
+        "examiner_id" : "Examiner.examiner_id"
+      },
+      "[EdgeLabel]" : "Examiner_Of",
+      "[edge_right]" : {
+        "patent_id" : "Patent.patent_id"
+      }
+    },
+    "app_cites_patents_II.tsv" : {
+      "[edge_left]" : {
+        "cited_application_id" : "Application.application_id"
+      },
+      "[EdgeLabel]" : "Cites",
+      "[edge_right]" : {
+        "citing_patent_id" : "Patent.patent_id"
+      }
+    },
+    "becomes.tsv" : {
+      "[edge_left]" : {
+        "application_id" : "Application.application_id"
+      },
+      "[EdgeLabel]" : "Becomes",
+      "[edge_right]" : {
+        "patent_id" : "Patent.patent_id"
+      }
+    },
+        "cpc_to_patent.tsv" : {
+      "[edge_left]" : {
+        "cpc_id" : "CPC.cpc_id"
+      },
+      "[EdgeLabel]" : "CPC_Category_Of",
+      "[edge_right]" : {
+        "patent_id" : "Patent.patent_id"
+      }
+    },
+    "uspc_to_patent3.tsv" : {
+      "[edge_left]" : {
+        "uspc_id" : "USPC.uspc_id"
+      },
+      "[EdgeLabel]" : "USPC_Category_Of",
+      "[edge_right]" : {
+        "patent_id" : "Patent.patent_id"
+      }
+    },
+    "ipcr_to_patent.tsv" : {
+      "[edge_left]" : {
+        "sequence" : "IPCR.ipcr_id"
+      },
+      "[EdgeLabel]" : "IPCR_Category_Of",
+      "[edge_right]" : {
+        "patent_id" : "Patent.patent_id"
+      }
+    },
+    "nber_to_patent.tsv" : {
+      "[edge_left]" : {
+        "nber_id" : "NBER.nber_id"
+      },
+      "[EdgeLabel]" : "NBER_Category_Of",
+      "[edge_right]" : {
+        "patent_id" : "Patent.patent_id"
+      }
+    },
+    "wipo_to_patent.tsv" : {
+      "[edge_left]" : {
+        "wipo_field_id" : "WIPO.wipo_field_id"
+      },
+      "[EdgeLabel]" : "WIPO_Category_Of",
+      "[edge_right]" : {
+        "patent_id" : "Patent.patent_id"
+      }
+    }
+  }
+}

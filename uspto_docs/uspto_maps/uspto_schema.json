@@ -1,0 +1,540 @@
+{
+  "propertyKeys" : [ {
+    "name" : "patent_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "type",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "number",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "country",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "year",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "abstract",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "title",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "kind",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "num_claims",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "num_foreign_documents_cited",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "num_us_applications_cited",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "num_us_patents_cited",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "num_total_documents_cited",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "num_times_cited_by_us_patents",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "earliest_application_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "patent_processing_days",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "uspc_current_mainclass_average_patent_processing_days",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "cpc_current_group_average_patent_processing_days",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "term_extension",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "detail_desc_length",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "inventor_id",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "name_first",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "name_last",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "num_patents",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "num_assignees",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "lastknown_location_id",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "first_seen_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "last_seen_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "years_active",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "assignee_id",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "organization",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "num_inventors",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "persistent_assignee_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "location_id",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "city",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "state",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "state_fips",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "county_fips",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "latitude",
+    "dataType" : "Float",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "longitude",
+    "dataType" : "Float",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "lawyer_id",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "persistent_lawyer_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "organization_id",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "name",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "level_one",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "level_two",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "level_three",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "examiner_id",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "role",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "group",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "persistent_examiner_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "application_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "ipcr_id",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "level",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "category_label",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "wipo_field_id",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "nber_id",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "cpc_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "uspc_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  } ],
+  "vertexLabels" : [ {
+    "name" : "Patent",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Inventor",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Assignee",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Location",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Lawyer",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Government_Organization",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Examiner",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Application",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "IPCR",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "WIPO",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "NBER",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "CPC",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "USPC",
+    "partition" : false,
+    "useStatic" : false
+  } ],
+  "edgeLabels" : [ {
+    "name" : "Inventor_Located_In",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Assignee_Located_In",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Coinventor",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Inventor_Of",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Assigned_To",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Citation",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Lawyer_Of",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Interested_In",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Examiner_Of",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Cites",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "Becomes",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "CPC_Category_Of",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "USPC_Category_Of",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "IPCR_Category_Of",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "NBER_Category_Of",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "WIPO_Category_Of",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  } ],
+  "vertexIndexes" : [ {
+    "name" : "ptoPatentIdComposite",
+    "propertyKeys" : [ "patent_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoInventorIdComposite",
+    "propertyKeys" : [ "inventor_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoAssigneeIdComposite",
+    "propertyKeys" : [ "assignee_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoLocationIdComposite",
+    "propertyKeys" : [ "location_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoOrganizationIdComposite",
+    "propertyKeys" : [ "organization_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoLawyerIdComposite",
+    "propertyKeys" : [ "lawyer_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoExaminerIdComposite",
+    "propertyKeys" : [ "examiner_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoApplicationIdComposite",
+    "propertyKeys" : [ "application_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoIpcrIdComposite",
+    "propertyKeys" : [ "ipcr_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoWipoFieldIdComposite",
+    "propertyKeys" : [ "wipo_field_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoNberIdComposite",
+    "propertyKeys" : [ "nber_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoCpcIdComposite",
+    "propertyKeys" : [ "cpc_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoUspcIdComposite",
+    "propertyKeys" : [ "uspc_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoPersisAssigneeIdComposite",
+    "propertyKeys" : [ "persistent_assignee_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoTypeComposite",
+    "propertyKeys" : [ "type" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoNumberComposite",
+    "propertyKeys" : [ "number" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoDateComposite",
+    "propertyKeys" : [ "date" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoDateMixed",
+    "propertyKeys" : [ "date" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "ptoStateFipsComposite",
+    "propertyKeys" : [ "state_fips" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoCountyFipsComposite",
+    "propertyKeys" : [ "county_fips" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoLevelComposite",
+    "propertyKeys" : [ "level" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "ptoYearMixed",
+    "propertyKeys" : [ "year" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "ptoAbstractMixed",
+    "propertyKeys" : [ "abstract" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "ptoTitleMixed",
+    "propertyKeys" : [ "title" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "ptoNameFirstMixed",
+    "propertyKeys" : [ "name_first" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "ptoNameLastMixed",
+    "propertyKeys" : [ "name_last" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "ptoCityMixed",
+    "propertyKeys" : [ "city" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "ptoCountryMixed",
+    "propertyKeys" : [ "country" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "ptoOrganizationMixed",
+    "propertyKeys" : [ "organization" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "ptoCategoryLabelMixed",
+    "propertyKeys" : [ "category_label" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  } ],
+  "edgeIndexes" : [],
+  "vertexCentricIndexes" : []
+}
