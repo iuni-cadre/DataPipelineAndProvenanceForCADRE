@@ -242,6 +242,11 @@ SELECT DISTINCT(uspc_mainclass_id) AS uspc_id,
         'mainclass' AS level,
         uspc_mainclass_title AS label
 FROM patview_core.g_uspc_at_issue
+UNION ALL
+SELECT DISTINCT(uspc_subclass_id) AS uspc_id,
+        'subclass' AS level,
+        uspc_subclass_title as label
+FROM patview_core.g_uspc_at_issue
 );
 \copy (SELECT * FROM g_uspc_export) TO 'uspc_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
