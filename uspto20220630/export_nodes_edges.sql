@@ -7,15 +7,14 @@ CREATE TEMP VIEW g_inventor_export AS (
 SELECT inventor_id,
         disambig_inventor_name_first,
         disambig_inventor_name_last,
-        male_flag,
+        male_flag
         -- num_patents no longer supported
         -- num_assignees no longer supported
-        location_id
         -- first_seen_date no longer supported
         -- last_seen_date no longer supported
         -- years_active no longer supporter
 FROM patview_core.g_inventor_disambiguated);
-\copy (SELECT * FROM g_inventor_export) TO 'inventor_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_inventor_export) TO 'inventor_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Location
 CREATE TEMP VIEW g_location_export AS (
@@ -32,7 +31,7 @@ SELECT location_id,
         -- num_invenotrs no longer supported
         -- num_patents no longer supported
 FROM patview_core.g_location_disambiguated);
-\copy (SELECT * FROM g_location_export) TO 'location_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_location_export) TO 'location_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Assginee
 CREATE TEMP VIEW g_assignee_export AS (
@@ -49,7 +48,7 @@ SELECT assignee_id,
         -- persistent assignee id no longer supported
 FROM patview_core.g_assignee_disambiguated
 );
-\copy (SELECT * FROM g_assignee_export) TO 'assignee_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_assignee_export) TO 'assignee_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Government Organization
 CREATE TEMP VIEW g_gov_org_export AS (
@@ -61,7 +60,7 @@ SELECT gi_organization_id::VARCHAR(64) as organization_id,
         ROW_NUMBER() OVER( PARTITION BY gi_organization_id,fedagency_name, level_one, level_two, level_three) AS row_num
 FROM patview_core.g_gov_interest_org org
 );
-\copy (SELECT * FROM g_gov_org_export where row_num = 1) TO 'gov_org_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT organization_id, fedagency_name, level_one, level_two, level_three FROM g_gov_org_export where row_num = 1) TO 'gov_org_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Application
 CREATE TEMP VIEW g_application_export AS (
@@ -72,7 +71,7 @@ SELECT application_id,
         filing_date
 FROM patview_core.g_application
 );
-\copy (SELECT * FROM g_application_export) TO 'application_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_application_export) TO 'application_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Lawyer 
 CREATE TEMP VIEW g_attorney_export AS (
@@ -89,7 +88,7 @@ SELECT attorney_id,
         -- persistent lawyer id no longer supported
 FROM patview_core.g_attorney_disambiguated
 );
-\copy (SELECT * FROM g_attorney_export) TO 'lawyer_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_attorney_export) TO 'lawyer_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Patent
 CREATE TEMP VIEW g_patent_export AS (
@@ -116,17 +115,17 @@ SELECT patent_id,
         -- detail desc length no longer supported
 FROM patview_core.g_patent
 );
-\copy (SELECT * FROM g_patent_export) TO 'patent_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_patent_export) TO 'patent_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- ############### --
 --      EDGES      --
 -- ############### --
 
 -- INVENTOR LOCATED IN
-\copy (SELECT location_id,inventor_id FROM patview_core.g_inventor_disambiguated) TO 'inventor_located_in.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT location_id,inventor_id FROM patview_core.g_inventor_disambiguated) TO 'inventor_located_in.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- ASSIGNEE LOCATED IN
-\copy (SELECT location_id,assignee_id FROM patview_core.g_assignee_disambiguated) TO 'assignee_located_in.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT location_id,assignee_id FROM patview_core.g_assignee_disambiguated) TO 'assignee_located_in.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- COINVENTOR OF 
 CREATE TEMP VIEW g_coinventor_export AS (
@@ -136,16 +135,16 @@ FROM patview_core.g_inventor_disambiguated a
 JOIN patview_core.g_inventor_disambiguated b
 ON a.patent_id = b.patent_id AND a.inventor_id <> b.inventor_id
 );
-\copy (SELECT * FROM g_coinventor_export) TO 'coinventor_of.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_coinventor_export) TO 'coinventor_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- INVENTOR OF
 
 
 -- Assigned to
-\copy (SELECT patent_id,assignee_id FROM patview_core.g_assignee_disambiguated) TO 'assigned_to.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT patent_id,assignee_id FROM patview_core.g_assignee_disambiguated) TO 'assigned_to.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Lawyer of
-\copy (SELECT patent_id,attorney_id FROM patview_core.g_attorney_disambiguated) TO 'lawyer_of.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT patent_id,attorney_id FROM patview_core.g_attorney_disambiguated) TO 'lawyer_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 --Interested in 
 CREATE TEMP VIEW g_interested_in_export AS (
@@ -155,7 +154,7 @@ FROM patview_core.g_gov_interest_org org
 JOIN patview_core.g_patent p
 ON p.patent_id = org.patent_id
 );
-\copy (SELECT * FROM g_interested_in_export) TO 'interested_in.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_interested_in_export) TO 'interested_in.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Application -> Cites -> Patents
 CREATE TEMP VIEW g_app_cites_pat_export AS (
@@ -165,10 +164,10 @@ FROM patview_core.g_us_application_citation cit
 JOIN patview_core.g_application app
 ON cit.patent_id = app.patent_id
 );
-\copy (SELECT * FROM g_app_cites_pat_export) TO 'cites.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_app_cites_pat_export) TO 'cites.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Application -> Becomes -> Patent
-\copy (SELECT application_id,patent_id FROM patview_core.g_application) TO 'becomes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT application_id,patent_id FROM patview_core.g_application) TO 'becomes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Patent -> Cites -> Patents
 CREATE TEMP VIEW g_pat_cite_pat_export AS (
@@ -180,7 +179,7 @@ ON p1.patent_id = c.patent_id
 JOIN patview_core.g_patent p2
 ON p2.patent_id = c.citation_patent_id
 );
-\copy (SELECT * FROM g_pat_cite_pat_export) TO 'citation.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_pat_cite_pat_export) TO 'citation.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- ############### --
 --  CATEGORY DATA  --
@@ -214,7 +213,7 @@ FROM patview_core.g_cpc_current c
 JOIN patview_core.g_cpc_title t
 ON c.cpc_group = t.cpc_group
 );
-\copy (SELECT * FROM g_cpc_export) TO 'cpc_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_cpc_export) TO 'cpc_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- CPC Edge
 CREATE TEMP VIEW g_cpc_edge_export AS (
@@ -230,7 +229,7 @@ UNION ALL
 SELECT patent_id, cpc_group AS cpc_id
 FROM patview_core.g_cpc_current
 );
-\copy (SELECT * FROM g_cpc_edge_export) TO 'cpc_category_of.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_cpc_edge_export) TO 'cpc_category_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- USPC Node
 CREATE TEMP VIEW g_uspc_export AS (
@@ -239,7 +238,7 @@ SELECT DISTINCT(uspc_mainclass_id) AS uspc_id,
         uspc_mainclass_title AS label
 FROM patview_core.g_uspc_at_issue
 );
-\copy (SELECT * FROM g_uspc_export) TO 'uspc_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_uspc_export) TO 'uspc_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- USPC Edge
 CREATE TEMP VIEW g_uspc_edge_export AS (
@@ -251,7 +250,7 @@ SELECT patent_id,
         uspc_subclass_id AS uspc_id
 FROM patview_core.g_uspc_at_issue
 );
-\copy (SELECT * FROM g_uspc_edge_export) TO 'uspc_category_of.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_uspc_edge_export) TO 'uspc_category_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- WIPO Node
 CREATE TEMP VIEW g_wipo_export AS (
@@ -265,10 +264,10 @@ SELECT DISTINCT(wipo_field_id),
         wipo_sector_title AS label
 FROM patview_core.g_wipo_technology
 );
-\copy (SELECT * FROM g_wipo_export) TO 'wipo_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_wipo_export) TO 'wipo_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- WIPO Edge
-\copy (SELECT patent_id, wipo_field_id FROM patview_core.g_wipo_technology) TO 'wipo_category_of.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT patent_id, wipo_field_id FROM patview_core.g_wipo_technology) TO 'wipo_category_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- NBER tables removed
 
@@ -298,7 +297,7 @@ UNION ALL
 SELECT DISTINCT(ipc_sequence) AS ipcr_id, 'classification_data_source' AS level, classification_data_source AS label
 FROM patview_core.g_ipc_at_issue
 );
-\copy (SELECT * FROM g_ipcr_export) TO 'ipcr_nodes.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT * FROM g_ipcr_export) TO 'ipcr_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- IPCR Edge
-\copy (SELECT patent_id, ipc_sequence FROM patview_core.g_ipc_at_issue) TO 'ipcr_category_of.tsv' CSV DELIMITER E'\t' NULL 'NULL' HEADER;
+\copy (SELECT patent_id, ipc_sequence FROM patview_core.g_ipc_at_issue) TO 'ipcr_category_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
