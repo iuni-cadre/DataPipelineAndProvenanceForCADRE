@@ -7,14 +7,15 @@ CREATE TEMP VIEW g_inventor_export AS (
 SELECT inventor_id,
         disambig_inventor_name_first,
         disambig_inventor_name_last,
-        male_flag
+        male_flag,
+        ROW_NUMBER() OVER( PARTITION BY inventor_id, disambig_inventor_name_first, disambig_inventor_name_last, male_flag) AS row_num
         -- num_patents no longer supported
         -- num_assignees no longer supported
         -- first_seen_date no longer supported
         -- last_seen_date no longer supported
         -- years_active no longer supporter
 FROM patview_core.g_inventor_disambiguated);
-\copy (SELECT * FROM g_inventor_export) TO 'inventor_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
+\copy (SELECT inventor_id, disambig_inventor_name_first, disambig_inventor_name_last, male_flag FROM g_inventor_export WHERE row_num=1) TO 'inventor_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Location
 CREATE TEMP VIEW g_location_export AS (
@@ -25,13 +26,14 @@ SELECT location_id,
         disambig_country,
         state_fips,
         county_fips,
-        latitude::VARCHAR(256),
-        longitude::VARCHAR(256)
+        latitude::VARCHAR(256) as latitude,
+        longitude::VARCHAR(256) as longitude,
+        ROW_NUMBER() OVER( PARTITION BY location_id, disambig_city, county, disambig_state, disambig_country, state_fips, county_fips, latitude, longitude) AS row_num
         -- num_assignees no longer supported
         -- num_invenotrs no longer supported
         -- num_patents no longer supported
 FROM patview_core.g_location_disambiguated);
-\copy (SELECT * FROM g_location_export) TO 'location_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
+\copy (SELECT location_id, disambig_city, county, disambig_state, disambig_country, state_fips, county_fips, latitude, longitude FROM g_location_export WHERE row_num=1) TO 'location_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Assginee
 CREATE TEMP VIEW g_assignee_export AS (
@@ -39,7 +41,8 @@ SELECT assignee_id,
         assignee_type,
         disambig_assignee_individual_name_first,
         disambig_assignee_individual_name_last,
-        disambig_assignee_organization
+        disambig_assignee_organization,
+        ROW_NUMBER() OVER( PARTITION BY assignee_id, assignee_type, disambig_assignee_individual_name_first, disambig_assignee_individual_name_last, disambig_assignee_organization) AS row_num
         -- num patents no longer supported
         -- num inventors no longer supported
         -- first seen date no longer supported
@@ -48,7 +51,7 @@ SELECT assignee_id,
         -- persistent assignee id no longer supported
 FROM patview_core.g_assignee_disambiguated
 );
-\copy (SELECT * FROM g_assignee_export) TO 'assignee_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
+\copy (SELECT assignee_id, assignee_type, disambig_assignee_individual_name_first, disambig_assignee_individual_name_last, disambig_assignee_organization FROM g_assignee_export WHERE row_num=1) TO 'assignee_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Government Organization
 CREATE TEMP VIEW g_gov_org_export AS (
@@ -68,17 +71,19 @@ SELECT application_id,
         patent_application_type,
         -- number no longer supported
         -- country no longer supported
-        filing_date
+        filing_date,
+        ROW_NUMBER() OVER( PARTITION BY application_id, patent_application_type, filing_date) AS row_num
 FROM patview_core.g_application
 );
-\copy (SELECT * FROM g_application_export) TO 'application_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
+\copy (SELECT application_id, patent_application_type, filing_date FROM g_application_export WHERE row_num=1) TO 'application_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Lawyer 
 CREATE TEMP VIEW g_attorney_export AS (
 SELECT attorney_id,
         disambig_attorney_name_first,
         disambig_attorney_name_last,
-        disambig_attorney_organization
+        disambig_attorney_organization,
+        ROW_NUMBER() OVER( PARTITION BY attorney_id, disambig_attorney_name_first, disambig_attorney_name_last, disambig_attorney_organization) AS row_num
         -- num patents no longer supported
         -- num assignees no longer supported
         -- num inventors no longer supported
@@ -88,7 +93,7 @@ SELECT attorney_id,
         -- persistent lawyer id no longer supported
 FROM patview_core.g_attorney_disambiguated
 );
-\copy (SELECT * FROM g_attorney_export) TO 'lawyer_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
+\copy (SELECT attorney_id, disambig_attorney_name_first, disambig_attorney_name_last, disambig_attorney_organization FROM g_attorney_export WHERE row_num=1) TO 'lawyer_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Patent
 CREATE TEMP VIEW g_patent_export AS (
