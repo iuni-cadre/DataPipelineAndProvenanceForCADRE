@@ -143,7 +143,7 @@ ON a.patent_id = b.patent_id AND a.inventor_id <> b.inventor_id
 \copy (SELECT * FROM g_coinventor_export) TO 'coinventor_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- INVENTOR OF
-
+\copy (SELECT patent_id, inventor_id FROM patview_core.g_inventor_disambiguated) TO 'inventor_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Assigned to
 \copy (SELECT patent_id,assignee_id FROM patview_core.g_assignee_disambiguated) TO 'assigned_to.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
