@@ -283,28 +283,28 @@ FROM patview_core.g_wipo_technology
 
 -- IPCR Node
 CREATE TEMP VIEW g_ipcr_export AS (
-SELECT DISTINCT(ipc_sequence) AS ipcr_id, 'section' AS level, section AS label
+SELECT DISTINCT(ipc_sequence) AS ipc_id, 'section' AS level, section AS label
 FROM patview_core.g_ipc_at_issue
 UNION ALL
-SELECT DISTINCT(ipc_sequence) AS ipcr_id, 'ipc_class' AS level, ipc_class AS label
+SELECT DISTINCT(ipc_sequence) AS ipc_id, 'ipc_class' AS level, ipc_class AS label
 FROM patview_core.g_ipc_at_issue
 UNION ALL
-SELECT DISTINCT(ipc_sequence) AS ipcr_id, 'subclass' AS level, subclass AS label
+SELECT DISTINCT(ipc_sequence) AS ipc_id, 'subclass' AS level, subclass AS label
 FROM patview_core.g_ipc_at_issue
 UNION ALL
-SELECT DISTINCT(ipc_sequence) AS ipcr_id, 'main_group' AS level, main_group AS label
+SELECT DISTINCT(ipc_sequence) AS ipc_id, 'main_group' AS level, main_group AS label
 FROM patview_core.g_ipc_at_issue
 UNION ALL
-SELECT DISTINCT(ipc_sequence) AS ipcr_id, 'subgroup' AS level, subgroup AS label
+SELECT DISTINCT(ipc_sequence) AS ipc_id, 'subgroup' AS level, subgroup AS label
 FROM patview_core.g_ipc_at_issue
 UNION ALL
-SELECT DISTINCT(ipc_sequence) AS ipcr_id, 'symbol_position' AS level, symbol_position AS label
+SELECT DISTINCT(ipc_sequence) AS ipc_id, 'symbol_position' AS level, symbol_position AS label
 FROM patview_core.g_ipc_at_issue
 UNION ALL
-SELECT DISTINCT(ipc_sequence) AS ipcr_id, 'classification_value' AS level, classification_value AS label
+SELECT DISTINCT(ipc_sequence) AS ipc_id, 'classification_value' AS level, classification_value AS label
 FROM patview_core.g_ipc_at_issue
 UNION ALL
-SELECT DISTINCT(ipc_sequence) AS ipcr_id, 'classification_data_source' AS level, classification_data_source AS label
+SELECT DISTINCT(ipc_sequence) AS ipc_id, 'classification_data_source' AS level, classification_data_source AS label
 FROM patview_core.g_ipc_at_issue
 );
 \copy (SELECT * FROM g_ipcr_export) TO 'ipcr_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
