@@ -41,7 +41,7 @@ SELECT assignee_id,
         assignee_type,
         disambig_assignee_individual_name_first,
         disambig_assignee_individual_name_last,
-        disambig_assignee_organization,
+        REGEXP_REPLACE(disambig_assignee_organization,'\n','','g') AS disambig_assignee_organization,
         ROW_NUMBER() OVER( PARTITION BY assignee_id, assignee_type, disambig_assignee_individual_name_first, disambig_assignee_individual_name_last, disambig_assignee_organization) AS row_num
         -- num patents no longer supported
         -- num inventors no longer supported
@@ -103,8 +103,8 @@ SELECT patent_id,
         -- country no longer supported
         patent_date,
         extract(year from date(patent_date)) AS year,
-        patent_abstract,
-        patent_title,
+        REGEXP_REPLACE(REGEXP_REPLACE(patent_abstract,'\t',' t','g'),'\n','','g') AS patent_abstract,
+        REGEXP_REPLACE(REGEXP_REPLACE(patent_title,'\t',' t','g'),'\n','','g') AS patent_title,
         wipo_kind,
         num_claims
         -- num foreign documents cited no longer supported
@@ -245,7 +245,7 @@ FROM patview_core.g_uspc_at_issue
 UNION ALL
 SELECT DISTINCT(uspc_subclass_id) AS uspc_id,
         'subclass' AS level,
-        uspc_subclass_title as label
+        REGEXP_REPLACE(uspc_subclass_title, '\t','','g') as label
 FROM patview_core.g_uspc_at_issue
 );
 \copy (SELECT * FROM g_uspc_export) TO 'uspc_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
@@ -310,4 +310,4 @@ FROM patview_core.g_ipc_at_issue
 \copy (SELECT * FROM g_ipcr_export) TO 'ipcr_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- IPCR Edge
-\copy (SELECT patent_id, ipc_sequence FROM patview_core.g_ipc_at_issue) TO 'ipcr_category_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
+\copy (SELECT patent_id, ipc_sequence AS ipc_id FROM patview_core.g_ipc_at_issue) TO 'ipcr_category_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
