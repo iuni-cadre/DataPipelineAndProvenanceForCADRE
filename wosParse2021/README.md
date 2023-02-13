@@ -10,21 +10,22 @@ to get it from the Spark MVN repo:
 
 
 You will also need to set the following environment variables:
-
+```
 export HADOOP_USER_NAME=hdfs
 export PATH=~/.local/bin:$PATH
 export JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera/
 export HADOOP_HOME=/opt/cloudera/parcels/CDH/lib/hadoop
 export HADOOP_CONF_DIR=/opt/cloudera/parcels/CDH-6.3.1-1.cdh6.3.1.p0.1470567/lib/spark/conf/yarn-conf
 export SPARK_HOME=/opt/cloudera/parcels/CDH-6.3.1-1.cdh6.3.1.p0.1470567/lib/spark
-
+```
 Environmental Varaibles for PySpark Console
+```
 export PYTHONPATH=/N/soft/rhel7/python/3.6.8/bin/python
 export PYSPARK_PYTHON=$PYTHONPATH
 export PYSPARK_DRIVER_PYTHON=$PYTHONPATH
-
+```
 To execute a scala script:
-
+```
 spark-shell \\
   --master yarn \\
   --packages \\
@@ -36,8 +37,9 @@ spark-shell \\
   --conf spark.yarn.executor.memoryOverheadFactor=0.1 \\
   --conf spark.driver.maxResultSize=8g \\
   -i <scala_script>
-
+```
 To execute a python script:
+```
 spark-submit \
   --master yarn \
   --driver-memory 8G \
@@ -47,7 +49,7 @@ spark-submit \
   --conf spark.yarn.executor.memoryOverheadFactor=0.2 \
   --conf spark.driver.maxResultSize=8g \
   WoSXMLParseFromParquet.py
-
+```
 Adjust memory limits, number of threads, and number of executors as needed.
 
 

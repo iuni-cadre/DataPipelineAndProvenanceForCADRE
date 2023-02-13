@@ -1,0 +1,48 @@
+import findspark
+from pyspark.sql import SparkSession
+from pyspark.sql.types import *
+import sys
+
+def main():
+    try:
+        # setting variables
+        entity = sys.argv[1]
+        hdfs_b = '/OpenAlex_202211/'
+        schemas = hdfs_b + 'schemas/'
+        parquets = hdfs_b + 'parquets/'
+        # find and initiate spark
+        findspark.init()
+        spark= SparkSession.builder \
+            .master('yarn') \
+            .config('spark.driver.memory','8g') \
+            .config('spark.executor.num','49') \
+            .config('spark.executor.memory','8g') \
+            .config('spark.executor.cores','5') \
+            .config('spark.yarn.executor.memoryOverheadFactor','0.2') \
+            .config('spark.driver.max.ResultSize','8g') \
+            .getOrCreate()
+
+        spark.conf.set('spark.sql.caseSensitive','True')
+
+        # extract schema from sample parquet
+        print('Loading schema')
+        schema = spark.read.load(f'{schemas}{entity}.parquet').schema
+        print('schema loaded')
+
+        # load all jsons using schema from sample parquet
+        print('loading JSONs')
+        df =spark.read.schema(schema).json(f'{hdfs_b}{entity}/')
+        print('JSONs loaded into spark')
+
+        if entity == 'works':
+            df = df.drop("abstract_inverted_index")
+
+        # write all json to parquets
+        print('Writing JSONs to Parquets')
+        df.coalesce(100).write.mode('overwrite').parquet(f'{parquets}{entity}')
+        print('Parquets have been written')
+    except Exception as e:
+        print(f'Failed JSON to Parquet conversion. Error: \n{e}')
+
+if __name__ == '__main__':
+    main()

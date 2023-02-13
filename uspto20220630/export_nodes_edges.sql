@@ -127,10 +127,10 @@ FROM patview_core.g_patent
 -- ############### --
 
 -- INVENTOR LOCATED IN
-\copy (SELECT location_id,inventor_id FROM patview_core.g_inventor_disambiguated) TO 'inventor_located_in.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
+\copy (SELECT location_id,inventor_id FROM patview_core.g_inventor_disambiguated WHERE location_id IS NOT NULL) TO 'inventor_located_in.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- ASSIGNEE LOCATED IN
-\copy (SELECT location_id,assignee_id FROM patview_core.g_assignee_disambiguated) TO 'assignee_located_in.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
+\copy (SELECT location_id,assignee_id FROM patview_core.g_assignee_disambiguated WHERE location_id IS NOT NULL) TO 'assignee_located_in.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- COINVENTOR OF 
 CREATE TEMP VIEW g_coinventor_export AS (
@@ -222,17 +222,25 @@ ON c.cpc_group = t.cpc_group
 
 -- CPC Edge
 CREATE TEMP VIEW g_cpc_edge_export AS (
-SELECT patent_id, cpc_section AS cpc_id
-FROM patview_core.g_cpc_current
+SELECT c.patent_id, c.cpc_section AS cpc_id
+FROM patview_core.g_cpc_current c
+JOIN patview_core.g_cpc_title t
+ON c.cpc_group = t.cpc_group
 UNION ALL
-SELECT patent_id, cpc_class AS cpc_id
-FROM patview_core.g_cpc_current
+SELECT c.patent_id, c.cpc_class AS cpc_id
+FROM patview_core.g_cpc_current c
+JOIN patview_core.g_cpc_title t
+ON c.cpc_group = t.cpc_group
 UNION ALL
-SELECT patent_id, cpc_subclass AS cpc_id
-FROM patview_core.g_cpc_current
+SELECT c.patent_id, c.cpc_subclass AS cpc_id
+FROM patview_core.g_cpc_current c
+JOIN patview_core.g_cpc_title t
+ON c.cpc_group = t.cpc_group
 UNION ALL
-SELECT patent_id, cpc_group AS cpc_id
-FROM patview_core.g_cpc_current
+SELECT c.patent_id, c.cpc_group AS cpc_id
+FROM patview_core.g_cpc_current c
+JOIN patview_core.g_cpc_title t
+ON c.cpc_group = t.cpc_group
 );
 \copy (SELECT * FROM g_cpc_edge_export) TO 'cpc_category_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
