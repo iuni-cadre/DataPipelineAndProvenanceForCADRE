@@ -4,6 +4,7 @@ from pyspark.sql.types import *
 import sys
 
 def main():
+    """Requires path to OpenAlex entity folder"""
     try:
         # setting variables
         entity = sys.argv[1]
@@ -34,6 +35,7 @@ def main():
         df =spark.read.schema(schema).json(f'{hdfs_b}{entity}/')
         print('JSONs loaded into spark')
 
+        # the works abstract inverted index column is not a realistic field for our uses
         if entity == 'works':
             df = df.drop("abstract_inverted_index")
 

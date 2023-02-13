@@ -6,12 +6,12 @@ from os import system
 import pandas as pd
 
 def main():
+    """Requires file path argument for sample schema file"""
     try:
         # setting variables
         args = sys.argv
         hdfs_b = '/OpenAlex_202211/'
         schemas = hdfs_b + 'schemas/'
-        parquets = hdfs_b + 'parquets/'
 
         # test that file for basing schema off is valid
         if isfile(args[1]):
@@ -33,7 +33,7 @@ def main():
             system(f'rm {new_f}')
 
         else:
-            print('Invalid File')
+            print('Invalid File Path')
     except Exception as e:
         print(f'Error: {e}')
 
