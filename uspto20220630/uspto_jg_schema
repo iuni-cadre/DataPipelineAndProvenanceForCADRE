@@ -1,0 +1,125 @@
+gremlin> mgmt.printSchema()
+==>------------------------------------------------------------------------------------------------
+Vertex Label Name              | Partitioned | Static                                             |
+---------------------------------------------------------------------------------------------------
+Patent                         | false       | false                                              |
+Application                    | false       | false                                              |
+Government_Organization        | false       | false                                              |
+Inventor                       | false       | false                                              |
+Location                       | false       | false                                              |
+Assignee                       | false       | false                                              |
+Lawyer                         | false       | false                                              |
+USPC                           | false       | false                                              |
+CPC                            | false       | false                                              |
+WIPO                           | false       | false                                              |
+IPC                            | false       | false                                              |
+---------------------------------------------------------------------------------------------------
+Edge Label Name                | Directed    | Unidirected | Multiplicity                         |
+---------------------------------------------------------------------------------------------------
+Citation                       | true        | false       | MULTI                                |
+Cites                          | true        | false       | MULTI                                |
+Becomes                        | true        | false       | MULTI                                |
+Interested_In                  | true        | false       | MULTI                                |
+Coinventor                     | true        | false       | MULTI                                |
+Inventor_Of                    | true        | false       | MULTI                                |
+Inventor_Located_In            | true        | false       | MULTI                                |
+Assigned_To                    | true        | false       | MULTI                                |
+Assignee_Located_In            | true        | false       | MULTI                                |
+Lawyer_Of                      | true        | false       | MULTI                                |
+USPC_Category_Of               | true        | false       | MULTI                                |
+CPC_Category_Of                | true        | false       | MULTI                                |
+WIPO_Category_Of               | true        | false       | MULTI                                |
+IPC_Category_Of                | true        | false       | MULTI                                |
+---------------------------------------------------------------------------------------------------
+Property Key Name              | Cardinality | Data Type                                          |
+---------------------------------------------------------------------------------------------------
+level_three                    | SINGLE      | class java.lang.String                             |
+inventor_id                    | SINGLE      | class java.lang.String                             |
+inventor_name_first            | SINGLE      | class java.lang.String                             |
+inventor_name_last             | SINGLE      | class java.lang.String                             |
+male_flag                      | SINGLE      | class java.lang.Integer                            |
+location_id                    | SINGLE      | class java.lang.String                             |
+city                           | SINGLE      | class java.lang.String                             |
+county                         | SINGLE      | class java.lang.String                             |
+state                          | SINGLE      | class java.lang.String                             |
+country                        | SINGLE      | class java.lang.String                             |
+state_fips                     | SINGLE      | class java.lang.String                             |
+county_fips                    | SINGLE      | class java.lang.String                             |
+latitude                       | SINGLE      | class java.lang.Float                              |
+longitude                      | SINGLE      | class java.lang.Float                              |
+assignee_id                    | SINGLE      | class java.lang.String                             |
+assignee_type                  | SINGLE      | class java.lang.Integer                            |
+assignee_name_first            | SINGLE      | class java.lang.String                             |
+assignee_name_last             | SINGLE      | class java.lang.String                             |
+assignee_organization          | SINGLE      | class java.lang.String                             |
+attorney_id                    | SINGLE      | class java.lang.String                             |
+attorney_name_first            | SINGLE      | class java.lang.String                             |
+attorney_name_last             | SINGLE      | class java.lang.String                             |
+attorney_organization          | SINGLE      | class java.lang.String                             |
+uspc_id                        | SINGLE      | class java.lang.String                             |
+level                          | SINGLE      | class java.lang.String                             |
+category_label                 | SINGLE      | class java.lang.String                             |
+cpc_id                         | SINGLE      | class java.lang.String                             |
+wipo_field_id                  | SINGLE      | class java.lang.Float                              |
+ipc_id                         | SINGLE      | class java.lang.String                             |
+patent_id                      | SINGLE      | class java.lang.String                             |
+patent_type                    | SINGLE      | class java.lang.String                             |
+patent_date                    | SINGLE      | class java.util.Date                               |
+patent_year                    | SINGLE      | class java.lang.Integer                            |
+patent_abstract                | SINGLE      | class java.lang.String                             |
+patent_title                   | SINGLE      | class java.lang.String                             |
+wipo_kind                      | SINGLE      | class java.lang.String                             |
+num_claims                     | SINGLE      | class java.lang.Integer                            |
+application_id                 | SINGLE      | class java.lang.String                             |
+application_type               | SINGLE      | class java.lang.String                             |
+filing_date                    | SINGLE      | class java.util.Date                               |
+organization_id                | SINGLE      | class java.lang.String                             |
+fedagency_name                 | SINGLE      | class java.lang.String                             |
+level_one                      | SINGLE      | class java.lang.String                             |
+level_two                      | SINGLE      | class java.lang.String                             |
+---------------------------------------------------------------------------------------------------
+Vertex Index Name              | Type        | Unique    | Backing        | Key:           Status |
+---------------------------------------------------------------------------------------------------
+ptoPatentIdComposite           | Composite   | false     | internalindex  | patent_id:    ENABLED |
+ptoPatentTypeComposite         | Composite   | false     | internalindex  | patent_type:    ENABLED |
+ptoPatentDateComposite         | Composite   | false     | internalindex  | patent_date:    ENABLED |
+ptoPatentDateMixed             | Mixed       | false     | search         | patent_date:    ENABLED |
+ptoPatentYearComposite         | Composite   | false     | internalindex  | patent_year:    ENABLED |
+ptoPatentYearMixed             | Mixed       | false     | search         | patent_year:    ENABLED |
+ptoPatentAbstractMixed         | Mixed       | false     | search         | patent_abstract:    ENABLED |
+ptoPatentTitleMixed            | Mixed       | false     | search         | patent_title:    ENABLED |
+ptoApplicationIdComposite      | Composite   | false     | internalindex  | application_id:    ENABLED |
+ptoApplicationTypeComposite    | Composite   | false     | internalindex  | application_type:    ENABLED |
+ptoFilingDateComposite         | Composite   | false     | internalindex  | filing_date:    ENABLED |
+ptoFilingDateMixed             | Mixed       | false     | search         | filing_date:    ENABLED |
+ptoOrganizationIdComposite     | Composite   | false     | internalindex  | organization_id:    ENABLED |
+ptoFedagencyNameMixed          | Mixed       | false     | search         | fedagency_name:    ENABLED |
+ptoInventorIdComposite         | Composite   | false     | internalindex  | inventor_id:    ENABLED |
+ptoInventorNameFirstMixed      | Mixed       | false     | search         | inventor_name_first:    ENABLED |
+ptoInventorNameLastMixed       | Mixed       | false     | search         | inventor_name_last:    ENABLED |
+ptoLocationIdComposite         | Composite   | false     | internalindex  | location_id:    ENABLED |
+ptoCityMixed                   | Mixed       | false     | search         | city:         ENABLED |
+ptoStateComposite              | Composite   | false     | internalindex  | state:        ENABLED |
+ptoCountryComposite            | Composite   | false     | internalindex  | country:      ENABLED |
+ptoStateFipsComposite          | Composite   | false     | internalindex  | state_fips:    ENABLED |
+ptoCountyFipsComposite         | Composite   | false     | internalindex  | county_fips:    ENABLED |
+ptoAssigneeIdComposite         | Composite   | false     | internalindex  | assignee_id:    ENABLED |
+ptoAssigneeTypeComposite       | Composite   | false     | internalindex  | assignee_type:    ENABLED |
+ptoAssigneeNameFirstMixed      | Mixed       | false     | search         | assignee_name_first:    ENABLED |
+ptoAssigneeNameLastMixed       | Mixed       | false     | search         | assignee_name_last:    ENABLED |
+ptoAssigneeOrganizationMixed   | Mixed       | false     | search         | assignee_organization:    ENABLED |
+ptoAttorneyIdComposite         | Composite   | false     | internalindex  | attorney_id:    ENABLED |
+ptoAttorneyNameFirstMixed      | Mixed       | false     | search         | attorney_name_first:    ENABLED |
+ptoAttorneyNameLastMixed       | Mixed       | false     | search         | attorney_name_last:    ENABLED |
+ptoUspcIdComposite             | Composite   | false     | internalindex  | uspc_id:      ENABLED |
+ptoCpcIdComposite              | Composite   | false     | internalindex  | cpc_id:       ENABLED |
+ptoWipoFieldIdComposite        | Composite   | false     | internalindex  | wipo_field_id:    ENABLED |
+ptoIpcIdComposite              | Composite   | false     | internalindex  | ipc_id:       ENABLED |
+ptoLevelComposite              | Composite   | false     | internalindex  | level:        ENABLED |
+ptoCategoryLabelComposite      | Composite   | false     | internalindex  | category_label:    ENABLED |
+---------------------------------------------------------------------------------------------------
+Edge Index (VCI) Name          | Type        | Unique    | Backing        | Key:           Status |
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+Relation Index                 | Type        | Direction | Sort Key       | Order    |     Status |
+---------------------------------------------------------------------------------------------------
