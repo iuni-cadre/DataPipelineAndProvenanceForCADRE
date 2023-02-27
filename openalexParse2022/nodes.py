@@ -1,6 +1,6 @@
 import findspark
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, size, explode, lit, expr, udf, length, concat_ws
+from pyspark.sql.functions import col, size, explode, lit, expr, udf, length, concat_ws, concat
 from pyspark.sql.types import *
 from datetime import datetime as dt
 
@@ -85,8 +85,8 @@ concepts = df.select(\
                         col("wikidata").alias("wikidata_id"),\
                         col("ids.mag").alias("mag_id"),\
                         col("ids.wikipedia").alias("wikipedia_id"),\
-                        concat_ws('|',col("ids.umls_aui")).alias("uml_aui_id"),\
-                        concat_ws('|',col("ids.umls_cui")).alias("umls_cui_id"),\
+                        concat('|',concat_ws('|',col("ids.umls_aui")),'|').alias("umls_aui_id"),\
+                        concat('|',concat_ws('|',col("ids.umls_cui")),'|').alias("umls_cui_id"),\
                         # counts
                         col("works_count"),\
                         col("cited_by_count"),\
@@ -154,7 +154,7 @@ institutions = df.select(\
                         col("updated_date"),\
                         # names
                         name_lr(col("display_name")).alias("name"),\
-                        concat_ws('|',col("display_name_alternatives")).alias("alternative_names"),\
+                        concat('|',concat_ws('|',col("display_name_alternatives")),'|').alias("alternative_names"),\
                         # location
                         col("geo.city").alias("city"),\
                         col("geo.country").alias("country"),\
@@ -166,7 +166,7 @@ institutions = df.select(\
                         # misc
                         col("homepage_url"),\
                         col("type"),\
-                        concat_ws('|',col("display_name_acronyms")).alias("display_name_acronyms")
+                        concat('|',concat_ws('|',col("display_name_acronyms")),'|').alias("display_name_acronyms")
                         )
 
 institutions.write.option('header','True')\
@@ -211,7 +211,7 @@ venues = df.select(\
                     col("oa_venues_id"),\
                     col("issn_l"),\
                     col("ids.mag").alias("mag_id"),\
-                    concat_ws('|',col("ids.issn")).alias("issns"),\
+                    concat('|',concat_ws('|',col("ids.issn")),'|').alias("issns"),\
                     col("ids.fatcat").alias("fatcat_id"),\
                     col("ids.wikidata").alias("wikidata_id"),\
                     # counts 
@@ -222,7 +222,7 @@ venues = df.select(\
                     col("updated_date"),\
                     # names
                     name_lr(col("display_name")).alias("name"),\
-                    concat_ws('|',col("alternate_titles")).alias("alternative_titles"),\
+                    concat('|',concat_ws('|',col("alternate_titles")),'|').alias("alternative_titles"),\
                     col("abbreviated_title"),\
                     # misc
                     col("publisher"),\
