@@ -222,25 +222,33 @@ ON c.cpc_group = t.cpc_group
 
 -- CPC Edge
 CREATE TEMP VIEW g_cpc_edge_export AS (
-SELECT c.patent_id, c.cpc_section AS cpc_id
+SELECT p.patent_id, c.cpc_section AS cpc_id
 FROM patview_core.g_cpc_current c
 JOIN patview_core.g_cpc_title t
 ON c.cpc_group = t.cpc_group
+JOIN patview_core.g_patent p
+ON p.patent_id = c.patent_id
 UNION ALL
-SELECT c.patent_id, c.cpc_class AS cpc_id
+SELECT p.patent_id, c.cpc_class AS cpc_id
 FROM patview_core.g_cpc_current c
 JOIN patview_core.g_cpc_title t
 ON c.cpc_group = t.cpc_group
+JOIN patview_core.g_patent p
+ON p.patent_id = c.patent_id
 UNION ALL
-SELECT c.patent_id, c.cpc_subclass AS cpc_id
+SELECT p.patent_id, c.cpc_subclass AS cpc_id
 FROM patview_core.g_cpc_current c
 JOIN patview_core.g_cpc_title t
 ON c.cpc_group = t.cpc_group
+JOIN patview_core.g_patent p
+ON p.patent_id = c.patent_id
 UNION ALL
-SELECT c.patent_id, c.cpc_group AS cpc_id
+SELECT p.patent_id, c.cpc_group AS cpc_id
 FROM patview_core.g_cpc_current c
 JOIN patview_core.g_cpc_title t
 ON c.cpc_group = t.cpc_group
+JOIN patview_core.g_patent p
+ON p.patent_id = c.patent_id
 );
 \copy (SELECT * FROM g_cpc_edge_export) TO 'cpc_category_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
