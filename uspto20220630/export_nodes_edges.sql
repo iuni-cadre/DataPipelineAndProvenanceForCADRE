@@ -323,4 +323,4 @@ FROM patview_core.g_ipc_at_issue
 \copy (SELECT * FROM g_ipcr_export) TO 'ipcr_nodes.tsv' CSV DELIMITER E'\t' NULL E''  HEADER;
 
 -- IPCR Edge
-\copy (SELECT patent_id, ipc_sequence AS ipc_id FROM patview_core.g_ipc_at_issue) TO 'ipcr_category_of.tsv' CSV DELIMITER E'\t' NULL E'' QUOTE '' HEADER;
+\copy (SELECT patent_id, ipc_sequence AS ipc_id FROM patview_core.g_ipc_at_issue) TO 'ipcr_category_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
