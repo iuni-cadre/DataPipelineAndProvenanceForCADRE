@@ -5,8 +5,7 @@
 -- Inventor
 CREATE TEMP VIEW g_inventor_export AS (
 SELECT inventor_id,
-        disambig_inventor_name_first,
-        disambig_inventor_name_last,
+        concat_ws(' ', disambig_inventor_name_first, disambig_inventor_name_last) AS inventor_name,
         male_flag,
         ROW_NUMBER() OVER( PARTITION BY inventor_id, disambig_inventor_name_first, disambig_inventor_name_last, male_flag) AS row_num
         -- num_patents no longer supported
@@ -39,8 +38,7 @@ FROM patview_core.g_location_disambiguated);
 CREATE TEMP VIEW g_assignee_export AS (
 SELECT assignee_id,
         assignee_type,
-        disambig_assignee_individual_name_first,
-        disambig_assignee_individual_name_last,
+        concat_ws(' ', disambig_assignee_individual_name_first, disambig_assignee_individual_name_last) AS assignee_name,
         REGEXP_REPLACE(disambig_assignee_organization,'\n','','g') AS disambig_assignee_organization,
         ROW_NUMBER() OVER( PARTITION BY assignee_id, assignee_type, disambig_assignee_individual_name_first, disambig_assignee_individual_name_last, disambig_assignee_organization) AS row_num
         -- num patents no longer supported
@@ -80,8 +78,7 @@ FROM patview_core.g_application
 -- Lawyer 
 CREATE TEMP VIEW g_attorney_export AS (
 SELECT attorney_id,
-        disambig_attorney_name_first,
-        disambig_attorney_name_last,
+        concat_ws(' ', disambig_attorney_name_first, disambig_attorney_name_last) AS attorney_name,
         disambig_attorney_organization,
         ROW_NUMBER() OVER( PARTITION BY attorney_id, disambig_attorney_name_first, disambig_attorney_name_last, disambig_attorney_organization) AS row_num
         -- num patents no longer supported
@@ -93,7 +90,7 @@ SELECT attorney_id,
         -- persistent lawyer id no longer supported
 FROM patview_core.g_attorney_disambiguated
 );
-\copy (SELECT attorney_id, disambig_attorney_name_first, disambig_attorney_name_last, disambig_attorney_organization FROM g_attorney_export WHERE row_num=1) TO 'lawyer_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
+\copy (SELECT attorney_id, disambig_attorney_name_first, disambig_attorney_name_last, disambig_attorney_organization FROM g_attorney_export WHERE row_num=1) TO 'attorney_nodes.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Patent
 CREATE TEMP VIEW g_patent_export AS (
@@ -149,7 +146,7 @@ ON a.patent_id = b.patent_id AND a.inventor_id <> b.inventor_id
 \copy (SELECT patent_id,assignee_id FROM patview_core.g_assignee_disambiguated) TO 'assigned_to.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 -- Lawyer of
-\copy (SELECT patent_id,attorney_id FROM patview_core.g_attorney_disambiguated) TO 'lawyer_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
+\copy (SELECT patent_id,attorney_id FROM patview_core.g_attorney_disambiguated) TO 'attorney_of.tsv' CSV DELIMITER E'\t' NULL E'' HEADER;
 
 --Interested in 
 CREATE TEMP VIEW g_interested_in_export AS (
