@@ -26,6 +26,7 @@ scopus_id = udf(lambda x: x.split("authorID=")[-1].split('&')[0] if x is not Non
 twitter_id = udf(lambda x: x.split("twitter.com/")[-1] if x is not None else None, StringType())
 emp_list = udf(lambda x: x if len(x) > 0 else None)
 name_lr = udf(lambda x: x.lower() if x is not None else None, StringType())
+pipecat = udf(lambda x: '|' + x + '|' if x is not None and x != "" else None, StringType())
 
 start = dt.now()
 
@@ -85,8 +86,8 @@ concepts = df.select(\
                         col("wikidata").alias("wikidata_id"),\
                         col("ids.mag").alias("mag_id"),\
                         col("ids.wikipedia").alias("wikipedia_id"),\
-                        concat('|',concat_ws('|',col("ids.umls_aui")),'|').alias("umls_aui_id"),\
-                        concat('|',concat_ws('|',col("ids.umls_cui")),'|').alias("umls_cui_id"),\
+                        concat_ws('|',col("ids.umls_aui")).alias("umls_aui_id"),\
+                        concat_ws('|',col("ids.umls_cui")).alias("umls_cui_id"),\
                         # counts
                         col("works_count"),\
                         col("cited_by_count"),\
@@ -98,7 +99,9 @@ concepts = df.select(\
                         # misc
                         col("level"),\
                         col("description")\
-                    )
+                    )\
+                    .withColumn('umls_aui_id', pipecat(col("umls_aui_id")))\
+                    .withColumn('umls_cui_id', pipecat(col("umls_cui_id")))
 
 concepts.write.option('header','True')\
                         .option('sep','\t').option('quote','\u0000').option('nullValue',None)\
@@ -154,7 +157,7 @@ institutions = df.select(\
                         col("updated_date"),\
                         # names
                         name_lr(col("display_name")).alias("name"),\
-                        concat('|',concat_ws('|',col("display_name_alternatives")),'|').alias("alternative_names"),\
+                        concat_ws('|',col("display_name_alternatives")).alias("alternative_names"),\
                         # location
                         col("geo.city").alias("city"),\
                         col("geo.country").alias("country"),\
@@ -166,8 +169,10 @@ institutions = df.select(\
                         # misc
                         col("homepage_url"),\
                         col("type"),\
-                        concat('|',concat_ws('|',col("display_name_acronyms")),'|').alias("display_name_acronyms")
-                        )
+                        concat_ws('|',col("display_name_acronyms")).alias("display_name_acronyms")
+                        )\
+                        .withColumn('alternative_names', pipecat(col("alternative_names")))\
+                        .withColumn('display_name_acronyms', pipecat(col("display_name_acronyms")))
 
 institutions.write.option('header','True')\
                         .option('sep','\t').option('quote','\u0000').option('nullValue',None)\
@@ -211,7 +216,7 @@ venues = df.select(\
                     col("oa_venues_id"),\
                     col("issn_l"),\
                     col("ids.mag").alias("mag_id"),\
-                    concat('|',concat_ws('|',col("ids.issn")),'|').alias("issns"),\
+                    concat_ws('|',col("ids.issn")).alias("issns"),\
                     col("ids.fatcat").alias("fatcat_id"),\
                     col("ids.wikidata").alias("wikidata_id"),\
                     # counts 
@@ -222,7 +227,7 @@ venues = df.select(\
                     col("updated_date"),\
                     # names
                     name_lr(col("display_name")).alias("name"),\
-                    concat('|',concat_ws('|',col("alternate_titles")),'|').alias("alternative_titles"),\
+                    concat_ws('|',col("alternate_titles")).alias("alternative_titles"),\
                     col("abbreviated_title"),\
                     # misc
                     col("publisher"),\
@@ -230,7 +235,9 @@ venues = df.select(\
                     col("apc_usd"),\
                     col("is_oa"),\
                     col("is_in_doaj")\
-                    )
+                    )\
+                    .withColumn("issns", pipecat(col("issns")))\
+                    .withColumn("alternative_titles", pipecat(col("issns")))
 
 venues.write.option('header','True')\
                         .option('sep','\t').option('quote','\u0000').option('nullValue',None)\
