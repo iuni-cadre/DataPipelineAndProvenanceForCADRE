@@ -27,17 +27,19 @@ def main():
 
         # extract schema from sample parquet
         print('Loading schema')
-        schema = spark.read.load(f'{schemas}{entity}.parquet').schema
+        schema = spark.read.load(f'{schemas}{entity}.parquet')
         print('schema loaded')
+
+        if entity == 'works':
+            schema = schema.drop('abstract_inverted_index').schema
+            schema.add('abstract_inverted_index', MapType(StringType(), ArrayType(IntegerType())))
+        else:
+            schema = schema.schema
 
         # load all jsons using schema from sample parquet
         print('loading JSONs')
         df =spark.read.schema(schema).json(f'{hdfs_b}{entity}/')
         print('JSONs loaded into spark')
-
-        # the works abstract inverted index column is not a realistic field for our uses
-        if entity == 'works':
-            df = df.drop("abstract_inverted_index")
 
         # write all json to parquets
         print('Writing JSONs to Parquets')
