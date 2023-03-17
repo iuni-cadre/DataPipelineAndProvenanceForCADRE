@@ -19,27 +19,50 @@ spark.conf.set('spark.sql.caseSensitive','True')
 
 csv_loc = '/OpenAlex_202211/jg/'
 
-clean_text = udf(lambda x: x.replace('\n','').replace('\t',' ').replace('\r','').replace('\x08','').strip() if x is not None else None, StringType())
+
+##################
+# Function build #
+##################
+
+# extract ids from urls
 oa_id = udf(lambda x: x.split(".org/")[-1] if x is not None else None, StringType())
 orc_id = udf(lambda x: x.split(".org/")[-1] if x is not None else None, StringType())
 scopus_id = udf(lambda x: x.split("authorID=")[-1].split('&')[0] if x is not None else None, IntegerType())
 twitter_id = udf(lambda x: x.split("twitter.com/")[-1] if x is not None else None, StringType())
+wiki = udf(lambda x: x.split('wiki/')[-1] if x is not None else None, StringType())
+ror_id = udf(lambda x: x.split('ror.org/')[-1] if x is not None else None, StringType())
+
+# clean/transform text
+clean_text = udf(lambda x: x.replace('\n','').replace('\t',' ').replace('\r','').replace('\x08','').strip() if x is not None else None, StringType())
+
+# aggregate text
 emp_list = udf(lambda x: x if len(x) > 0 else None)
 name_lr = udf(lambda x: x.lower() if x is not None else None, StringType())
 pipecat = udf(lambda x: '|' + x + '|' if x is not None and x != "" else None, StringType())
 
+
+@udf(returnType=StringType())
+def abstract(x):
+    if x is not None:
+        x1 = dict(x)
+        final = " ".join(dict(sorted({z:k for k,x in x1.items() for z in x}.items())).values())
+    else:
+        final = None
+    return final
+
 start = dt.now()
+
 
 #########################
 # dataframe for authors #
 #########################
 df = spark.read.load('/OpenAlex_202211/parquets/authors/')\
-                    .withColumn("oa_author_id", oa_id(col("id")))
+                    .withColumn("openalex_author_id", oa_id(col("id")))
 
 # authors node
 authors = df.select(\
                     # identifers
-                    col("oa_author_id"),\
+                    col("openalex_author_id"),\
                     col("ids.mag").alias("mag_id"),\
                     orc_id(col("ids.orcid")).alias("orc_id"),\
                     scopus_id(col("ids.scopus")).alias("scopus_id"),\
@@ -51,7 +74,8 @@ authors = df.select(\
                     col("created_date"),\
                     col("updated_date"),\
                     # names
-                    name_lr(col("display_name")).alias("name"),\
+                    name_lr(col("display_name")).alias("author_name"),\
+                    col("display_name").alias("display_name"),\
                     emp_list(col("display_name_alternatives")).alias("alternative_names"),\
                     # misc
                     col("works_api_url")\
@@ -62,10 +86,10 @@ authors.write.option('header','True')\
                         .mode('overwrite').csv(csv_loc+'author_nodes/')
 
 # authors to concept edge
-auth2con = df.select(col("oa_author_id"),\
+auth2con = df.select(col("openalex_author_id"),\
                         explode(col("x_concepts")))\
-                .select(col("oa_author_id"),\
-                        oa_id(col("col.id")).alias("oa_concept_id")\
+                .select(col("openalex_author_id"),\
+                        oa_id(col("col.id")).alias("openalex_concept_id")\
                 )
 
 auth2con.write.option('header','True')\
@@ -78,14 +102,14 @@ auth2con.write.option('header','True')\
 
 # concepts first load
 df = spark.read.load('/OpenAlex_202211/parquets/concepts/')\
-                        .withColumn("oa_concept_id", oa_id(col("id")))
+                        .withColumn("openalex_concept_id", oa_id(col("id")))
 
 concepts = df.select(\
                         #identifers
-                        col("oa_concept_id"),\
-                        col("wikidata").alias("wikidata_id"),\
+                        col("openalex_concept_id"),\
+                        wiki(col("wikidata")).alias("wikidata_id"),\
                         col("ids.mag").alias("mag_id"),\
-                        col("ids.wikipedia").alias("wikipedia_id"),\
+                        wiki(col("ids.wikipedia")).alias("wikipedia_id"),\
                         concat_ws('|',col("ids.umls_aui")).alias("umls_aui_id"),\
                         concat_ws('|',col("ids.umls_cui")).alias("umls_cui_id"),\
                         # counts
@@ -109,10 +133,10 @@ concepts.write.option('header','True')\
 
 # concepts to concepts (ancestors) edge
 ancestors = df.select(\
-                        col("oa_concept_id"),\
+                        col("openalex_concept_id"),\
                         explode(col("ancestors")))\
                 .select(\
-                        col("oa_concept_id").alias("descendant_concept_id"),\
+                        col("openalex_concept_id").alias("descendant_concept_id"),\
                         oa_id(col("col.id")).alias("ancestor_concept_id")\
                 )
 
@@ -122,10 +146,10 @@ ancestors.write.option('header','True')\
 
 # concepts to concepts (related) edge
 related = df.select(\
-                    col("oa_concept_id"),\
+                    col("openalex_concept_id"),\
                     explode(col("related_concepts")))\
             .select(\
-                    col("oa_concept_id").alias("oa_concept_id"),\
+                    col("openalex_concept_id").alias("openalex_concept_id"),\
                     oa_id(col("col.id")).alias("related_concept_id")\
             )
 
@@ -139,16 +163,16 @@ related.write.option('header','True')\
 
 # institutions first load
 df = spark.read.load("/OpenAlex_202211/parquets/institutions/")\
-                        .withColumn("oa_institution_id",oa_id(col("id")))
+                        .withColumn("openalex_institution_id",oa_id(col("id")))
 
 institutions = df.select(\
                         # identifiers
-                        col("oa_institution_id"),\
-                        col("ror"),\
-                        col("ids.wikidata").alias("wikidata_id"),\
+                        col("openalex_institution_id"),\
+                        ror_id(col("ror")).alias('ror'),\
+                        wiki(col("ids.wikidata")).alias("wikidata_id"),\
                         col("ids.grid").alias("grid_id"),\
                         col("ids.mag").alias("mag_id"),\
-                        col("ids.wikipedia").alias("wikipedia_id"),\
+                        wiki(col("ids.wikipedia")).alias("wikipedia_id"),\
                         # counts
                         col("works_count"),\
                         col("cited_by_count"),\
@@ -180,10 +204,10 @@ institutions.write.option('header','True')\
 
 # institutions to institutions (associated) edge
 associated = df.select(\
-                        col("oa_institution_id"),\
+                        col("openalex_institution_id"),\
                         explode(col("associated_institutions")))\
                 .select(\
-                        col("oa_institution_id").alias("oa_institution_id"),\
+                        col("openalex_institution_id").alias("openalex_institution_id"),\
                         oa_id(col("col.id")).alias("associated_institution_id")\
                 )
 
@@ -193,11 +217,11 @@ associated.write.option('header','True')\
 
 # institutions to concepts edge
 inst_2_con = df.select(\
-                        col("oa_institution_id"),\
+                        col("openalex_institution_id"),\
                         explode(col("x_concepts")))\
                 .select(\
-                        col("oa_institution_id").alias("oa_institution_id"),\
-                        oa_id(col("col.id")).alias("oa_concept_id")\
+                        col("openalex_institution_id").alias("openalex_institution_id"),\
+                        oa_id(col("col.id")).alias("openalex_concept_id")\
                 )
 inst_2_con.write.option('header','True')\
                         .option('sep','\t').option('quote','\u0000').option('nullValue',None)\
@@ -209,16 +233,16 @@ inst_2_con.write.option('header','True')\
 
 # first venues load
 df = spark.read.load('/OpenAlex_202211/parquets/venues')\
-                        .withColumn("oa_venues_id", oa_id(col("id")))
+                        .withColumn("openalex_venues_id", oa_id(col("id")))
 
 venues = df.select(\
                     # identifiers
-                    col("oa_venues_id"),\
+                    col("openalex_venues_id"),\
                     col("issn_l"),\
                     col("ids.mag").alias("mag_id"),\
                     concat_ws('|',col("ids.issn")).alias("issns"),\
                     col("ids.fatcat").alias("fatcat_id"),\
-                    col("ids.wikidata").alias("wikidata_id"),\
+                    wiki(col("ids.wikidata")).alias("wikidata_id"),\
                     # counts 
                     col("works_count"),\
                     col("cited_by_count"),\
@@ -226,7 +250,8 @@ venues = df.select(\
                     col("created_date"),\
                     col("updated_date"),\
                     # names
-                    name_lr(col("display_name")).alias("name"),\
+                    name_lr(col("display_name")).alias("venue_name"),\
+                    col("display_name").alias("display_name"),\
                     concat_ws('|',col("alternate_titles")).alias("alternative_titles"),\
                     col("abbreviated_title"),\
                     # misc
@@ -245,11 +270,11 @@ venues.write.option('header','True')\
 
 # venues to concepts edge
 ven2con = df.select(\
-                    col("oa_venues_id"),\
+                    col("openalex_venues_id"),\
                     explode(col("x_concepts")))\
             .select(\
-                    col("oa_venues_id").alias("oa_venues_id"),\
-                    oa_id(col("col.id").alias("oa_concept_id"))\
+                    col("openalex_venues_id").alias("openalex_venues_id"),\
+                    oa_id(col("col.id").alias("openalex_concept_id"))\
             )
 
 ven2con.write.option('header','True')\
@@ -271,10 +296,10 @@ venue_societies.write.option('header','True')\
 
 # venues to societies edge
 ven2soc = df.select(\
-                    col("oa_venues_id"),\
+                    col("openalex_venues_id"),\
                     explode(col("societies")))\
                 .select(\
-                        col("oa_venues_id").alias("oa_venue_id"),\
+                        col("openalex_venues_id").alias("openalex_venue_id"),\
                         col("col.url").alias("society_url")\
                 )
 
@@ -286,11 +311,11 @@ ven2soc.write.option('header','True')\
 # dataframe for works table #
 #############################
 df = spark.read.load('/OpenAlex_202211/parquets/works/')\
-                        .withColumn('oa_work_id',oa_id(col("id")))
+                        .withColumn('openalex_work_id',oa_id(col("id")))
 
 works = df.select(\
                 # identifiers
-                col("oa_work_id"),\
+                col("openalex_work_id"),\
                 col("doi"),\
                 col("ids.mag").alias("mag_id"),\
                 col("ids.pmid").alias("pmid"),\
@@ -301,7 +326,7 @@ works = df.select(\
                 col("updated_date"),\
                 col("publication_date"),\
                 # names
-                name_lr(col("display_name")).alias("name"),\
+                name_lr(col("display_name")).alias("publication_name"),\
                 clean_text(col("title")).alias("title"),\
                 # open access
                 col("open_access.is_oa"),\
@@ -311,7 +336,8 @@ works = df.select(\
                 col("type"),\
                 col("is_retracted"),\
                 col("is_paratext"),\
-                col("cited_by_api_url")
+                col("cited_by_api_url"),\
+                clean_text(abstract(col("abstract_inverted_index"))).alias("abstract")
                 )
 
 works.write.option('header','True')\
@@ -320,7 +346,7 @@ works.write.option('header','True')\
 
 # work to venue (host) edge
 hosts = df.select(\
-                    col("oa_work_id").alias("oa_work_id"),\
+                    col("openalex_work_id").alias("openalex_work_id"),\
                     oa_id(col("host_venue.id")).alias("host_oa_venue_id"))\
             .na.drop(subset=['host_oa_venue_id'], how='all')
 
@@ -330,14 +356,14 @@ hosts.write.option('header','True')\
 
 # authorships
 authorships = df.select(\
-                        col("oa_work_id"),\
+                        col("openalex_work_id"),\
                         explode(col("authorships"))\
                     )
 
 # work to author (authorship) edge
 work2auth = authorships.select(\
-                                col("oa_work_id").alias("oa_work_id"),\
-                                oa_id(col("col.author.id")).alias("oa_author_id")\
+                                col("openalex_work_id").alias("openalex_work_id"),\
+                                oa_id(col("col.author.id")).alias("openalex_author_id")\
                         )
 
 work2auth.write.option('header','True')\
@@ -346,11 +372,11 @@ work2auth.write.option('header','True')\
 
 # work to institution (authorship) edge
 work2inst = authorships.select(\
-                                col("oa_work_id").alias("oa_work_id"),\
+                                col("openalex_work_id").alias("openalex_work_id"),\
                                 explode(col("col.institutions")))\
                         .select(\
-                                col("oa_work_id"),\
-                                oa_id(col("col.id")).alias("oa_institution_id")\
+                                col("openalex_work_id"),\
+                                oa_id(col("col.id")).alias("openalex_institution_id")\
                         )
 
 work2inst.write.option('header','True')\
@@ -359,11 +385,11 @@ work2inst.write.option('header','True')\
 
 # work to concepts edge
 work2con = df.select(\
-                        col("oa_work_id"),\
+                        col("openalex_work_id"),\
                         explode(col("concepts")))\
                 .select(\
-                        col("oa_work_id").alias("oa_work_id"),\
-                        oa_id(col("col.id")).alias("oa_concept_id"),\
+                        col("openalex_work_id").alias("openalex_work_id"),\
+                        oa_id(col("col.id")).alias("openalex_concept_id"),\
                         col("col.score")
                 )
 
@@ -373,11 +399,11 @@ work2con.write.option('header','True')\
 
 # work to work (referenced) edge
 workRef = df.select(\
-                        col("oa_work_id"),\
+                        col("openalex_work_id"),\
                         explode("referenced_works"))\
                 .select(\
-                        col("oa_work_id").alias("oa_work_id"),\
-                        oa_id(col("col")).alias("oa_referenced_work_id")\
+                        col("openalex_work_id").alias("openalex_work_id"),\
+                        oa_id(col("col")).alias("openalex_referenced_work_id")\
                 )
 
 workRef.write.option('header','True')\
@@ -386,11 +412,11 @@ workRef.write.option('header','True')\
 
 # work to work (related) edge
 workRel = df.select(\
-                    col("oa_work_id"),\
+                    col("openalex_work_id"),\
                     explode(col("related_works")))\
             .select(\
-                    col("oa_work_id").alias("oa_work_id"),\
-                    oa_id(col("col")).alias("oa_related_work_id")\
+                    col("openalex_work_id").alias("openalex_work_id"),\
+                    oa_id(col("col")).alias("openalex_related_work_id")\
             )
 
 workRel.write.option('header','True')\
