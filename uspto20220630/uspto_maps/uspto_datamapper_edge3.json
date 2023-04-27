@@ -1,0 +1,34 @@
+{
+  "vertexMap" : {},
+  "edgeMap" : {
+     "uspc_category_of.tsv" : {
+       "[edge_left]" : {
+         "uspc_id" : "USPC.uspc_id"
+       },
+       "[EdgeLabel]" : "USPC_Category_Of",
+       "[edge_right]" : {
+         "patent_id" : "Patent.patent_id"
+       }
+     },
+     "wipo_category_of.tsv" : {
+       "[edge_left]" : {
+         "wipo_field_id" : "WIPO.wipo_field_id"
+       },
+       "[EdgeLabel]" : "WIPO_Category_Of",
+       "[edge_right]" : {
+         "patent_id" : "Patent.patent_id"
+       }
+     },
+     "ipc_category_of.tsv" : {
+       "[edge_left]" : {
+         "ipc_id" : "IPC.ipc_id"
+       },
+       "[EdgeLabel]" : "IPC_Category_Of",
+       "[edge_right]" : {
+         "patent_id" : "Patent.patent_id"
+       }
+     }
+  }  
+}
+    
+

@@ -1,0 +1,22 @@
+{
+  "vertexMap" : {
+     "patent_nodes.tsv" : {
+       "[VertexLabel]" : "Patent",
+       "patent_id" : "patent_id",
+       "patent_type" : "patent_type",
+       "patent_date" : "patent_date",
+       "year" : "patent_year",
+       "patent_abstract" : "patent_abstract",
+       "patent_title" : "patent_title",
+       "wipo_kind" : "wipo_kind",
+       "num_claims" : "num_claims"
+     },
+     "cpc_nodes.tsv" : {
+       "[VertexLabel]" : "CPC",
+       "cpc_id" : "cpc_id",
+       "level" : "level",
+       "label" : "category_label"
+     }
+  },
+  "edgeMap" : {}
+}

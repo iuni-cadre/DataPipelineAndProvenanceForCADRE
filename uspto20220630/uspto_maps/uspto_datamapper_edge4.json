@@ -1,0 +1,34 @@
+{
+  "vertexMap" : {},
+  "edgeMap" : {
+     "coinventor_with.tsv" : {
+       "[edge_left]" : {
+         "inventor_id" : "Inventor.inventor_id"
+       },
+       "[EdgeLabel]" : "Coinventor_With",
+       "[edge_right]" : {
+         "coinventor_id" : "Inventor.inventor_id"
+       }  
+     },
+     "inventor_of.tsv" : {
+       "[edge_left]" : {
+         "inventor_id" : "Inventor.inventor_id"
+       },
+       "[EdgeLabel]" : "Inventor_Of",
+       "[edge_right]" : {
+         "patent_id" : "Patent.patent_id"
+       }
+     },
+     "inventor_located_in.tsv" : {
+       "[edge_left]" : {
+         "inventor_id" : "Inventor.inventor_id"
+       },
+       "[EdgeLabel]" : "Inventor_Located_In",
+       "[edge_right]" : {
+         "location_id" : "Location.location_id"
+       }
+     }
+  }  
+}
+    
+

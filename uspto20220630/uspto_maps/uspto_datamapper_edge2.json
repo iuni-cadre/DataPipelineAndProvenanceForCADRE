@@ -1,0 +1,43 @@
+{
+  "vertexMap" : {},
+  "edgeMap" : {
+     "citation.tsv" : {
+       "[edge_left]" : {
+         "patent_id" : "Patent.patent_id"
+       },
+       "[EdgeLabel]" : "Citation",
+       "[edge_right]" : {
+         "citation_patent_id" : "Patent.patent_id"
+       }
+     },
+     "cites.tsv" : {
+       "[edge_left]" : {
+         "application_id" : "Application.application_id"
+       },
+       "[EdgeLabel]" : "Cites",
+       "[edge_right]" : {
+         "patent_id" : "Patent.patent_id"
+       }
+     },
+     "becomes.tsv" : {
+       "[edge_left]" : {
+         "application_id" : "Application.application_id"
+       },
+       "[EdgeLabel]" : "Becomes",
+       "[edge_right]" : {
+         "patent_id" : "Patent.patent_id"
+       }
+     },
+     "interested_in.tsv" : {
+       "[edge_left]" : {
+         "organization_id" : "Government_Organization.organization_id"
+       },
+       "[EdgeLabel]" : "Interested_In",
+       "[edge_right]" : {
+         "patent_id" : "Patent.patent_id"
+       }
+     }
+  }  
+}
+    
+

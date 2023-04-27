@@ -1,0 +1,34 @@
+{
+  "vertexMap" : {},
+  "edgeMap" : {
+     "assignee_located_in.tsv" : {
+       "[edge_left]" : {
+         "assignee_id" : "Assignee.assignee_id"
+       },
+       "[EdgeLabel]" : "Assignee_Located_In",
+       "[edge_right]" : {
+         "location_id" : "Location.location_id"
+       }
+     },
+     "assigned_to.tsv" : {
+       "[edge_left]" : {
+         "assignee_id" : "Assignee.assignee_id"
+       },
+       "[EdgeLabel]" : "Assigned_To",
+       "[edge_right]" : {
+         "patent_id" : "Patent.patent_id"
+       }
+     },
+     "attorney_of.tsv" : {
+       "[edge_left]" : {
+         "attorney_id" : "Attorney.attorney_id"
+       },
+       "[EdgeLabel]" : "Attorney_Of",
+       "[edge_right]" : {
+         "patent_id" : "Patent.patent_id"
+       }
+     }
+  }  
+}
+    
+

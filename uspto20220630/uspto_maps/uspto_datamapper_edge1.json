@@ -1,0 +1,14 @@
+{      
+  "vertexMap" : {},
+  "edgeMap" : {
+     "cpc_category_of.tsv" : {
+       "[edge_left]" : {
+         "cpc_id" : "CPC.cpc_id"
+       },
+       "[EdgeLabel]" : "CPC_Category_Of",
+       "[edge_right]" : {
+         "patent_id" : "Patent.patent_id"
+       }
+     }
+  }
+}

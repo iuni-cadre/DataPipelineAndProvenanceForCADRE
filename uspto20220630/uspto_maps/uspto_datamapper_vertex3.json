@@ -1,0 +1,37 @@
+{
+  "vertexMap" : {
+     "assignee_nodes.tsv" : {
+       "[VertexLabel]" : "Assignee",
+       "assignee_id" : "assignee_id",
+       "assignee_type" : "assignee_type",
+       "assignee_display_name" : "assignee_display_name",
+       "assignee_name" : "assignee_name",
+       "disambig_assignee_organization" : "assignee_organization"
+     },
+     "attorney_nodes.tsv" : {
+       "[VertexLabel]" : "Attorney",
+       "attorney_id" : "attorney_id",
+       "attorney_name" : "attorney_name",
+       "disambig_attorney_organization" : "attorney_organization"
+     },
+     "uspc_nodes.tsv" : {
+       "[VertexLabel]" : "USPC",
+       "uspc_id" : "uspc_id",
+       "level" : "level",
+       "label" : "category_label"
+     },
+     "wipo_nodes.tsv" : {
+       "[VertexLabel]" : "WIPO",
+       "wipo_field_id" : "wipo_field_id",
+       "level" : "level",
+       "label" : "category_label"
+     },
+     "ipc_nodes.tsv" : {
+       "[VertexLabel]" : "IPC",
+       "ipc_id" : "ipc_id",
+       "level" : "level",
+       "label" : "category_label"
+     }
+  },
+  "edgeMap" : {}
+}

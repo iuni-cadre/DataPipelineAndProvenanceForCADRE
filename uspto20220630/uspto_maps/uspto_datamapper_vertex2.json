@@ -1,0 +1,40 @@
+{
+  "vertexMap" : {
+     "application_nodes.tsv" : {
+       "[VertexLabel]" : "Application",
+       "application_id" : "application_id",
+       "patent_application_type" : "application_type",
+       "filing_date" : "filing_date"
+     },
+     "gov_org_nodes.tsv" : {
+       "[VertexLabel]" : "Government_Organization",
+       "organization_id" : "organization_id",
+       "fedagency_name" : "fedagency_name",
+       "level_one" : "level_one",
+       "level_two" : "level_two",
+       "level_three" : "level_three"
+     },
+     "inventor_nodes.tsv" : {
+       "[VertexLabel]" : "Inventor",
+       "inventor_id" : "inventor_id",
+       "inventor_display_name" : "inventor_display_name",
+       "inventor_name" : "inventor_name",
+       "male_flag" : "male_flag"
+     },
+     "location_nodes.tsv" : {
+       "[VertexLabel]" : "Location",
+       "location_id" : "location_id",
+       "disambig_city" : "city",
+       "county" : "county",
+       "disambig_state" : "state",
+       "disambig_country" : "country",
+       "state_fips" : "state_fips",
+       "county_fips" : "county_fips",
+       "latitude" : "latitude",
+       "longitude" : "longitude"
+     }
+  },
+  "edgeMap" : {}
+}
+    
+
