@@ -1,0 +1,21 @@
+{
+  "vertexMap" : {
+     "concept_nodes.tsv" : {
+       "[VertexLabel]" : "Concept",
+       "oa_concept_id" : "openalex_concept_id",
+       "wikidata_id" : "wikidata_concept_id",
+       "mag_id" : "mag_concept_id",
+       "wikipedia_id" : "wikipedia_concept_id",
+       "umls_aui_id" : "umls_aui_id",
+       "umls_cui_id" : "umls_cui_id",
+       "works_count" : "works_count",
+       "cited_by_count" : "cited_by_count",
+       "created_date" : "concept_created_date",
+       "updated_date" : "concept_updated_date",
+       "name" : "concept_name",
+       "level" : "level",
+       "description" : "description"
+     }
+  },
+  "edgeMap" : {}
+}

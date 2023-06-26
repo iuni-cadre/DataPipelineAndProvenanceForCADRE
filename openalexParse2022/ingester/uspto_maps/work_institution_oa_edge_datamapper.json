@@ -1,0 +1,14 @@
+{
+  "vertexMap" : {},
+  "edgeMap" : {
+     "work_institution.tsv" : {
+       "[edge_left]" : {
+         "oa_work_id" : "Work.openalex_work_id"
+       },
+       "[EdgeLabel]" : "WorkInstitution",
+       "[edge_right]" : {
+         "oa_institution_id" : "Institution.openalex_institution_id"
+       }
+     }
+  }
+}

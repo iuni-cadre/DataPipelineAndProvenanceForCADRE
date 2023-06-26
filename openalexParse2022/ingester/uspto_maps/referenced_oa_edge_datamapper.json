@@ -1,0 +1,14 @@
+{
+  "vertexMap" : {},
+  "edgeMap" : {
+     "referenced.tsv" : {
+       "[edge_left]" : {
+         "oa_work_id" : "Work.openalex_work_id"
+       },
+       "[EdgeLabel]" : "Referenced",
+       "[edge_right]" : {
+         "oa_referenced_work_id" : "Work.openalex_work_id"
+       }
+     }
+  }
+}

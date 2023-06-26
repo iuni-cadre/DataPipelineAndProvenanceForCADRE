@@ -1,0 +1,24 @@
+{
+  "vertexMap" : {
+     "venue_nodes.tsv" : {
+       "[VertexLabel]" : "Venue",
+       "oa_venues_id" : "openalex_venue_id",
+       "issn_l" : "issn_l",
+       "mag_id" : "mag_venue_id",
+       "issns" : "issns",
+       "fatcat_id" : "fatcat_id",
+       "wikidata_id" : "wikidata_venue_id",
+       "works_count" : "works_count",
+       "cited_by_count" : "cited_by_count",
+       "created_date" : "venue_created_date",
+       "updated_date" : "venue_updated_date",
+       "name" : "venue_name",
+       "publisher" : "publisher_name",
+       "homepage_url" : "homepage_url",
+       "apc_usd" : "apc_usd",
+       "is_oa" : "venue_is_oa",
+       "is_in_doaj" : "is_in_doaj"
+     }
+  },
+  "edgeMap" : {}
+}

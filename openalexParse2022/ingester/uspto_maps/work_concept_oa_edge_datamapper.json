@@ -1,0 +1,15 @@
+{
+  "vertexMap" : {},
+  "edgeMap" : {
+     "work_concept.tsv" : {
+       "[edge_left]" : {
+         "oa_work_id" : "Work.openalex_work_id"
+       },
+       "[EdgeLabel]" : "WorkConcept",
+       "[edge_right]" : {
+         "oa_concept_id" : "Concept.openalex_concept_id"
+       },
+       "score" : "work_concept_score"
+     }
+  }
+}

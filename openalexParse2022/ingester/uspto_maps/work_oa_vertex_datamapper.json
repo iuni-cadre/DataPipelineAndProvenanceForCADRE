@@ -1,0 +1,25 @@
+{
+  "vertexMap" : {
+     "work_nodes.tsv" : {
+       "[VertexLabel]" : "Work",
+       "oa_work_id" : "openalex_work_id",
+       "doi" : "doi",
+       "mag_id" : "mag_work_id",
+       "pmid" : "pmid",
+       "cited_by_count" : "cited_by_count",
+       "created_date" : "work_created_date",
+       "updated_date" : "work_updated_date",
+       "publication_date" : "publication_date",
+       "name" : "publication_name",
+       "title" : "title",
+       "is_oa" : "work_is_oa",
+       "oa_status" : "work_oa_status",
+       "oa_url" : "work_oa_url",
+       "type" : "type",
+       "is_retracted" : "is_retracted",
+       "is_paratext" : "is_paratext",
+       "cited_by_api_url" : "cited_by_api_url"
+     }
+  },
+  "edgeMap" : {}
+}

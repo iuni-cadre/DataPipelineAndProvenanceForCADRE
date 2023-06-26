@@ -1,0 +1,20 @@
+{
+  "vertexMap" : {
+     "author_nodes.tsv" : {
+       "[VertexLabel]" : "Author",
+       "oa_author_id" : "openalex_author_id",
+       "mag_id" : "mag_author_id",
+       "orc_id" : "orc_id",
+       "scopus_id" : "scopus_id",
+       "twitter_id" : "twitter_id",
+       "works_count" : "works_count",
+       "cited_by_count" : "cited_by_count",
+       "created_date" : "author_created_date",
+       "updated_date" : "author_updated_date",
+       "name" : "author_name",
+       "alternative_names" : "author_alternative_names",
+       "works_api_url" : "works_api_url"
+     }
+  },
+  "edgeMap" : {}
+}

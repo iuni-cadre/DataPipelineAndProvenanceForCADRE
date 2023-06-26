@@ -1,0 +1,14 @@
+{
+  "vertexMap" : {},
+  "edgeMap" : {
+     "work_author.tsv" : {
+       "[edge_left]" : {
+         "oa_work_id" : "Work.openalex_work_id"
+       },
+       "[EdgeLabel]" : "WorkAuthor",
+       "[edge_right]" : {
+         "oa_author_id" : "Author.openalex_author_id"
+       }
+     }
+  }
+}

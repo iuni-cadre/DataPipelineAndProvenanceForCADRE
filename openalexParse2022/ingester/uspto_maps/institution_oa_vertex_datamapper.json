@@ -1,0 +1,24 @@
+{
+  "vertexMap" : {
+     "institution_nodes.tsv" : {
+       "[VertexLabel]" : "Institution",
+       "oa_institution_id" : "openalex_institution_id",
+       "ror" : "ror",
+       "wikidata_id" : "wikidata_institution_id",
+       "grid_id" : "grid_id",
+       "wikipedia_id" : "wikipedia_institution_id",
+       "works_count" : "works_count",
+       "cited_by_count" : "cited_by_count",
+       "created_date" : "institution_created_date",
+       "updated_date" : "institution_updated_date",
+       "name" : "institution_name",
+       "alternative_names" : "institution_alternative_names",
+       "city" : "city",
+       "country_code" : "country_code",
+       "geonames_city_id" : "geonames_city_id",
+       "homepage_url" : "homepage_url",
+       "type" : "institution_type"
+     }
+  },
+  "edgeMap" : {}
+}

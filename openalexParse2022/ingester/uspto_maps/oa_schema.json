@@ -1,0 +1,623 @@
+{
+  "propertyKeys" : [ {
+    "name" : "openalex_work_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "doi",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "mag_work_id",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "pmid",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "cited_by_count",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "work_created_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "work_updated_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "publication_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "publication_name",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "title",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "work_is_oa",
+    "dataType" : "Boolean",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "work_oa_status",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "work_oa_url",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "type",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "is_retracted",
+    "dataType" : "Boolean",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "is_paratext",
+    "dataType" : "Boolean",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "cited_by_api_url",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "openalex_author_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "mag_author_id",
+    "dataType" : "Long",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "orc_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "scopus_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "twitter_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "works_count",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "author_created_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "author_updated_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "author_name",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "author_alternative_names",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "works_api_url",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "openalex_concept_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "wikidata_concept_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "mag_concept_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "wikipedia_concept_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "umls_aui_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "umls_cui_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "concept_created_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "concept_updated_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "concept_name",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "level",
+    "dataType" : "Integer",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "description",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "openalex_institution_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "ror",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "wikidata_institution_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "grid_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "wikipedia_institution_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "institution_created_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "institution_updated_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "institution_name",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "institution_alternative_names",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "city",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "country_code",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "geonames_city_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "homepage_url",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "institution_type",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "openalex_venue_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "issn_l",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "mag_venue_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "issns",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "fatcat_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "wikidata_venue_id",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "works_count",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "venue_created_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "venue_updated_date",
+    "dataType" : "Date",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "venue_name",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "publisher_name",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "homepage_url",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "apc_usd",
+    "dataType" : "String",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "venue_is_oa",
+    "dataType" : "Boolean",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "is_in_doaj",
+    "dataType" : "Boolean",
+    "cardinality" : "SINGLE"
+  }, {
+    "name" : "work_concept_score",
+    "dataType" : "Float",
+    "cardinality" : "SINGLE"
+  } ],
+  "vertexLabels" : [ {
+    "name" : "Work",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Author",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Concept",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Institution",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+    "name" : "Venue",
+    "partition" : false,
+    "useStatic" : false
+  }, {
+} ],
+"edgeLabels" : [ { 
+    "name" : "Referenced",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "WorkAuthor",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "WorkConcept",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "AuthorConcept",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "WorkInstitution",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "InstitutionConcept",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "WorkHostVenue",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  }, {
+    "name" : "VenueConcept",
+    "multiplicity" : "MULTI",
+    "signatures" : null,
+    "unidirected" : false
+  } ],
+"vertexIndexes" : [ {
+    "name" : "openalexWorkIdComposite",
+    "propertyKeys" : [ "openalex_work_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "doiComposite",
+    "propertyKeys" : [ "doi" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "magWorkIdComposite",
+    "propertyKeys" : [ "mag_work_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "pmidComposite",
+    "propertyKeys" : [ "pmid" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "publicationDateComposite",
+    "propertyKeys" : [ "publication_date" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "publicationDateMixed",
+    "propertyKeys" : [ "publication_date" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "publicationNameComposite",
+    "propertyKeys" : [ "publication_name" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "publicationNameMixed",
+    "propertyKeys" : [ "publication_name" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "titleComposite",
+    "propertyKeys" : [ "title" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "titleMixed",
+    "propertyKeys" : [ "title" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "workIsOAComposite",
+    "propertyKeys" : [ "work_is_oa" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "workOAStatusComposte",
+    "propertyKeys" : [ "work_oa_status" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "typeComposite",
+    "propertyKeys" : [ "type" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "openalexAuthorIDComposite",
+    "propertyKeys" : [ "openalex_author_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "magAuthorIDComposite",
+    "propertyKeys" : [ "mag_author_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "orcIDComposite",
+    "propertyKeys" : [ "orc_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "scopusIDComposite",
+    "propertyKeys" : [ "scopus_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "twitterIDComposite",
+    "propertyKeys" : [ "twitter_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "authorNameComposite",
+    "propertyKeys" : [ "author_name" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "authorNameMixed",
+    "propertyKeys" : [ "author_name" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "authorAlternativeNamesComposite",
+    "propertyKeys" : [ "author_alternative_names" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "authorAlternativeNamesMixed",
+    "propertyKeys" : [ "author_alternative_names" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "openalexConceptIDComposite",
+    "propertyKeys" : [ "openalex_concept_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "wikidataConceptIDComposite",
+    "propertyKeys" : [ "wikidata_concept_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "magConceptIDComposite",
+    "propertyKeys" : [ "mag_concept_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "wikipediaConceptIDComposite",
+    "propertyKeys" : [ "wikipedia_concept_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "umlsAUIIDComposite",
+    "propertyKeys" : [ "umls_aui_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "umlsAUIIDMixed",
+    "propertyKeys" : [ "umls_aui_id" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "umlsCUIIDComposite",
+    "propertyKeys" : [ "umls_cui_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "umlsCUIIDMixed",
+    "propertyKeys" : [ "umls_cui_id" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "conceptNameComposite",
+    "propertyKeys" : [ "concpet_name" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "openalexInstitutionIDComposite",
+    "propertyKeys" : [ "openalex_institution_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "rorComposite",
+    "propertyKeys" : [ "ror" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "wikidataInstitutionIDComposite",
+    "propertyKeys" : [ "wikidata_institution_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "gridIDComposite",
+    "propertyKeys" : [ "grid_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "wikipediaInstitutionIDComposite",
+    "propertyKeys" : [ "wikipedia_institution_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "institutionNameComposite",
+    "propertyKeys" : [ "intstitution_name" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "institutionNameMixed",
+    "propertyKeys" : [ "institution_name" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "institutionAlternativeNamesComposite",
+    "propertyKeys" : [ "intstitution_alternative_names" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "institutionAlternativeNamesMixed",
+    "propertyKeys" : [ "institution_alternative_names" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "cityComposite",
+    "propertyKeys" : [ "city" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "countryCodeComposite",
+    "propertyKeys" : [ "country_code" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "geonamesCityIDComposite",
+    "propertyKeys" : [ "geonames_city_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "institutionTypeComposite",
+    "propertyKeys" : [ "institution_type" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "openalexVenueIDComposite",
+    "propertyKeys" : [ "openalex_venue_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "issnLComposite",
+    "propertyKeys" : [ "issn_l" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "issnsComposite",
+    "propertyKeys" : [ "issns" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "issnsMixed",
+    "propertyKeys" : [ "issns" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  }, {
+    "name" : "fatcatIDComposite",
+    "propertyKeys" : [ "fatcat_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "wikidataVenueIDComposite",
+    "propertyKeys" : [ "wikidata_venue_id" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "venueNameComposite",
+    "propertyKeys" : [ "venue_name" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "publisherNameComposite",
+    "propertyKeys" : [ "publisher_name" ],
+    "composite" : true,
+    "unique" : false
+  }, {
+    "name" : "workConceptScoreMixed",
+    "propertyKeys" : [ "work_concept_score" ],
+    "composite" : false,
+    "unique" : false,
+    "mixedIndex" : "search"
+  } ],
+  "edgeIndexes" : [],
+  "vertexCentricIndexes" : []
+}
+    
+

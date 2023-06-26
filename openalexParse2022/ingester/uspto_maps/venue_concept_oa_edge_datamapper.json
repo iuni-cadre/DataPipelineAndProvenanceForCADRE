@@ -1,0 +1,14 @@
+{
+  "vertexMap" : {},
+  "edgeMap" : {
+     "venue_concept.tsv" : {
+       "[edge_left]" : {
+         "oa_venues_id" : "Venue.openalex_venue_id"
+       },
+       "[EdgeLabel]" : "VenueConcept",
+       "[edge_right]" : {
+         "oa_concept_id" : "Concept.openalex_concept_id"
+       }
+     }
+  }
+}

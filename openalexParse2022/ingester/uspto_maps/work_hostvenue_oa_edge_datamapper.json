@@ -1,0 +1,14 @@
+{
+  "vertexMap" : {},
+  "edgeMap" : {
+     "work_hostvenue.tsv" : {
+       "[edge_left]" : {
+         "oa_work_id" : "Work.openalex_work_id"
+       },
+       "[EdgeLabel]" : "WorkHostVenue",
+       "[edge_right]" : {
+         "host_oa_venue_id" : "Venue.openalex_venue_id"
+       }
+     }
+  }
+}
